@@ -167,8 +167,8 @@ class MyApplication : Application(){
 |[deleteBoardPage](#deleteboardpage)|删除白板页|
 |[insertFile](#insertfile)|向当前白板页中插入文件|
 |[jumpFilePage](#jumpfilepage)|文件翻页|
-|deleteFile|删除文件|
-|revert|撤销一次擦除的笔迹|
+|[deleteFile](#deletefile)|删除文件|
+|[revert](#revert)|撤销一次擦除的笔迹|
 |[screenshots](#screenshots)|白板截图|
 
 ## 获取白板当前属性的方法
@@ -481,6 +481,33 @@ office文件需要在线转换格式，所以画面呈现会相对慢一些。
 |----|----|
 |widgetId|文件的widgetId，每个文件都有一个id，可以通过[getActiveWidget]方法获取当前用户正在操作的Widget，也可以通过[onWidgetActive]收集当前正在操作的Widget|
 |pageNo|跳转的目标页号，从1开始，如果序号超出文件范围，跳转会失败并忽略|
+
+## deleteFile
+
+`public static void deleteFile(@NonNull String widgetId)`
+
+删除文件
+
+删除后会触发[onWidgetActionEvent]回调，如果删除的文件是当前正在激活的widget，则会收到[onWidgetActive]回调，并且参数为null。
+
+|参数|描述|
+|----|----|
+|widgetId|文件的widgetId，每个文件都有一个id，可以通过[getActiveWidget]方法获取当前用户正在操作的Widget，也可以通过[onWidgetActive]收集当前正在操作的Widget|
+
+## revert
+
+`public static void revert()`
+
+还原最近一次擦除的笔迹
+
+在输入模式为橡皮模式[InputConfig.erase]时，本用户擦除的笔迹可以通过调用此方法来还原（回滚）。
+一次擦除的笔迹指的是用户从落下手指移动擦除线条到抬起手指为止期间擦掉的所有线条。
+
+* 当切换到其它输入模式或者白板翻页后擦除的笔迹缓存将会清空，将无法再还原擦掉的笔迹，即此方法仅在[InputConfig.erase]模式下有效。
+* 此方法多次调用是安全的。
+* 判断当前是否有可还原的笔迹可以通过调用[canRecovery]或监听[onRecoveryStateChanged]回调获知。
+
+
 
 
 
