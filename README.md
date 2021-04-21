@@ -16,7 +16,7 @@ repositories {
 }
 
 dependencies {
-    implementation 'com.latitech.android:whiteboard:0.0.3'
+    implementation 'com.latitech.android:whiteboard:0.0.6'
 
     // 可选，如果项目使用了androidx可以添加此项开启sdk的可空/非空参数注解的识别，在kotlin环境非常有用。
     compileOnly 'androidx.annotation:annotation:1.1.0'
@@ -515,7 +515,7 @@ office文件需要在线转换格式，所以画面呈现会相对慢一些。
 
 也可以监听[onBoardStatusChanged]。
 
-### 返回
-当前的白板状态[BoardStatus]
+- 返回 
+    - 当前的白板状态[BoardStatus]
 
 
