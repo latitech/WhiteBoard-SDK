@@ -16,7 +16,7 @@ repositories {
 }
 
 dependencies {
-    implementation 'com.latitech.android:whiteboard:0.0.2'
+    implementation 'com.latitech.android:whiteboard:0.0.3'
 
     // 可选，如果项目使用了androidx可以添加此项开启sdk的可空/非空参数注解的识别，在kotlin环境非常有用。
     compileOnly 'androidx.annotation:annotation:1.1.0'
@@ -154,22 +154,22 @@ class MyApplication : Application(){
 
 |方法名称|方法描述|
 |----|----|
-|setDefaultInputMode|设置白板的默认初始输入模式配置|
-|setRetry|设置白板断线自动重连次数|
-|setInputMode|改变白板的输入模式|
-|setBackgroundColor|设置白板背景色|
-|scroll|垂直滚动白板显示区|
-|newBoardPage|新建白板页|
-|insertBoardPage|插入新白板页|
-|jumpBoardPage|跳转到目标白板页|
-|preBoardPage|后退到上一页|
-|nextBoardPage|前进到下一页|
-|deleteBoardPage|删除白板页|
-|insertFile|向当前白板页中插入文件|
-|jumpFilePage|文件翻页|
+|[setDefaultInputMode](#setdefaultinputmode)|设置白板的默认初始输入模式配置|
+|[setRetry](#setretry)|设置白板断线自动重连次数|
+|[setInputMode](#setinputmode)|改变白板的输入模式|
+|[setBackgroundColor](#setbackgroundcolor)|设置白板背景色|
+|[scroll](#scroll)|垂直滚动白板显示区|
+|[newBoardPage](#newboardpage)|新建白板页|
+|[insertBoardPage](#insertboardpage)|插入新白板页|
+|[jumpBoardPage](#jumpboardpage)|跳转到目标白板页|
+|[preBoardPage](#preboardpage)|后退到上一页|
+|[nextBoardPage](#nextboardpage)|前进到下一页|
+|[deleteBoardPage](#deleteboardpage)|删除白板页|
+|[insertFile](#insertfile)|向当前白板页中插入文件|
+|[jumpFilePage](#jumpfilepage)|文件翻页|
 |deleteFile|删除文件|
 |revert|撤销一次擦除的笔迹|
-|screenshots|白板截图|
+|[screenshots](#screenshots)|白板截图|
 
 ## 获取白板当前属性的方法
 
@@ -299,3 +299,183 @@ class MyApplication : Application(){
 
 可在任何时候调用。
 
+## screenshots
+
+`public static void screenshots(@NonNull ScreenshotsCallback listener)`
+
+白板截图
+
+仅在WhiteBoardView附加到布局中时有效（即必须有可见的白板），回调ScreenshotsCallback将在非主线程执行。
+
+|参数|描述|
+|----|----|
+|listener|截图回调，在非主线程回调，截图成功会返回`Bitmap`，失败返回null|
+
+## setDefaultInputMode
+
+`public static void setDefaultInputMode(@NonNull InputConfig config)`
+
+设置白板的默认初始输入模式配置
+
+在[joinRoom](#joinroom)之前调用有效，已经进入房间时调用此方法不会改变当前的输入模式，仅会影响下次进入房间的输入模式。
+如需改变当前房间中的输入模式，请调用[setInputMode](#setinputmode)方法。
+
+此方法用于预先设定加入房间后的初始输入配置，反复加入离开房间不会影响此默认设置。
+默认设置不会随[setInputMode](#setinputmode)方法改变，即一次设定长期有效。
+
+|参数|描述|
+|----|----|
+|config|输入模式配置|
+
+## setRetry
+
+`public static void setRetry(int count)`
+
+设置白板断线自动重连次数
+
+默认为10次，设为0表示不自动重连。
+
+|参数|描述|
+|----|----|
+|count|重连次数|
+
+## setInputMode
+
+`public static void setInputMode(@NonNull InputConfig config)`
+
+改变白板的输入模式
+
+此方法用于已经连通白板房间时改变用户对白板的输入模式，包括例如笔迹的粗细和颜色等。
+
+|参数|描述|
+|----|----|
+|config|输入模式配置|
+
+## setBackgroundColor
+
+`public static void setBackgroundColor(@ColorInt int color)`
+
+设置白板背景色
+
+用于在白板房间中改变当前白板页的背景色，未进入房间调用无效。
+
+* 仅能改变当前页面的背景以及此后新增的页面背景，不会影响已经存在的页面背景。
+* 如需设定新房间的初始背景色，请在服务器创建房间时设定。
+
+|参数|描述|
+|----|----|
+|color|颜色值，不支持透明度|
+
+## scroll
+
+`public static void scroll(float offsetY)`
+
+垂直滚动白板显示区
+
+* 目前白板是一个纵向可滚动（高大于宽）的矩形，通常白板的可视区[WhiteBoardViewport]不能呈现完整白板，需要通过滚动来控制可见区。
+* 白板内部可以通过用户的双指操作来滚动白板，无需外部干涉，此方法的目的是方便用户实现类似top按钮或滚动条功能。
+
+无论是调用此方法还是用户通过白板手势滚动了白板（包括远程用户滚动白板），都会触发[onBoardScroll]回调。
+
+|参数|描述|
+|----|----|
+|offsetY|白板的垂直偏移量，此值为总量而非增量，当前值在[WhiteBoardViewport]中描述|
+
+## newBoardPage
+
+`public static void newBoardPage()`
+
+新增白板页
+
+在房间中调用可以在当前页列表末尾插入一个新的页面并会自动跳转到这个新页面。
+
+页面创建成功后用户会收到[onCurrentBoardPageChanged]、[onBoardPageList]、[onBoardPageInfoChanged]三个回调。
+
+## insertBoardPage
+
+`public static void insertBoardPage(@NonNull String pageId)`
+
+插入新白板页
+
+在指定的页面之前插入一个新白板页，同时白板会自动跳转到新插入的页面。
+
+页面创建成功后用户会收到[onCurrentBoardPageChanged]、[onBoardPageList]、[onBoardPageInfoChanged]三个回调。
+
+|参数|描述|
+|----|----|
+|pageId|目标插入位置的页id，此id来自于页数据，可通过[getPageList]或[getCurrentPage]获取页列表或当前显示页数据，也可通过[onBoardPageList]和[onCurrentBoardPageChanged]回调来收集|
+
+## jumpBoardPage
+
+`public static void jumpBoardPage(@NonNull String pageId)`
+
+跳转到指定白板页
+
+直接跳页的实现方式。
+
+跳转成功后用户会收到[onCurrentBoardPageChanged]、[onBoardPageInfoChanged]回调。
+
+|参数|描述|
+|----|----|
+|pageId|跳转目标的页id，此id来自于页数据，可通过[getPageList]或[getCurrentPage]获取页列表或当前显示页数据，也可通过[onBoardPageList]和[onCurrentBoardPageChanged]回调来收集|
+
+## preBoardPage
+
+`public static void preBoardPage()`
+
+返回到上一页
+
+成功后用户会收到[onCurrentBoardPageChanged]、[onBoardPageInfoChanged]回调。
+
+## nextBoardPage
+
+`public static void nextBoardPage()`
+
+前进到下一页
+
+成功后用户会收到[onCurrentBoardPageChanged]、[onBoardPageInfoChanged]回调。
+
+## deleteBoardPage
+
+`public static void deleteBoardPage(@NonNull String pageId)`
+
+删除白板页
+
+删除成功后一定会收到[onBoardPageList]回调，如果删除的是当前页会同时触发[onCurrentBoardPageChanged]，
+如果删除当前页是仅有的一页，白板会删除当前页并立即创建一个新的空白页，效果类似与清空白板。
+
+|参数|描述|
+|----|----|
+|pageId|要删除的页id，此id来自于页数据，可通过[getPageList]或[getCurrentPage]获取页列表或当前显示页数据，也可通过[onBoardPageList]和[onCurrentBoardPageChanged]回调来收集|
+
+## insertFile
+
+`public static void insertFile(@NonNull FileConfig config)`
+
+向当前白板页中插入文件
+
+支持的格式有jpg,png,pdf,doc,docx,ppt,pptx,xls,xlsx。
+图片尽量上传2K及以下的尺寸，否则某些老旧设备可能无法加载。
+office文件需要在线转换格式，所以画面呈现会相对慢一些。
+
+文件插入后会收到大量[onWidgetActionEvent]回调（与房间人数有关），此回调仅表达了导致文件状态变化的用户信息和此用户的加载情况，
+通常用于在界面上表达房间中各成员对此文件的加载状态。
+
+|参数|描述|
+|----|----|
+|config|文件配置信息|
+
+## jumpFilePage
+
+`public static void jumpFilePage(@NonNull String widgetId , int pageNo)`
+
+文件翻页
+
+对于可翻页的文件，如pdf和office文件，通过调用此方法可以使文件跳到指定序号的页面。
+
+翻页成功后会收到[onFilePageChanged]回调。
+
+|参数|描述|
+|----|----|
+|widgetId|文件的widgetId，每个文件都有一个id，可以通过[getActiveWidget]方法获取当前用户正在操作的Widget，也可以通过[onWidgetActive]收集当前正在操作的Widget|
+|pageNo|跳转的目标页号，从1开始，如果序号超出文件范围，跳转会失败并忽略|
