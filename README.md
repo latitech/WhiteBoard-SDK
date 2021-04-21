@@ -219,7 +219,7 @@ class MyApplication : Application(){
 |onWidgetActionEvent|widget被执行了某些关键动作|
 |onRecoveryStateChanged|笔迹回收站状态变化|
 
-# WhiteBoard类
+# WhiteBoard
 
 所有白板SDK的主动用户接口，所有接口线程安全
 
@@ -481,4 +481,6 @@ office文件需要在线转换格式，所以画面呈现会相对慢一些。
 |----|----|
 |widgetId|文件的widgetId，每个文件都有一个id，可以通过[getActiveWidget]方法获取当前用户正在操作的Widget，也可以通过[onWidgetActive]收集当前正在操作的Widget|
 |pageNo|跳转的目标页号，从1开始，如果序号超出文件范围，跳转会失败并忽略|
+
+
 
