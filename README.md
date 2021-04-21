@@ -133,6 +133,19 @@ class MyApplication : Application(){
 
 ```
 
+## 关键方法
+
+* 所有用户可以主动调用的方法都是`WhiteBoard`类的静态方法
+
+|方法名称|方法描述|
+|----|----|
+|[init](#init)|初始化白板SDK|
+|[joinRoom](#joinroom)|进入白板房间|
+|[leaveRoom](#leaveroom)|离开白板房间|
+|[addListener](#addlistener)|添加一个白板事件监听器|
+|[removeListener](#removelistener)|移除一个白板事件监听器|
+|[clearListener](#clearlistener)|清空所有白板监听器|
+
 ## 主动控制的方法
 
 * 所有用户可以主动调用的方法都是`WhiteBoard`类的静态方法
@@ -202,5 +215,85 @@ class MyApplication : Application(){
 |onWidgetActionEvent|widget被执行了某些关键动作|
 |onRecoveryStateChanged|笔迹回收站状态变化|
 
-## 主动方法
+# WhiteBoard类
+
+所有白板SDK的主要用户接口，所有接口线程安全
+
+## init
+
+`public static void init(@NonNull Context context , boolean debug)`
+
+初始化白板SDK
+
+应用启动后只需调用一次，最好在`Application`中调用。
+
+|参数|描述|
+|----|----|
+|context|Android上下文|
+|debug|是否开启debug模式，如果为true则sdk会输出一些日志|
+
+## joinRoom
+
+`public static void joinRoom(@NonNull JoinConfig config)`
+
+进入白板房间
+
+只有此方法执行成功才能连通白板，目前sdk仅支持同时进入一个房间，多次调用是安全的，但仅有第一次调用的参数有效，后续调用会被忽略，如需进入其它房间，需要先执行[leaveRoom](#leaveroom)。
+
+加入成功后本地会收到onJoinSuccess回调，加入失败则会收到onJoinFailed回调。
+同时远端用户会收到onUserJoin回调。
+
+如果已经加入成功但是发生了掉线，则SDK会尝试自动重连，并收到onReconnecting回调。
+重连次数可以通过setRetry修改，重连成功后会收到onReconnected，重连失败会收到onDisconnected，此时必须用户手动调用此方法重新加入房间。
+
+|参数|描述|
+|----|----|
+|config|房间和身份信息|
+
+## leaveRoom
+
+`public static void leaveRoom()`
+
+离开白板房间
+
+该方法会断开白板连接并释放资源，同时会清理所有的AutoRemoveWhiteBoardListener类型的监听器。
+多次调用是安全的。
+离开白板后远端用户会收到onUserLeave回调。
+
+## addListener
+
+`public static void addListener(@NonNull WhiteBoardListener listener)`
+
+添加一个白板事件监听器
+
+如果添加WhiteBoardListener的直接子类则会永久存续，直到使用removeListener移除。 
+如果添加AutoRemoveWhiteBoardListener的子类则可以在[leaveRoom](#leaveroom)时自动移除，无需手动执行removeListener。
+
+可以在[joinRoom](#joinroom)之前或之后添加
+
+|参数|描述|
+|----|----|
+|listener|事件监听器|
+
+## removeListener
+
+`public static void removeListener(@NonNull WhiteBoardListener listener)`
+
+移除一个白板事件监听器
+
+可在任何时候调用。
+
+|参数|描述|
+|----|----|
+|listener|监听器实例|
+
+## clearListener
+
+`public static void clearListener()`
+
+清空所有白板监听器
+
+会清空所有的监听器，包括WhiteBoardListener和AutoRemoveWhiteBoardListener类型的全部监听器。
+
+可在任何时候调用。
 
