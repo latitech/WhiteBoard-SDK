@@ -57,6 +57,8 @@ class MyApplication : Application(){
 
 ```
 
+其中[WhiteBoard](#whiteboard)是所有用户主动方法的接口类。
+
 ## 在布局中引入白板控件
 
 在有白板的activity的layout文件中引入`com.latitech.whiteboard.WhiteBoardView`控件，
@@ -86,13 +88,13 @@ class MyApplication : Application(){
 
 ```
 
-实例中通过`app:layout_constraintDimensionRatio`参数设定宽高比，比例中的数字时白板的虚拟大小，决定了白板中内容的坐标系。
+示例中通过`app:layout_constraintDimensionRatio`参数设定宽高比，比例中的数字时白板的虚拟大小，决定了白板中内容的坐标系。
 
 ## 加入房间
 
 首先访问自己的服务器获取要加入的白板房间的roomId,token,appId等参数（房间的创建和token的生成由服务器对接SDK服务端接口）。
 
-首先构建进房参数`JoinConfig`，然后执行`WhiteBoard.joinRoom`来加入房间。
+首先构建进房参数`JoinConfig`，然后执行[joinRoom](#joinroom)来加入房间。
 
 ```joinRoom
 
@@ -119,7 +121,7 @@ class MyApplication : Application(){
 
 ## 关闭并离开房间
 
-房间关闭时，比如离开房间的`Activity`时，必须调用`WhiteBoard.leaveRoom`来退出房间并释放资源，
+房间关闭时，比如离开房间的`Activity`时，必须调用[leaveRoom](#leaveroom)来退出房间并释放资源，
 此方法会同时完成离开房间和资源释放，同时可以自动释放`AutoRemoveWhiteBoardListener`类型的事件监听器（推荐），多次执行是安全的。
 
 通常情况会把它放在`Activity.onDestroy`中执行，比如：
@@ -135,7 +137,7 @@ class MyApplication : Application(){
 
 ## 关键方法
 
-* 所有用户可以主动调用的方法都是`WhiteBoard`类的静态方法
+* 所有用户可以主动调用的方法都是[WhiteBoard](#whiteboard)类的静态方法
 
 |方法名称|方法描述|
 |----|----|
@@ -148,7 +150,7 @@ class MyApplication : Application(){
 
 ## 主动控制的方法
 
-* 所有用户可以主动调用的方法都是`WhiteBoard`类的静态方法
+* 所有用户可以主动调用的方法都是[WhiteBoard](#whiteboard)类的静态方法
 
 |方法名称|方法描述|
 |----|----|
@@ -171,7 +173,7 @@ class MyApplication : Application(){
 
 ## 获取白板当前属性的方法
 
-* 所有用户可以主动调用的方法都是`WhiteBoard`类的静态方法
+* 所有用户可以主动调用的方法都是[WhiteBoard](#whiteboard)类的静态方法
 
 |方法名称|方法描述|
 |----|----|
