@@ -168,7 +168,7 @@ class MyApplication : Application(){
 |[insertFile](#insertfile)|向当前白板页中插入文件|
 |[jumpFilePage](#jumpfilepage)|文件翻页|
 |[deleteFile](#deletefile)|删除文件|
-|[revert](#revert)|撤销一次擦除的笔迹|
+|[recover](#recover)|撤销一次擦除的笔迹|
 |[screenshots](#screenshots)|白板截图|
 
 ## 获取白板当前属性的方法
@@ -494,9 +494,9 @@ office文件需要在线转换格式，所以画面呈现会相对慢一些。
 |----|----|
 |widgetId|文件的widgetId，每个文件都有一个id，可以通过[getActiveWidget]方法获取当前用户正在操作的Widget，也可以通过[onWidgetActive]收集当前正在操作的Widget|
 
-## revert
+## recover
 
-`public static void revert()`
+`public static void recover()`
 
 还原最近一次擦除的笔迹
 
@@ -507,7 +507,15 @@ office文件需要在线转换格式，所以画面呈现会相对慢一些。
 * 此方法多次调用是安全的。
 * 判断当前是否有可还原的笔迹可以通过调用[canRecovery]或监听[onRecoveryStateChanged]回调获知。
 
+## getStatus
 
+`public static BoardStatus getStatus()`
 
+获取白板当前状态
+
+也可以监听[onBoardStatusChanged]。
+
+### 返回
+当前的白板状态[BoardStatus]
 
 
