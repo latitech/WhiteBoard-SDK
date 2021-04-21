@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.latitech.whiteboard.example.RoomViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/cardview_dark_background"
+        android:orientation="vertical">
+
+        <HorizontalScrollView
+            android:id="@+id/horizontalScrollView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@color/cardview_light_background"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:text="@{viewModel.currentPage.pageNumber + `/` + viewModel.pageList.size()}" />
+
+                <Button
+                    android:id="@+id/insert_image"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="插入图片" />
+
+                <Button
+                    android:id="@+id/camera"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="拍照" />
+
+                <Button
+                    android:id="@+id/insert_file"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="插入文件" />
+
+                <Button
+                    android:id="@+id/select"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="选择" />
+
+                <Button
+                    android:id="@+id/pan"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="笔" />
+
+                <Button
+                    android:id="@+id/pan_color"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="换笔颜色" />
+
+                <Button
+                    android:id="@+id/eraser"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="橡皮" />
+
+                <Button
+                    android:id="@+id/restore"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="撤销擦除" />
+
+                <Button
+                    android:id="@+id/pre_page"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="上一页" />
+
+                <Button
+                    android:id="@+id/next_page"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="下一页" />
+
+                <Button
+                    android:id="@+id/new_page"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="新建页" />
+
+                <Button
+                    android:id="@+id/screenshots"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="截屏" />
+
+            </LinearLayout>
+
+        </HorizontalScrollView>
+
+        <com.latitech.whiteboard.WhiteBoardView
+            android:id="@+id/white_board"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintDimensionRatio="@{viewModel.whiteBoardRatio}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/horizontalScrollView" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
