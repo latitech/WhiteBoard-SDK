@@ -61,7 +61,7 @@ class MyApplication : Application(){
 
 ## 在布局中引入白板控件
 
-在有白板的activity的layout文件中引入`com.latitech.whiteboard.WhiteBoardView`控件，
+在有白板的activity的layout文件中引入[com.latitech.whiteboard.WhiteBoardView]控件，
 控件大小最好与用户设定的白板宽高比相同，否则边缘可能会留白。白板大小由用户服务器创建房间时设定。
 
 例如：
@@ -94,7 +94,7 @@ class MyApplication : Application(){
 
 首先访问自己的服务器获取要加入的白板房间的roomId,token,appId等参数（房间的创建和token的生成由服务器对接SDK服务端接口）。
 
-首先构建进房参数`JoinConfig`，然后执行[joinRoom](#joinroom)来加入房间。
+首先构建进房参数[JoinConfig]，然后执行[joinRoom](#joinroom)来加入房间。
 
 ```joinRoom
 
@@ -117,12 +117,12 @@ class MyApplication : Application(){
 
 ```
 
-如果加入房间成功，会收到`onJoinSuccess`回调，如果加入失败会收到`onJoinFailed`回调。
+如果加入房间成功，会收到[onJoinSuccess]回调，如果加入失败会收到[onJoinFailed]回调。
 
 ## 关闭并离开房间
 
 房间关闭时，比如离开房间的`Activity`时，必须调用[leaveRoom](#leaveroom)来退出房间并释放资源，
-此方法会同时完成离开房间和资源释放，同时可以自动释放`AutoRemoveWhiteBoardListener`类型的事件监听器（推荐），多次执行是安全的。
+此方法会同时完成离开房间和资源释放，同时可以自动释放[AutoRemoveWhiteBoardListener]类型的事件监听器（推荐），多次执行是安全的。
 
 通常情况会把它放在`Activity.onDestroy`中执行，比如：
 
@@ -191,9 +191,11 @@ class MyApplication : Application(){
 
 ## 添加事件监听器
 
-* 通过调用`WhiteBoard.addListener`可以添加事件监听器，可以在任何时期添加，包括进入白板之前。
-* 所有的事件都在`WhiteBoardListener`接口中。如果添加此类的直接子类作为监听器，则添加后必须由用户手动调用`WhiteBoard.removeListener`来移除。此方式通常用于在房间外监听房间中发生的事并记录日志或触发某些全局事件时使用。
-* `WhiteBoardListener`存在一个易用的子类`AutoRemoveWhiteBoardListener`，如果添加此类的子类监听器，则用户在调用`WhiteBoard.leaveRoom`时系统会自动清理所有的`AutoRemoveWhiteBoardListener`子类监听器，无需用户手动移除。
+* 通过调用[WhiteBoard.addListener](#addlistener)可以添加事件监听器，可以在任何时期添加，包括进入白板之前。
+* 所有的事件都在[WhiteBoardListener]接口中。如果添加此类的直接子类作为监听器，则添加后必须由用户手动调用[WhiteBoard.removeListener
+](#removelistener)来移除。此方式通常用于在房间外监听房间中发生的事并记录日志或触发某些全局事件时使用。
+* [WhiteBoardListener]存在一个易用的子类[AutoRemoveWhiteBoardListener]，如果添加此类的子类监听器，则用户在调用[WhiteBoard.leaveRoom
+](#leaveroom)时系统会自动清理所有的[AutoRemoveWhiteBoardListener]子类监听器，无需用户手动移除。
 
 |事件名称|事件描述|
 |----|----|
@@ -219,7 +221,7 @@ class MyApplication : Application(){
 
 # WhiteBoard类
 
-所有白板SDK的主要用户接口，所有接口线程安全
+所有白板SDK的主动用户接口，所有接口线程安全
 
 ## init
 
@@ -242,15 +244,15 @@ class MyApplication : Application(){
 
 只有此方法执行成功才能连通白板，目前sdk仅支持同时进入一个房间，多次调用是安全的，但仅有第一次调用的参数有效，后续调用会被忽略，如需进入其它房间，需要先执行[leaveRoom](#leaveroom)。
 
-加入成功后本地会收到onJoinSuccess回调，加入失败则会收到onJoinFailed回调。
-同时远端用户会收到onUserJoin回调。
+加入成功后本地会收到[onJoinSuccess]回调，加入失败则会收到[onJoinFailed]回调。
+同时远端用户会收到[onUserJoin]回调。
 
-如果已经加入成功但是发生了掉线，则SDK会尝试自动重连，并收到onReconnecting回调。
-重连次数可以通过setRetry修改，重连成功后会收到onReconnected，重连失败会收到onDisconnected，此时必须用户手动调用此方法重新加入房间。
+如果已经加入成功但是发生了掉线，则SDK会尝试自动重连，并收到[onReconnecting]回调。
+重连次数可以通过[setRetry](#setretry)修改，重连成功后会收到[onReconnected]，重连失败会收到[onDisconnected]，此时必须用户手动调用此方法重新加入房间。
 
 |参数|描述|
 |----|----|
-|config|房间和身份信息|
+|[config]|房间和身份信息|
 
 ## leaveRoom
 
@@ -258,9 +260,9 @@ class MyApplication : Application(){
 
 离开白板房间
 
-该方法会断开白板连接并释放资源，同时会清理所有的AutoRemoveWhiteBoardListener类型的监听器。
+该方法会断开白板连接并释放资源，同时会清理所有的[AutoRemoveWhiteBoardListener]类型的监听器。
 多次调用是安全的。
-离开白板后远端用户会收到onUserLeave回调。
+离开白板后远端用户会收到[onUserLeave]回调。
 
 ## addListener
 
@@ -268,14 +270,14 @@ class MyApplication : Application(){
 
 添加一个白板事件监听器
 
-如果添加WhiteBoardListener的直接子类则会永久存续，直到使用removeListener移除。 
-如果添加AutoRemoveWhiteBoardListener的子类则可以在[leaveRoom](#leaveroom)时自动移除，无需手动执行removeListener。
+如果添加[WhiteBoardListener]的直接子类则会永久存续，直到使用[removeListener](#removelistener)移除。 
+如果添加[AutoRemoveWhiteBoardListener]的子类则可以在[leaveRoom](#leaveroom)时自动移除，无需手动执行[removeListener](#removelistener)。
 
 可以在[joinRoom](#joinroom)之前或之后添加
 
 |参数|描述|
 |----|----|
-|listener|事件监听器|
+|[listener]|事件监听器|
 
 ## removeListener
 
@@ -287,7 +289,7 @@ class MyApplication : Application(){
 
 |参数|描述|
 |----|----|
-|listener|监听器实例|
+|[listener]|监听器实例|
 
 ## clearListener
 
@@ -295,7 +297,7 @@ class MyApplication : Application(){
 
 清空所有白板监听器
 
-会清空所有的监听器，包括WhiteBoardListener和AutoRemoveWhiteBoardListener类型的全部监听器。
+会清空所有的监听器，包括[WhiteBoardListener]和[AutoRemoveWhiteBoardListener]类型的全部监听器。
 
 可在任何时候调用。
 
@@ -305,11 +307,11 @@ class MyApplication : Application(){
 
 白板截图
 
-仅在WhiteBoardView附加到布局中时有效（即必须有可见的白板），回调ScreenshotsCallback将在非主线程执行。
+仅在[WhiteBoardView]附加到布局中时有效（即必须有可见的白板），回调[ScreenshotsCallback]将在非主线程执行。
 
 |参数|描述|
 |----|----|
-|listener|截图回调，在非主线程回调，截图成功会返回`Bitmap`，失败返回null|
+|[listener]|截图回调，在非主线程回调，截图成功会返回`Bitmap`，失败返回null|
 
 ## setDefaultInputMode
 
@@ -325,7 +327,7 @@ class MyApplication : Application(){
 
 |参数|描述|
 |----|----|
-|config|输入模式配置|
+|[config]|输入模式配置|
 
 ## setRetry
 
@@ -349,7 +351,7 @@ class MyApplication : Application(){
 
 |参数|描述|
 |----|----|
-|config|输入模式配置|
+|[config]|输入模式配置|
 
 ## setBackgroundColor
 
@@ -463,7 +465,7 @@ office文件需要在线转换格式，所以画面呈现会相对慢一些。
 
 |参数|描述|
 |----|----|
-|config|文件配置信息|
+|[config]|文件配置信息|
 
 ## jumpFilePage
 
@@ -479,3 +481,4 @@ office文件需要在线转换格式，所以画面呈现会相对慢一些。
 |----|----|
 |widgetId|文件的widgetId，每个文件都有一个id，可以通过[getActiveWidget]方法获取当前用户正在操作的Widget，也可以通过[onWidgetActive]收集当前正在操作的Widget|
 |pageNo|跳转的目标页号，从1开始，如果序号超出文件范围，跳转会失败并忽略|
+
