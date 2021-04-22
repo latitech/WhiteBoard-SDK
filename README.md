@@ -16,7 +16,7 @@ repositories {
 }
 
 dependencies {
-    implementation 'com.latitech.android:whiteboard:0.0.7'
+    implementation 'com.latitech.android:whiteboard:0.0.8'
 
     // 可选，如果项目使用了androidx可以添加此项开启sdk的可空/非空参数注解的识别，在kotlin环境非常有用。
     compileOnly 'androidx.annotation:annotation:1.1.0'
@@ -192,10 +192,8 @@ class MyApplication : Application(){
 ## 添加事件监听器
 
 * 通过调用[WhiteBoard.addListener](#addlistener)可以添加事件监听器，可以在任何时期添加，包括进入白板之前。
-* 所有的事件都在[WhiteBoardListener](#whiteboardlistener)接口中。如果添加此类的直接子类作为监听器，则添加后必须由用户手动调用[WhiteBoard.removeListener
-](#removelistener)来移除。此方式通常用于在房间外监听房间中发生的事并记录日志或触发某些全局事件时使用。
-* [WhiteBoardListener](#whiteboardlistener)存在一个易用的子类[AutoRemoveWhiteBoardListener](#autoremovewhiteboardlistener)，如果添加此类的子类监听器，则用户在调用[WhiteBoard.leaveRoom
-](#leaveroom)时系统会自动清理所有的[AutoRemoveWhiteBoardListener](#autoremovewhiteboardlistener)子类监听器，无需用户手动移除。
+* 所有的事件都在[WhiteBoardListener](#whiteboardlistener)接口中。如果添加此类的直接子类作为监听器，则添加后必须由用户手动调用[WhiteBoard.removeListener](#removelistener)来移除。此方式通常用于在房间外监听房间中发生的事并记录日志或触发某些全局事件时使用。
+* [WhiteBoardListener](#whiteboardlistener)存在一个易用的子类[AutoRemoveWhiteBoardListener](#autoremovewhiteboardlistener)，如果添加此类的子类监听器，则用户在调用[WhiteBoard.leaveRoom](#leaveroom)时系统会自动清理所有的[AutoRemoveWhiteBoardListener](#autoremovewhiteboardlistener)子类监听器，无需用户手动移除。
 
 |事件名称|事件描述|
 |----|----|
@@ -208,16 +206,16 @@ class MyApplication : Application(){
 |[onUserList](#onuserlist)|当前已经在房间中的用户列表|
 |[onUserJoin](#onuserjoin)|有其它用户加入了房间|
 |[onUserLeave](#onuserleave)|有其它用户离开了房间|
-|onBoardPageList|白板页信息列表|
-|onCurrentBoardPageChanged|白板当前页变化|
-|onBoardPageInfoChanged|某一个白板页信息变化|
-|onBoardSizeChanged|白板的虚拟大小发生变化|
-|onBoardScroll|白板内发生滚动|
-|onBackgroundColorChanged|白板背景色变化|
-|onWidgetActive|有widget被激活|
-|onFilePageChanged|文件被翻页|
-|onWidgetActionEvent|widget被执行了某些关键动作|
-|onRecoveryStateChanged|笔迹回收站状态变化|
+|[onBoardPageList](#onboardpagelist)|白板页信息列表|
+|[onCurrentBoardPageChanged](#oncurrentboardpagechanged)|白板当前页变化|
+|[onBoardPageInfoChanged](#onboardpageinfochanged)|某一个白板页信息变化|
+|[onBoardSizeChanged](#onboardsizechanged)|白板的虚拟大小发生变化|
+|[onBoardScroll](#onboardscroll)|白板内发生滚动|
+|[onBackgroundColorChanged](#onbackgroundcolorchanged)|白板背景色变化|
+|[onWidgetActive](#onwidgetactive)|有widget被激活|
+|[onFilePageChanged](#onfilepagechanged)|文件被翻页|
+|[onWidgetActionEvent](#onwidgetactionevent)|widget被执行了某些关键动作|
+|[onRecoveryStateChanged](#onrecoverystatechanged)|笔迹回收站状态变化|
 
 
 # WhiteBoard
@@ -378,7 +376,7 @@ class MyApplication : Application(){
 * 目前白板是一个纵向可滚动（高大于宽）的矩形，通常白板的可视区[WhiteBoardViewport]不能呈现完整白板，需要通过滚动来控制可见区。
 * 白板内部可以通过用户的双指操作来滚动白板，无需外部干涉，此方法的目的是方便用户实现类似top按钮或滚动条功能。
 
-无论是调用此方法还是用户通过白板手势滚动了白板（包括远程用户滚动白板），都会触发[onBoardScroll]回调。
+无论是调用此方法还是用户通过白板手势滚动了白板（包括远程用户滚动白板），都会触发[onBoardScroll](#onboardscroll)回调。
 
 |参数|描述|
 |----|----|
@@ -392,7 +390,7 @@ class MyApplication : Application(){
 
 在房间中调用可以在当前页列表末尾插入一个新的页面并会自动跳转到这个新页面。
 
-页面创建成功后用户会收到[onCurrentBoardPageChanged]、[onBoardPageList]、[onBoardPageInfoChanged]三个回调。
+页面创建成功后用户会收到[onCurrentBoardPageChanged](#oncurrentboardpagechanged)、[onBoardPageList](#onboardpagelist)、[onBoardPageInfoChanged](#onboardpageinfochanged)三个回调。
 
 ## insertBoardPage
 
@@ -402,11 +400,11 @@ class MyApplication : Application(){
 
 在指定的页面之前插入一个新白板页，同时白板会自动跳转到新插入的页面。
 
-页面创建成功后用户会收到[onCurrentBoardPageChanged]、[onBoardPageList]、[onBoardPageInfoChanged]三个回调。
+页面创建成功后用户会收到[onCurrentBoardPageChanged](#oncurrentboardpagechanged)、[onBoardPageList](#onboardpagelist)、[onBoardPageInfoChanged](#onboardpageinfochanged)三个回调。
 
 |参数|描述|
 |----|----|
-|pageId|目标插入位置的页id，此id来自于页数据，可通过[getPageList](#getpagelist)或[getCurrentPage](#getcurrentpage)获取页列表或当前显示页数据，也可通过[onBoardPageList]和[onCurrentBoardPageChanged]回调来收集|
+|pageId|目标插入位置的页id，此id来自于页数据，可通过[getPageList](#getpagelist)或[getCurrentPage](#getcurrentpage)获取页列表或当前显示页数据，也可通过[onBoardPageList](#onboardpagelist)和[onCurrentBoardPageChanged](#oncurrentboardpagechanged)回调来收集|
 
 ## jumpBoardPage
 
@@ -416,11 +414,11 @@ class MyApplication : Application(){
 
 直接跳页的实现方式。
 
-跳转成功后用户会收到[onCurrentBoardPageChanged]、[onBoardPageInfoChanged]回调。
+跳转成功后用户会收到[onCurrentBoardPageChanged](#oncurrentboardpagechanged)、[onBoardPageInfoChanged](#onboardpageinfochanged)回调。
 
 |参数|描述|
 |----|----|
-|pageId|跳转目标的页id，此id来自于页数据，可通过[getPageList](#getpagelist)或[getCurrentPage](#getcurrentpage)获取页列表或当前显示页数据，也可通过[onBoardPageList]和[onCurrentBoardPageChanged]回调来收集|
+|pageId|跳转目标的页id，此id来自于页数据，可通过[getPageList](#getpagelist)或[getCurrentPage](#getcurrentpage)获取页列表或当前显示页数据，也可通过[onBoardPageList](#onboardpagelist)和[onCurrentBoardPageChanged](#oncurrentboardpagechanged)回调来收集|
 
 ## preBoardPage
 
@@ -428,7 +426,7 @@ class MyApplication : Application(){
 
 返回到上一页
 
-成功后用户会收到[onCurrentBoardPageChanged]、[onBoardPageInfoChanged]回调。
+成功后用户会收到[onCurrentBoardPageChanged](#oncurrentboardpagechanged)、[onBoardPageInfoChanged](#onboardpageinfochanged)回调。
 
 ## nextBoardPage
 
@@ -436,7 +434,7 @@ class MyApplication : Application(){
 
 前进到下一页
 
-成功后用户会收到[onCurrentBoardPageChanged]、[onBoardPageInfoChanged]回调。
+成功后用户会收到[onCurrentBoardPageChanged](#oncurrentboardpagechanged)、[onBoardPageInfoChanged](#onboardpageinfochanged)回调。
 
 ## deleteBoardPage
 
@@ -444,12 +442,12 @@ class MyApplication : Application(){
 
 删除白板页
 
-删除成功后一定会收到[onBoardPageList]回调，如果删除的是当前页会同时触发[onCurrentBoardPageChanged]，
+删除成功后一定会收到[onBoardPageList](#onboardpagelist)回调，如果删除的是当前页会同时触发[onCurrentBoardPageChanged](#oncurrentboardpagechanged)，
 如果删除当前页是仅有的一页，白板会删除当前页并立即创建一个新的空白页，效果类似与清空白板。
 
 |参数|描述|
 |----|----|
-|pageId|要删除的页id，此id来自于页数据，可通过[getPageList](#getpagelist)或[getCurrentPage](#getcurrentpage)获取页列表或当前显示页数据，也可通过[onBoardPageList]和[onCurrentBoardPageChanged]回调来收集|
+|pageId|要删除的页id，此id来自于页数据，可通过[getPageList](#getpagelist)或[getCurrentPage](#getcurrentpage)获取页列表或当前显示页数据，也可通过[onBoardPageList](#onboardpagelist)和[onCurrentBoardPageChanged](#oncurrentboardpagechanged)回调来收集|
 
 ## insertFile
 
@@ -461,11 +459,12 @@ class MyApplication : Application(){
 文档pdf,doc,docx,dot,wps,wpt,dotx,docm,dotm,rtf
 演示文稿ppt,pptx,pot,potx,pps,ppsx,dps,dpt,pptm,potm,ppsm
 表格xls,xlsx,xlt,et,ett,xltx,csv,xlsb,xlsm,xltm
+如果试图插入不支持的文件类型则会被忽略。
 
 图片尽量上传2K及以下的尺寸，否则某些老旧设备可能无法加载。
 office文件需要在线转换格式，所以画面呈现会相对慢一些。
 
-文件插入后会收到大量[onWidgetActionEvent]回调（与房间人数有关），此回调仅表达了导致文件状态变化的用户信息和此用户的加载情况，
+文件插入后会收到大量[onWidgetActionEvent](#onwidgetactionevent)回调（与房间人数有关），此回调仅表达了导致文件状态变化的用户信息和此用户的加载情况，
 通常用于在界面上表达房间中各成员对此文件的加载状态。
 
 |参数|描述|
@@ -480,11 +479,11 @@ office文件需要在线转换格式，所以画面呈现会相对慢一些。
 
 对于可翻页的文件，如pdf和office文件，通过调用此方法可以使文件跳到指定序号的页面。
 
-翻页成功后会收到[onFilePageChanged]回调。
+翻页成功后会收到[onFilePageChanged](#onfilepagechanged)回调。
 
 |参数|描述|
 |----|----|
-|widgetId|文件的widgetId，每个文件都有一个id，可以通过[getActiveWidget](#getactivewidget)方法获取当前用户正在操作的Widget，也可以通过[onWidgetActive]收集当前正在操作的Widget|
+|widgetId|文件的widgetId，每个文件都有一个id，可以通过[getActiveWidget](#getactivewidget)方法获取当前用户正在操作的Widget，也可以通过[onWidgetActive](#onwidgetactive)收集当前正在操作的Widget|
 |pageNo|跳转的目标页号，从1开始，如果序号超出文件范围，跳转会失败并忽略|
 
 ## deleteFile
@@ -493,11 +492,11 @@ office文件需要在线转换格式，所以画面呈现会相对慢一些。
 
 删除文件
 
-删除后会触发[onWidgetActionEvent]回调，如果删除的文件是当前正在激活的widget，则会收到[onWidgetActive]回调，并且参数为null。
+删除后会触发[onWidgetActionEvent](#onwidgetactionevent)回调，如果删除的文件是当前正在激活的widget，则会收到[onWidgetActive](#onwidgetactive)回调，并且参数为null。
 
 |参数|描述|
 |----|----|
-|widgetId|文件的widgetId，每个文件都有一个id，可以通过[getActiveWidget](#getactivewidget)方法获取当前用户正在操作的Widget，也可以通过[onWidgetActive]收集当前正在操作的Widget|
+|widgetId|文件的widgetId，每个文件都有一个id，可以通过[getActiveWidget](#getactivewidget)方法获取当前用户正在操作的Widget，也可以通过[onWidgetActive](#onwidgetactive)收集当前正在操作的Widget|
 
 ## recover
 
@@ -510,7 +509,7 @@ office文件需要在线转换格式，所以画面呈现会相对慢一些。
 
 * 当切换到其它输入模式或者白板翻页后擦除的笔迹缓存将会清空，将无法再还原擦掉的笔迹，即此方法仅在[InputConfig.erase]模式下有效。
 * 此方法多次调用是安全的。
-* 判断当前是否有可还原的笔迹可以通过调用[canRecovery](#canrecovery)或监听[onRecoveryStateChanged]回调获知。
+* 判断当前是否有可还原的笔迹可以通过调用[canRecovery](#canrecovery)或监听[onRecoveryStateChanged](#onrecoverystatechanged)回调获知。
 
 ## getStatus
 
@@ -562,7 +561,7 @@ office文件需要在线转换格式，所以画面呈现会相对慢一些。
 
 获取当前白板的全部页信息列表
 
-此列表与监听[onBoardPageList]，[onBoardPageInfoChanged]处理后获得的列表一致。
+此列表与监听[onBoardPageList](#onboardpagelist)，[onBoardPageInfoChanged](#onboardpageinfochanged)处理后获得的列表一致。
 
 - 返回
     - 一个不可变的[WhiteBoardPage]白板页信息列表，如果未加入房间则会返回空列表。
@@ -573,7 +572,7 @@ office文件需要在线转换格式，所以画面呈现会相对慢一些。
 
 获取当前显示的白板页信息
 
-此信息与监听[onCurrentBoardPageChanged]获得的信息一致。
+此信息与监听[onCurrentBoardPageChanged](#oncurrentboardpagechanged)获得的信息一致。
 
 - 返回
     - 当前白板页信息[WhiteBoardPage]，如果未加入房间则会返回null。
@@ -584,7 +583,7 @@ office文件需要在线转换格式，所以画面呈现会相对慢一些。
 
 获取当前白板页的背景色
 
-此值与监听[onBackgroundColorChanged]获得的颜色一致。
+此值与监听[onBackgroundColorChanged](#onbackgroundcolorchanged)获得的颜色一致。
 可通过调用[setBackgroundColor](#setbackgroundcolor)改变当前白板页的背景。
 默认背景色由服务器创建房间时指定。
 
@@ -606,7 +605,7 @@ office文件需要在线转换格式，所以画面呈现会相对慢一些。
 
 获取当前被激活操作的widget信息
 
-此信息与监听[onWidgetActive]获得的数据一致。
+此信息与监听[onWidgetActive](#onwidgetactive)获得的数据一致。
 
 - 返回
     - [ActiveWidgetInfo]，如果当前用户没有操作过任何widget或者用户未加入房间则会返回null。
@@ -617,7 +616,7 @@ office文件需要在线转换格式，所以画面呈现会相对慢一些。
 
 是否存在可还原的笔迹（擦除还原，仅对笔迹有效）
 
-此值与监听[onRecoveryStateChanged]回调获取的值一致。
+此值与监听[onRecoveryStateChanged](#onrecoverystatechanged)回调获取的值一致。
 
 - 返回
     - 如果为true表示有可还原的笔迹，此时可通过调用[recover](#recover)来还原一次擦除操作。false时调用[recover](#recover)无效。
@@ -628,7 +627,7 @@ office文件需要在线转换格式，所以画面呈现会相对慢一些。
 
 获取当前白板的可视区信息，包括白板的大小和偏移
 
-此数据与监听[onBoardSizeChanged]和[onBoardScroll]获取的数据一致。
+此数据与监听[onBoardSizeChanged](#onboardsizechanged)和[onBoardScroll](#onboardscroll)获取的数据一致。
 滚动白板可由用户双指手势拖动白板，也可通过程序主动调用[scroll](#scroll)完成。
 
 - 返回
@@ -763,3 +762,137 @@ office文件需要在线转换格式，所以画面呈现会相对慢一些。
 |参数|描述|
 |----|----|
 |[user]|用户信息|
+
+## onBoardPageList
+
+`void onBoardPageList(@NonNull List<WhiteBoardPage> list)`
+
+白板页信息列表
+
+在首次进入房间和白板页列表结构变化时触发，比如新增页，删除页等等。
+仅翻页不会触发此事件。
+
+|参数|描述|
+|----|----|
+|list|白板页信息[WhiteBoardPage]的不可变列表，也可以通过[getPageList](#getpagelist)获得|
+
+## onCurrentBoardPageChanged
+
+`void onCurrentBoardPageChanged(@NonNull WhiteBoardPage page)`
+
+白板当前页改变
+
+在首次加入房间后和翻页时触发，新增页由于会自动切换到新页面，所以也会触发。
+
+|参数|描述|
+|----|----|
+|[page]|当前显示的白板页信息，也可以通过[getCurrentPage](#getcurrentpage)获得|
+
+## onBoardPageInfoChanged
+
+`void onBoardPageInfoChanged(@NonNull WhiteBoardPage page)`
+
+某一个白板页信息变化
+
+目前仅白板页的缩略图地址发生变化时才会触发此事件，每当白板发生翻页时都会自动更新上一个页面的缩略图，
+所以通常情况下此事件触发的白板页信息不是当前正在显示的页面。
+
+* 由于页号[WhiteBoardPage.pageNumber]的变化是新增和删除页导致，可能同时影响大量的页信息，所以页号变化没有单独的事件，只能监听[onBoardPageList](#onboardpagelist)观察整个列表的变化。
+
+|参数|描述|
+|----|----|
+|[page]|有参数变化的新的页信息，当前仅有缩略图地址变化[WhiteBoardPage.thumbnails]|
+
+## onBoardSizeChanged
+
+`void onBoardSizeChanged(@NonNull WhiteBoardViewport viewport)`
+
+白板大小变化（虚拟大小）
+
+在白板设定的虚拟大小变化时触发，首次进入白板一定会触发一次。
+
+|参数|描述|
+|----|----|
+|[viewport]|白板的可视区数据|
+
+## onBoardScroll
+
+`void onBoardScroll(@NonNull WhiteBoardViewport viewport)`
+
+白板滚动
+
+白板内发生滚动时触发，主动调用[scroll](#scroll)也会触发，首次进入白板也会触发。
+
+|参数|描述|
+|----|----|
+|[viewport]|白板的可视区数据|
+
+## onBackgroundColorChanged
+
+`void onBackgroundColorChanged(@ColorInt int backgroundColor)`
+
+白板背景色改变
+
+当前的白板背景色变化时触发，首次进入白板也会触发。
+可通过[setBackgroundColor](#setbackgroundcolor)随时改变背景色。
+
+|参数|描述|
+|----|----|
+|backgroundColor|新的颜色值|
+
+## onWidgetActive
+
+`void onWidgetActive(@Nullable ActiveWidgetInfo info)`
+
+有新的widget被激活
+
+用户书写或操作白板时会激活被操作的widget，同时触发此事件，比如移动文件时会收到被移动的文件信息，在白板上写字时会收到白板的信息。
+当此widget是文件且此文件发生翻页后会再次触发此事件，同时也会触发[onFilePageChanged](#onfilepagechanged)。
+
+|参数|描述|
+|----|----|
+|[info]|当前激活的widget信息，null表示用户还没有操作，比如刚刚翻页后|
+
+## onFilePageChanged
+
+`void onFilePageChanged(@NonNull ActiveWidgetInfo info)`
+
+文件页改变
+
+当文件被翻页时触发，同时会触发[onWidgetActive](#onwidgetactive)。
+当前仅被激活的文件发生翻页时才会收到此事件。
+文件翻页可通过调用[jumpFilePage](#jumpfilepage)实现。
+
+|参数|描述|
+|----|----|
+|[info]|新的widget信息|
+
+## onWidgetActionEvent
+
+`void onWidgetActionEvent(@NonNull WidgetActionEvent event)`
+
+widget被执行了某些关键动作
+
+比如有人插入文件或删除文件会收到此事件。
+同时每个远端用户的文件加载情况也会触发此事件，通过此事件可以观察到每个人文件加载成功或失败情况。
+
+* 当前仅文件和图片widget会触发此事件。
+
+|参数|描述|
+|----|----|
+|[event]|widget事件信息|
+
+## onRecoveryStateChanged
+
+`void onRecoveryStateChanged(boolean isEmpty)`
+
+笔迹回收站空与非空的状态变化
+
+当在擦除模式[InputConfig.erase]擦除笔迹时被擦除的笔迹会移动到回收站导致回收站不为空，会触发此事件。
+当反复调用还原笔迹[recover](#recover)导致回收站为空时会触发此事件。
+当从擦除模式切换到其他模式或白板翻页后会自动清空回收站，同样有可能触发此事件。
+
+|参数|描述|
+|----|----|
+|isEmpty|true表示回收站为空，false表示不为空，此时可以通过[recover](#recover)来还原一次擦除操作|
+
