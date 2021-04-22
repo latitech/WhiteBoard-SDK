@@ -457,7 +457,11 @@ class MyApplication : Application(){
 
 向当前白板页中插入文件
 
-支持的格式有jpg,png,pdf,doc,docx,ppt,pptx,xls,xlsx。
+支持的格式有图片jpg,png
+文档pdf,doc,docx,dot,wps,wpt,dotx,docm,dotm,rtf
+演示文稿ppt,pptx,pot,potx,pps,ppsx,dps,dpt,pptm,potm,ppsm
+表格xls,xlsx,xlt,et,ett,xltx,csv,xlsb,xlsm,xltm
+
 图片尽量上传2K及以下的尺寸，否则某些老旧设备可能无法加载。
 office文件需要在线转换格式，所以画面呈现会相对慢一些。
 
