@@ -16,7 +16,7 @@ repositories {
 }
 
 dependencies {
-    implementation 'com.latitech.android:whiteboard:0.0.6'
+    implementation 'com.latitech.android:whiteboard:0.0.7'
 
     // 可选，如果项目使用了androidx可以添加此项开启sdk的可空/非空参数注解的识别，在kotlin环境非常有用。
     compileOnly 'androidx.annotation:annotation:1.1.0'
@@ -177,17 +177,17 @@ class MyApplication : Application(){
 
 |方法名称|方法描述|
 |----|----|
-|getStatus|获取白板当前状态|
-|getRoom|获取当前加入的房间信息|
-|getMe|获取当前房间中的个人信息|
-|getUsers|获取当前房间中的用户列表|
-|getPageList|获取当前白板的全部页信息列表|
-|getCurrentPage|获取当前白板页信息|
-|getBackgroundColor|获取当前显示的白板背景色|
-|getInputConfig|获取当前使用的白板输入模式|
-|getActiveWidget|获取当前被激活操作的widget|
-|canRecovery|是否存在可还原的笔迹|
-|getViewport|获取当前白板的窗口尺寸信息|
+|[getStatus](#getstatus)|获取白板当前状态|
+|[getRoom](#getroom)|获取当前加入的房间信息|
+|[getMe](#getme)|获取当前房间中的个人信息|
+|[getUsers](#getusers)|获取当前房间中的用户列表|
+|[getPageList](#getpagelist)|获取当前白板的全部页信息列表|
+|[getCurrentPage](#getcurrentpage)|获取当前白板页信息|
+|[getBackgroundColor](#getbackgroundcolor)|获取当前显示的白板背景色|
+|[getInputConfig](#getinputconfig)|获取当前使用的白板输入模式|
+|[getActiveWidget](#getactivewidget)|获取当前被激活操作的widget|
+|[canRecovery](#canrecovery)|是否存在可还原的笔迹|
+|[getViewport](#getviewport)|获取当前白板的窗口尺寸信息|
 
 ## 添加事件监听器
 
@@ -405,7 +405,7 @@ class MyApplication : Application(){
 
 |参数|描述|
 |----|----|
-|pageId|目标插入位置的页id，此id来自于页数据，可通过[getPageList]或[getCurrentPage]获取页列表或当前显示页数据，也可通过[onBoardPageList]和[onCurrentBoardPageChanged]回调来收集|
+|pageId|目标插入位置的页id，此id来自于页数据，可通过[getPageList](#getpagelist)或[getCurrentPage](#getcurrentpage)获取页列表或当前显示页数据，也可通过[onBoardPageList]和[onCurrentBoardPageChanged]回调来收集|
 
 ## jumpBoardPage
 
@@ -419,7 +419,7 @@ class MyApplication : Application(){
 
 |参数|描述|
 |----|----|
-|pageId|跳转目标的页id，此id来自于页数据，可通过[getPageList]或[getCurrentPage]获取页列表或当前显示页数据，也可通过[onBoardPageList]和[onCurrentBoardPageChanged]回调来收集|
+|pageId|跳转目标的页id，此id来自于页数据，可通过[getPageList](#getpagelist)或[getCurrentPage](#getcurrentpage)获取页列表或当前显示页数据，也可通过[onBoardPageList]和[onCurrentBoardPageChanged]回调来收集|
 
 ## preBoardPage
 
@@ -448,7 +448,7 @@ class MyApplication : Application(){
 
 |参数|描述|
 |----|----|
-|pageId|要删除的页id，此id来自于页数据，可通过[getPageList]或[getCurrentPage]获取页列表或当前显示页数据，也可通过[onBoardPageList]和[onCurrentBoardPageChanged]回调来收集|
+|pageId|要删除的页id，此id来自于页数据，可通过[getPageList](#getpagelist)或[getCurrentPage](#getcurrentpage)获取页列表或当前显示页数据，也可通过[onBoardPageList]和[onCurrentBoardPageChanged]回调来收集|
 
 ## insertFile
 
@@ -479,7 +479,7 @@ office文件需要在线转换格式，所以画面呈现会相对慢一些。
 
 |参数|描述|
 |----|----|
-|widgetId|文件的widgetId，每个文件都有一个id，可以通过[getActiveWidget]方法获取当前用户正在操作的Widget，也可以通过[onWidgetActive]收集当前正在操作的Widget|
+|widgetId|文件的widgetId，每个文件都有一个id，可以通过[getActiveWidget](#getactivewidget)方法获取当前用户正在操作的Widget，也可以通过[onWidgetActive]收集当前正在操作的Widget|
 |pageNo|跳转的目标页号，从1开始，如果序号超出文件范围，跳转会失败并忽略|
 
 ## deleteFile
@@ -492,7 +492,7 @@ office文件需要在线转换格式，所以画面呈现会相对慢一些。
 
 |参数|描述|
 |----|----|
-|widgetId|文件的widgetId，每个文件都有一个id，可以通过[getActiveWidget]方法获取当前用户正在操作的Widget，也可以通过[onWidgetActive]收集当前正在操作的Widget|
+|widgetId|文件的widgetId，每个文件都有一个id，可以通过[getActiveWidget](#getactivewidget)方法获取当前用户正在操作的Widget，也可以通过[onWidgetActive]收集当前正在操作的Widget|
 
 ## recover
 
@@ -505,17 +505,126 @@ office文件需要在线转换格式，所以画面呈现会相对慢一些。
 
 * 当切换到其它输入模式或者白板翻页后擦除的笔迹缓存将会清空，将无法再还原擦掉的笔迹，即此方法仅在[InputConfig.erase]模式下有效。
 * 此方法多次调用是安全的。
-* 判断当前是否有可还原的笔迹可以通过调用[canRecovery]或监听[onRecoveryStateChanged]回调获知。
+* 判断当前是否有可还原的笔迹可以通过调用[canRecovery](#canrecovery)或监听[onRecoveryStateChanged]回调获知。
 
 ## getStatus
 
-`public static BoardStatus getStatus()`
+`@NonNull public static BoardStatus getStatus()`
 
 获取白板当前状态
 
 也可以监听[onBoardStatusChanged]。
 
 - 返回 
-    - 当前的白板状态[BoardStatus]
+    - 当前的白板状态[BoardStatus]。
 
+## getRoom
 
+`@Nullable public static Room getRoom()`
+
+获取当前加入的房间信息
+
+与监听[onJoinSuccess]获得的信息一致。
+
+- 返回
+    - 房间信息[Room]，如果未加入房间则会返回null。
+    
+## getMe
+
+`@Nullable public static RoomMember getMe()`
+
+获取当前房间中的个人信息
+
+与监听[onJoinSuccess]获得的信息一致。
+
+- 返回
+    - 自己的成员信息[RoomMember]，如果未加入房间则会返回null。
+
+## getUsers
+
+`@NonNull public static List<RoomMember> getUsers()`
+
+获取当前房间中的全部用户列表（包括自己）
+
+此列表与监听[onUserList]，[onUserJoin]，[onUserLeave]收集获得的列表一致。
+
+- 返回
+    - 一个不可变的[RoomMember]成员信息列表，如果未加入房间则会返回空列表。
+    
+## getPageList
+
+`@NonNull public static List<WhiteBoardPage> getPageList()`
+
+获取当前白板的全部页信息列表
+
+此列表与监听[onBoardPageList]，[onBoardPageInfoChanged]处理后获得的列表一致。
+
+- 返回
+    - 一个不可变的[WhiteBoardPage]白板页信息列表，如果未加入房间则会返回空列表。
+    
+## getCurrentPage
+
+`@Nullable public static WhiteBoardPage getCurrentPage()`
+
+获取当前显示的白板页信息
+
+此信息与监听[onCurrentBoardPageChanged]获得的信息一致。
+
+- 返回
+    - 当前白板页信息[WhiteBoardPage]，如果未加入房间则会返回null。
+    
+## getBackgroundColor
+
+`@ColorInt public static int getBackgroundColor()`
+
+获取当前白板页的背景色
+
+此值与监听[onBackgroundColorChanged]获得的颜色一致。
+可通过调用[setBackgroundColor](#setbackgroundcolor)改变当前白板页的背景。
+默认背景色由服务器创建房间时指定。
+
+- 返回
+    - 当前白板页颜色值，如果未加入房间则会返回一个固定值`Color.LTGRAY`。
+    
+## getInputConfig
+
+`@NonNull public static InputConfig getInputConfig()`
+
+获取白板当前的输入模式
+
+- 返回
+    - 通过[setInputMode](#setinputmode)设置的[InputConfig]，如果未加入房间则会返回默认配置，默认值可通过[setDefaultInputMode](#setdefaultinputmode)设置。
+    
+## getActiveWidget
+
+`@Nullable public static ActiveWidgetInfo getActiveWidget()`
+
+获取当前被激活操作的widget信息
+
+此信息与监听[onWidgetActive]获得的数据一致。
+
+- 返回
+    - [ActiveWidgetInfo]，如果当前用户没有操作过任何widget或者用户未加入房间则会返回null。
+    
+## canRecovery
+
+`public static boolean canRecovery()`
+
+是否存在可还原的笔迹（擦除还原，仅对笔迹有效）
+
+此值与监听[onRecoveryStateChanged]回调获取的值一致。
+
+- 返回
+    - 如果为true表示有可还原的笔迹，此时可通过调用[recover](#recover)来还原一次擦除操作。false时调用[recover](#recover)无效。
+    
+## getViewport
+
+`@NonNull public static WhiteBoardViewport getViewport()`
+
+获取当前白板的可视区信息，包括白板的大小和偏移
+
+此数据与监听[onBoardSizeChanged]和[onBoardScroll]获取的数据一致。
+滚动白板可由用户双指手势拖动白板，也可通过程序主动调用[scroll](#scroll)完成。
+
+- 返回
+    - 白板的可视区[WhiteBoardViewport]，通常此值是跟随用户滚动白板而变化，如果未加入房间则会返回固定值[WhiteBoardViewport.IDLE]。
