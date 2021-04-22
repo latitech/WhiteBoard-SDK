@@ -61,7 +61,7 @@ class MyApplication : Application(){
 
 ## 在布局中引入白板控件
 
-在有白板的activity的layout文件中引入[com.latitech.whiteboard.WhiteBoardView]控件，
+在有白板的activity的layout文件中引入[com.latitech.whiteboard.WhiteBoardView](#whiteboardview)控件，
 控件大小最好与用户设定的白板宽高比相同，否则边缘可能会留白。白板大小由用户服务器创建房间时设定。
 
 例如：
@@ -94,7 +94,7 @@ class MyApplication : Application(){
 
 首先访问自己的服务器获取要加入的白板房间的roomId,token,appId等参数（房间的创建和token的生成由服务器对接SDK服务端接口）。
 
-首先构建进房参数[JoinConfig]，然后执行[joinRoom](#joinroom)来加入房间。
+首先构建进房参数[JoinConfig](#joinconfig)，然后执行[joinRoom](#joinroom)来加入房间。
 
 ```joinRoom
 
@@ -251,7 +251,7 @@ class MyApplication : Application(){
 
 |参数|描述|
 |----|----|
-|[config]|房间和身份信息|
+|[config](#joinconfig)|房间和身份信息|
 
 ## leaveRoom
 
@@ -306,7 +306,7 @@ class MyApplication : Application(){
 
 白板截图
 
-仅在[WhiteBoardView]附加到布局中时有效（即必须有可见的白板），回调[ScreenshotsCallback]将在非主线程执行。
+仅在[WhiteBoardView](#whiteboardview)附加到布局中时有效（即必须有可见的白板），回调[ScreenshotsCallback]将在非主线程执行。
 
 |参数|描述|
 |----|----|
@@ -326,7 +326,7 @@ class MyApplication : Application(){
 
 |参数|描述|
 |----|----|
-|[config]|输入模式配置|
+|[config](#inputconfig)|输入模式配置|
 
 ## setRetry
 
@@ -350,7 +350,7 @@ class MyApplication : Application(){
 
 |参数|描述|
 |----|----|
-|[config]|输入模式配置|
+|[config](#inputconfig)|输入模式配置|
 
 ## setBackgroundColor
 
@@ -504,10 +504,10 @@ office文件需要在线转换格式，所以画面呈现会相对慢一些。
 
 还原最近一次擦除的笔迹
 
-在输入模式为橡皮模式[InputConfig.erase]时，本用户擦除的笔迹可以通过调用此方法来还原（回滚）。
+在输入模式为橡皮模式[InputConfig.erase](#inputconfigerase)时，本用户擦除的笔迹可以通过调用此方法来还原（回滚）。
 一次擦除的笔迹指的是用户从落下手指移动擦除线条到抬起手指为止期间擦掉的所有线条。
 
-* 当切换到其它输入模式或者白板翻页后擦除的笔迹缓存将会清空，将无法再还原擦掉的笔迹，即此方法仅在[InputConfig.erase]模式下有效。
+* 当切换到其它输入模式或者白板翻页后擦除的笔迹缓存将会清空，将无法再还原擦掉的笔迹，即此方法仅在[InputConfig.erase](#inputconfigerase)模式下有效。
 * 此方法多次调用是安全的。
 * 判断当前是否有可还原的笔迹可以通过调用[canRecovery](#canrecovery)或监听[onRecoveryStateChanged](#onrecoverystatechanged)回调获知。
 
@@ -597,7 +597,7 @@ office文件需要在线转换格式，所以画面呈现会相对慢一些。
 获取白板当前的输入模式
 
 - 返回
-    - 通过[setInputMode](#setinputmode)设置的[InputConfig]，如果未加入房间则会返回默认配置，默认值可通过[setDefaultInputMode](#setdefaultinputmode)设置。
+    - 通过[setInputMode](#setinputmode)设置的[InputConfig](#inputconfig)，如果未加入房间则会返回默认配置，默认值可通过[setDefaultInputMode](#setdefaultinputmode)设置。
     
 ## getActiveWidget
 
@@ -659,7 +659,7 @@ office文件需要在线转换格式，所以画面呈现会相对慢一些。
 |参数|描述|
 |----|----|
 |[room]|房间信息|
-|[me]|个人信息，由[joinRoom](#joinroom)传递的[JoinConfig]中携带的信息|
+|[me]|个人信息，由[joinRoom](#joinroom)传递的[JoinConfig](#joinconfig)中携带的信息|
 
 ## onJoinFailed
 
@@ -888,11 +888,93 @@ widget被执行了某些关键动作
 
 笔迹回收站空与非空的状态变化
 
-当在擦除模式[InputConfig.erase]擦除笔迹时被擦除的笔迹会移动到回收站导致回收站不为空，会触发此事件。
+当在擦除模式[InputConfig.erase](#inputconfigerase)擦除笔迹时被擦除的笔迹会移动到回收站导致回收站不为空，会触发此事件。
 当反复调用还原笔迹[recover](#recover)导致回收站为空时会触发此事件。
 当从擦除模式切换到其他模式或白板翻页后会自动清空回收站，同样有可能触发此事件。
 
 |参数|描述|
 |----|----|
 |isEmpty|true表示回收站为空，false表示不为空，此时可以通过[recover](#recover)来还原一次擦除操作|
+
+
+# WhiteBoardView
+
+白板的显示控件，用于显示白板内容，当前仅支持同时显示一个白板，如果同时放置了多个白板控件，仅最后一个控件会刷新内容。
+布局时此控件的大小最好设定为与白板的虚拟大小[WhiteBoardSize]的宽高比保持一致，否则多余的边缘会留白。
+
+# JoinConfig
+
+加入房间时的参数配置
+
+构造函数
+    - `public JoinConfig(@NonNull String appId , @NonNull String roomId , @NonNull String userId , @NonNull String token)`
+
+|参数|类型|可空|描述|
+|----|----|----|----|
+|appId|String|否|SDK分配的应用id|
+|roomId|String|否|白板的房间id，房间通常由服务器创建|
+|userId|String|否|用户业务系统中的稳定用户id|
+|token|String|否|每次加入房间时生成的标识符，与appId，roomId，userId关联，通常由服务器生成|
+|roleId|int|否|角色id，默认为0，通常用来标识此用户身份，方便定制用户权限系统|
+|sessionId|String|是|用户会话id，用于唯一标识用户，如果用户业务系统中有与userId对应的临时用户标识符，比如session或token等，此临时id可以在此传递，如果userId相同但是sessionId不同的两个用户加入了白板，可以视为相同用户的多设备加入白板实现，如果留空则白板会自动生成一个|
+|nickname|String|是|用户名或昵称，在白板中使用的用户名称|
+|avatar|String|是|用户头像地址，在白板中显示的用户头像|
+
+# InputConfig
+
+输入模式配置
+此类仅提供静态工厂方法。
+
+## InputConfig.pen
+
+`public static InputConfig pen(@ColorInt int color , float thickness)`
+
+创建一个笔书写输入模式配置
+
+|参数|描述|
+|----|----|
+|color|笔颜色，支持透明度，适当的透明度可以看作是马克笔实现|
+|thickness|笔粗细，必须大于0|
+
+## InputConfig.laserPen
+
+`public static InputConfig laserPen(@NonNull LaserType laserType)`
+
+创建一个激光笔输入模式配置
+
+激光笔是一种瞬时的位置指示型输入模式，指示手指位置的内容。
+
+|参数|描述|
+|----|----|
+|[laserType]|激光笔类型|
+
+## InputConfig.erase
+
+`public static InputConfig erase(float size)`
+
+创建一个橡皮（擦除）输入模式配置
+
+|参数|描述|
+|----|----|
+|size|橡皮面积|
+
+## InputConfig.geometry
+
+`public static InputConfig geometry(@NonNull GeometryType geometryType , @ColorInt int color , float thickness)`
+
+创建一个几何图形输入模式配置
+
+|参数|描述|
+|----|----|
+|[geometryType]|图形类型|
+|color|图形边框的颜色|
+|thickness|图形边框粗细|
+
+## InputConfig.select
+
+`public static InputConfig select()`
+
+创建一个选择输入模式配置
+
+此模式可以在白板中框选内容。
 
