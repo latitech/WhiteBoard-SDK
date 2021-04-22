@@ -117,12 +117,12 @@ class MyApplication : Application(){
 
 ```
 
-如果加入房间成功，会收到[onJoinSuccess]回调，如果加入失败会收到[onJoinFailed]回调。
+如果加入房间成功，会收到[onJoinSuccess](#onjoinsuccess)回调，如果加入失败会收到[onJoinFailed](#onjoinfailed)回调。
 
 ## 关闭并离开房间
 
 房间关闭时，比如离开房间的`Activity`时，必须调用[leaveRoom](#leaveroom)来退出房间并释放资源，
-此方法会同时完成离开房间和资源释放，同时可以自动释放[AutoRemoveWhiteBoardListener]类型的事件监听器（推荐），多次执行是安全的。
+此方法会同时完成离开房间和资源释放，同时可以自动释放[AutoRemoveWhiteBoardListener](#autoremovewhiteboardlistener)类型的事件监听器（推荐），多次执行是安全的。
 
 通常情况会把它放在`Activity.onDestroy`中执行，比如：
 
@@ -192,22 +192,22 @@ class MyApplication : Application(){
 ## 添加事件监听器
 
 * 通过调用[WhiteBoard.addListener](#addlistener)可以添加事件监听器，可以在任何时期添加，包括进入白板之前。
-* 所有的事件都在[WhiteBoardListener]接口中。如果添加此类的直接子类作为监听器，则添加后必须由用户手动调用[WhiteBoard.removeListener
+* 所有的事件都在[WhiteBoardListener](#whiteboardlistener)接口中。如果添加此类的直接子类作为监听器，则添加后必须由用户手动调用[WhiteBoard.removeListener
 ](#removelistener)来移除。此方式通常用于在房间外监听房间中发生的事并记录日志或触发某些全局事件时使用。
-* [WhiteBoardListener]存在一个易用的子类[AutoRemoveWhiteBoardListener]，如果添加此类的子类监听器，则用户在调用[WhiteBoard.leaveRoom
-](#leaveroom)时系统会自动清理所有的[AutoRemoveWhiteBoardListener]子类监听器，无需用户手动移除。
+* [WhiteBoardListener](#whiteboardlistener)存在一个易用的子类[AutoRemoveWhiteBoardListener](#autoremovewhiteboardlistener)，如果添加此类的子类监听器，则用户在调用[WhiteBoard.leaveRoom
+](#leaveroom)时系统会自动清理所有的[AutoRemoveWhiteBoardListener](#autoremovewhiteboardlistener)子类监听器，无需用户手动移除。
 
 |事件名称|事件描述|
 |----|----|
-|onJoinSuccess|成功加入白板房间|
-|onJoinFailed|加入房间失败|
-|onReconnecting|白板正在自动重连|
-|onReconnected|自动重连成功|
-|onDisconnected|房间彻底断开连接|
-|onBoardStatusChanged|白板房间状态变化|
-|onUserList|当前已经在房间中的用户列表|
-|onUserJoin|有其它用户加入了房间|
-|onUserLeave|有其它用户离开了房间|
+|[onJoinSuccess](#onjoinsuccess)|成功加入白板房间|
+|[onJoinFailed](#onjoinfailed)|加入房间失败|
+|[onReconnecting](#onreconnecting)|白板正在自动重连|
+|[onReconnected](#onreconnected)|自动重连成功|
+|[onDisconnected](#ondisconnected)|房间彻底断开连接|
+|[onBoardStatusChanged](#onboardstatuschanged)|白板房间状态变化|
+|[onUserList](#onuserlist)|当前已经在房间中的用户列表|
+|[onUserJoin](#onuserjoin)|有其它用户加入了房间|
+|[onUserLeave](#onuserleave)|有其它用户离开了房间|
 |onBoardPageList|白板页信息列表|
 |onCurrentBoardPageChanged|白板当前页变化|
 |onBoardPageInfoChanged|某一个白板页信息变化|
@@ -218,6 +218,7 @@ class MyApplication : Application(){
 |onFilePageChanged|文件被翻页|
 |onWidgetActionEvent|widget被执行了某些关键动作|
 |onRecoveryStateChanged|笔迹回收站状态变化|
+
 
 # WhiteBoard
 
@@ -244,11 +245,11 @@ class MyApplication : Application(){
 
 只有此方法执行成功才能连通白板，目前sdk仅支持同时进入一个房间，多次调用是安全的，但仅有第一次调用的参数有效，后续调用会被忽略，如需进入其它房间，需要先执行[leaveRoom](#leaveroom)。
 
-加入成功后本地会收到[onJoinSuccess]回调，加入失败则会收到[onJoinFailed]回调。
-同时远端用户会收到[onUserJoin]回调。
+加入成功后本地会收到[onJoinSuccess](#onjoinsuccess)回调，加入失败则会收到[onJoinFailed](#onjoinfailed)回调。
+同时远端用户会收到[onUserJoin](#onuserjoin)回调。
 
-如果已经加入成功但是发生了掉线，则SDK会尝试自动重连，并收到[onReconnecting]回调。
-重连次数可以通过[setRetry](#setretry)修改，重连成功后会收到[onReconnected]，重连失败会收到[onDisconnected]，此时必须用户手动调用此方法重新加入房间。
+如果已经加入成功但是发生了掉线，则SDK会尝试自动重连，并收到[onReconnecting](#onreconnecting)回调。
+重连次数可以通过[setRetry](#setretry)修改，重连成功后会收到[onReconnected](#onreconnected)，重连失败会收到[onDisconnected](#ondisconnected)，此时必须用户手动调用此方法重新加入房间。
 
 |参数|描述|
 |----|----|
@@ -260,9 +261,9 @@ class MyApplication : Application(){
 
 离开白板房间
 
-该方法会断开白板连接并释放资源，同时会清理所有的[AutoRemoveWhiteBoardListener]类型的监听器。
+该方法会断开白板连接并释放资源，同时会清理所有的[AutoRemoveWhiteBoardListener](#autoremovewhiteboardlistener)类型的监听器。
 多次调用是安全的。
-离开白板后远端用户会收到[onUserLeave]回调。
+离开白板后远端用户会收到[onUserLeave](#onuserleave)回调。
 
 ## addListener
 
@@ -270,14 +271,14 @@ class MyApplication : Application(){
 
 添加一个白板事件监听器
 
-如果添加[WhiteBoardListener]的直接子类则会永久存续，直到使用[removeListener](#removelistener)移除。 
-如果添加[AutoRemoveWhiteBoardListener]的子类则可以在[leaveRoom](#leaveroom)时自动移除，无需手动执行[removeListener](#removelistener)。
+如果添加[WhiteBoardListener](#whiteboardlistener)的直接子类则会永久存续，直到使用[removeListener](#removelistener)移除。 
+如果添加[AutoRemoveWhiteBoardListener](#autoremovewhiteboardlistener)的子类则可以在[leaveRoom](#leaveroom)时自动移除，无需手动执行[removeListener](#removelistener)。
 
 可以在[joinRoom](#joinroom)之前或之后添加
 
 |参数|描述|
 |----|----|
-|[listener]|事件监听器|
+|[listener](#whiteboardlistener)|事件监听器|
 
 ## removeListener
 
@@ -289,7 +290,7 @@ class MyApplication : Application(){
 
 |参数|描述|
 |----|----|
-|[listener]|监听器实例|
+|[listener](#whiteboardlistener)|监听器实例|
 
 ## clearListener
 
@@ -297,7 +298,7 @@ class MyApplication : Application(){
 
 清空所有白板监听器
 
-会清空所有的监听器，包括[WhiteBoardListener]和[AutoRemoveWhiteBoardListener]类型的全部监听器。
+会清空所有的监听器，包括[WhiteBoardListener](#whiteboardlistener)和[AutoRemoveWhiteBoardListener](#autoremovewhiteboardlistener)类型的全部监听器。
 
 可在任何时候调用。
 
@@ -311,7 +312,7 @@ class MyApplication : Application(){
 
 |参数|描述|
 |----|----|
-|[listener]|截图回调，在非主线程回调，截图成功会返回`Bitmap`，失败返回null|
+|[listener](#whiteboardlistener)|截图回调，在非主线程回调，截图成功会返回`Bitmap`，失败返回null|
 
 ## setDefaultInputMode
 
@@ -513,7 +514,7 @@ office文件需要在线转换格式，所以画面呈现会相对慢一些。
 
 获取白板当前状态
 
-也可以监听[onBoardStatusChanged]。
+也可以监听[onBoardStatusChanged](#onboardstatuschanged)。
 
 - 返回 
     - 当前的白板状态[BoardStatus]。
@@ -524,7 +525,7 @@ office文件需要在线转换格式，所以画面呈现会相对慢一些。
 
 获取当前加入的房间信息
 
-与监听[onJoinSuccess]获得的信息一致。
+与监听[onJoinSuccess](#onjoinsuccess)获得的信息一致。
 
 - 返回
     - 房间信息[Room]，如果未加入房间则会返回null。
@@ -535,7 +536,7 @@ office文件需要在线转换格式，所以画面呈现会相对慢一些。
 
 获取当前房间中的个人信息
 
-与监听[onJoinSuccess]获得的信息一致。
+与监听[onJoinSuccess](#onjoinsuccess)获得的信息一致。
 
 - 返回
     - 自己的成员信息[RoomMember]，如果未加入房间则会返回null。
@@ -546,7 +547,7 @@ office文件需要在线转换格式，所以画面呈现会相对慢一些。
 
 获取当前房间中的全部用户列表（包括自己）
 
-此列表与监听[onUserList]，[onUserJoin]，[onUserLeave]收集获得的列表一致。
+此列表与监听[onUserList](#onuserlist)，[onUserJoin](#onuserjoin)，[onUserLeave](#onuserleave)收集获得的列表一致。
 
 - 返回
     - 一个不可变的[RoomMember]成员信息列表，如果未加入房间则会返回空列表。
@@ -628,3 +629,133 @@ office文件需要在线转换格式，所以画面呈现会相对慢一些。
 
 - 返回
     - 白板的可视区[WhiteBoardViewport]，通常此值是跟随用户滚动白板而变化，如果未加入房间则会返回固定值[WhiteBoardViewport.IDLE]。
+    
+
+# WhiteBoardListener
+
+所有的白板事件的监听器，所有事件响应均在主线程回调。
+可通过[addListener](#addlistener)添加。
+
+# AutoRemoveWhiteBoardListener
+
+`public interface AutoRemoveWhiteBoardListener extends WhiteBoardListener`
+
+能自动移除的白板事件监听器（推荐使用）
+此监听器同样可以在任何时期添加，但是会伴随[leaveRoom](#leaveroom)的调用而自动移除，无需用户手动执行[removeListener](#removelistener)。
+
+## onJoinSuccess
+
+`void onJoinSuccess(@NonNull Room room , @NonNull RoomMember me)`
+
+成功加入白板房间
+
+[joinRoom](#joinroom)成功后的第一个关键事件（[onBoardStatusChanged](#onboardstatuschanged)返回[BoardStatus.SUCCESSFUL]会先一步触发）。
+在这里可以处理一些加入房间成功时的初始化工作。
+* 在断线重连成功时同样会触发此事件，之后才会触发[onReconnected](#onreconnected)事件。
+
+|参数|描述|
+|----|----|
+|[room]|房间信息|
+|[me]|个人信息，由[joinRoom](#joinroom)传递的[JoinConfig]中携带的信息|
+
+## onJoinFailed
+
+`void onJoinFailed(int errorCode)`
+
+加入房间失败
+
+[joinRoom](#joinroom)执行失败后触发，因为并没有成功加入房间，所以不会执行自动重连。
+失败后需要用户重新调用[joinRoom](#joinroom)来加入房间。
+如果已经成功加入了房间但是发生了断线则会触发[onReconnecting](#onreconnecting)尝试自动重连，重连失败则会触发[onDisconnected](#ondisconnected)，而不会触发本事件。
+
+|参数|描述|
+|----|----|
+|[errorCode]|失败错误码|
+
+## onReconnecting
+
+`void onReconnecting(int times)`
+
+白板正在自动重连
+
+当白板连接意外断开比如网络波动等，白板会自动尝试重连，在每次尝试开始时会触发此事件。
+重连成功后会先触发[onJoinSuccess](#onjoinsuccess)后触发[onReconnected](#onreconnected)，
+重连次数达到上限后会触发失败事件[onDisconnected](#ondisconnected)。
+首次调用[joinRoom](#joinroom)失败不会自动重连，而是触发[onJoinFailed](#onjoinfailed)。
+
+重连次数默认10次，可通过[setRetry](#setretry)修改。
+
+|参数|描述|
+|----|----|
+|times|当前为第几次重试|
+
+## onReconnected
+
+`void onReconnected()`
+
+自动重连成功
+
+参考[onReconnecting](#onreconnecting)。
+
+## onDisconnected
+
+`void onDisconnected()`
+
+自动重连失败，白板彻底断开连接
+
+即在[onReconnecting](#onreconnecting)重试次数达到上限后触发，
+此时需要用户重新执行[joinRoom](#joinroom)加入房间。
+
+## onBoardStatusChanged
+
+`void onBoardStatusChanged(@NonNull BoardStatus status)`
+
+白板房间状态变化
+
+从[joinRoom](#joinroom)到[leaveRoom](#leaveroom)之间，只要白板房间的状态发生变化就会触发此事件。
+同时此事件触发早于[onJoinSuccess](#onjoinsuccess)，[onJoinFailed](#onjoinfailed)，[onReconnecting](#onreconnecting)等独立事件。
+比如调用[joinRoom](#joinroom)后会立即触发[BoardStatus.LOADING]的变化，[onJoinSuccess](#onjoinsuccess)触发之前会先触发[BoardStatus.SUCCESSFUL]的变化。
+
+|参数|描述|
+|----|----|
+|[status]|新的白板状态|
+
+## onUserList
+
+`void onUserList(@NonNull List<RoomMember> users)`
+
+当前已经在房间中的用户列表（包括自己）
+
+加入房间后会触发一次返回已经在房间中的用户，自动重连成功后也会触发。
+
+* 如果自己管理用户列表，需要以此回调的作为列表初始数据，并且在重连成功后重置初始列表。
+* 后续的远端用户进出事件由[onUserJoin](#onuserjoin)和[onUserLeave](#onuserleave)反馈。
+* [getUsers](#getusers)总是获取当前的完整用户列表。
+
+|参数|描述|
+|----|----|
+|users|已经在房间中的用户信息[RoomMember]列表，此列表为不可变列表|
+
+## onUserJoin
+
+`void onUserJoin(@NonNull RoomMember user)`
+
+有远端用户加入了房间
+
+* 如果自己维护用户列表，注意更新列表数据
+
+|参数|描述|
+|----|----|
+|[user]|用户信息|
+
+## onUserLeave
+
+`void onUserLeave(@NonNull RoomMember user)`
+
+有远端用户离开了房间
+
+* 如果自己维护用户列表，注意更新列表数据
+
+|参数|描述|
+|----|----|
+|[user]|用户信息|
