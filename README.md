@@ -88,7 +88,7 @@ class MyApplication : Application(){
 
 ```
 
-示例中通过`app:layout_constraintDimensionRatio`参数设定宽高比，比例中的数字时白板的虚拟大小，决定了白板中内容的坐标系。
+示例中通过`app:layout_constraintDimensionRatio`参数设定宽高比，比例中的数字是白板的虚拟大小，决定了白板中内容的坐标系。
 
 ## 加入房间
 
@@ -373,14 +373,14 @@ class MyApplication : Application(){
 
 垂直滚动白板显示区
 
-* 目前白板是一个纵向可滚动（高大于宽）的矩形，通常白板的可视区[WhiteBoardViewport]不能呈现完整白板，需要通过滚动来控制可见区。
+* 目前白板是一个纵向可滚动（高大于宽）的矩形，通常白板的可视区[WhiteBoardViewport](#whiteboardviewport)不能呈现完整白板，需要通过滚动来控制可见区。
 * 白板内部可以通过用户的双指操作来滚动白板，无需外部干涉，此方法的目的是方便用户实现类似top按钮或滚动条功能。
 
 无论是调用此方法还是用户通过白板手势滚动了白板（包括远程用户滚动白板），都会触发[onBoardScroll](#onboardscroll)回调。
 
 |参数|描述|
 |----|----|
-|offsetY|白板的垂直偏移量，此值为总量而非增量，当前值在[WhiteBoardViewport]中描述|
+|offsetY|白板的垂直偏移量，此值为总量而非增量，当前值在[WhiteBoardViewport](#whiteboardviewport)中描述|
 
 ## newBoardPage
 
@@ -469,7 +469,7 @@ office文件需要在线转换格式，所以画面呈现会相对慢一些。
 
 |参数|描述|
 |----|----|
-|[config]|文件配置信息|
+|[config](#fileconfig)|文件配置信息|
 
 ## jumpFilePage
 
@@ -531,7 +531,7 @@ office文件需要在线转换格式，所以画面呈现会相对慢一些。
 与监听[onJoinSuccess](#onjoinsuccess)获得的信息一致。
 
 - 返回
-    - 房间信息[Room]，如果未加入房间则会返回null。
+    - 房间信息[Room](#room)，如果未加入房间则会返回null。
     
 ## getMe
 
@@ -542,7 +542,7 @@ office文件需要在线转换格式，所以画面呈现会相对慢一些。
 与监听[onJoinSuccess](#onjoinsuccess)获得的信息一致。
 
 - 返回
-    - 自己的成员信息[RoomMember]，如果未加入房间则会返回null。
+    - 自己的成员信息[RoomMember](#roommember)，如果未加入房间则会返回null。
 
 ## getUsers
 
@@ -553,7 +553,7 @@ office文件需要在线转换格式，所以画面呈现会相对慢一些。
 此列表与监听[onUserList](#onuserlist)，[onUserJoin](#onuserjoin)，[onUserLeave](#onuserleave)收集获得的列表一致。
 
 - 返回
-    - 一个不可变的[RoomMember]成员信息列表，如果未加入房间则会返回空列表。
+    - 一个不可变的[RoomMember](#roommember)成员信息列表，如果未加入房间则会返回空列表。
     
 ## getPageList
 
@@ -564,7 +564,7 @@ office文件需要在线转换格式，所以画面呈现会相对慢一些。
 此列表与监听[onBoardPageList](#onboardpagelist)，[onBoardPageInfoChanged](#onboardpageinfochanged)处理后获得的列表一致。
 
 - 返回
-    - 一个不可变的[WhiteBoardPage]白板页信息列表，如果未加入房间则会返回空列表。
+    - 一个不可变的[WhiteBoardPage](#whiteboardpage)白板页信息列表，如果未加入房间则会返回空列表。
     
 ## getCurrentPage
 
@@ -575,7 +575,7 @@ office文件需要在线转换格式，所以画面呈现会相对慢一些。
 此信息与监听[onCurrentBoardPageChanged](#oncurrentboardpagechanged)获得的信息一致。
 
 - 返回
-    - 当前白板页信息[WhiteBoardPage]，如果未加入房间则会返回null。
+    - 当前白板页信息[WhiteBoardPage](#whiteboardpage)，如果未加入房间则会返回null。
     
 ## getBackgroundColor
 
@@ -608,7 +608,7 @@ office文件需要在线转换格式，所以画面呈现会相对慢一些。
 此信息与监听[onWidgetActive](#onwidgetactive)获得的数据一致。
 
 - 返回
-    - [ActiveWidgetInfo]，如果当前用户没有操作过任何widget或者用户未加入房间则会返回null。
+    - [ActiveWidgetInfo](#activewidgetinfo)，如果当前用户没有操作过任何widget或者用户未加入房间则会返回null。
     
 ## canRecovery
 
@@ -631,7 +631,7 @@ office文件需要在线转换格式，所以画面呈现会相对慢一些。
 滚动白板可由用户双指手势拖动白板，也可通过程序主动调用[scroll](#scroll)完成。
 
 - 返回
-    - 白板的可视区[WhiteBoardViewport]，通常此值是跟随用户滚动白板而变化，如果未加入房间则会返回固定值[WhiteBoardViewport.IDLE]。
+    - 白板的可视区[WhiteBoardViewport](#whiteboardviewport)，通常此值是跟随用户滚动白板而变化，如果未加入房间则会返回固定值[WhiteBoardViewport.IDLE](#whiteboardviewportidle)。
     
 
 # WhiteBoardListener
@@ -658,8 +658,8 @@ office文件需要在线转换格式，所以画面呈现会相对慢一些。
 
 |参数|描述|
 |----|----|
-|[room]|房间信息|
-|[me]|个人信息，由[joinRoom](#joinroom)传递的[JoinConfig](#joinconfig)中携带的信息|
+|[room](#room)|房间信息|
+|[me](#roommember)|个人信息，由[joinRoom](#joinroom)传递的[JoinConfig](#joinconfig)中携带的信息|
 
 ## onJoinFailed
 
@@ -737,7 +737,7 @@ office文件需要在线转换格式，所以画面呈现会相对慢一些。
 
 |参数|描述|
 |----|----|
-|users|已经在房间中的用户信息[RoomMember]列表，此列表为不可变列表|
+|users|已经在房间中的用户信息[RoomMember](#roommember)列表，此列表为不可变列表|
 
 ## onUserJoin
 
@@ -749,7 +749,7 @@ office文件需要在线转换格式，所以画面呈现会相对慢一些。
 
 |参数|描述|
 |----|----|
-|[user]|用户信息|
+|[user](#roommember)|用户信息|
 
 ## onUserLeave
 
@@ -761,7 +761,7 @@ office文件需要在线转换格式，所以画面呈现会相对慢一些。
 
 |参数|描述|
 |----|----|
-|[user]|用户信息|
+|[user](#roommember)|用户信息|
 
 ## onBoardPageList
 
@@ -774,7 +774,7 @@ office文件需要在线转换格式，所以画面呈现会相对慢一些。
 
 |参数|描述|
 |----|----|
-|list|白板页信息[WhiteBoardPage]的不可变列表，也可以通过[getPageList](#getpagelist)获得|
+|list|白板页信息[WhiteBoardPage](#whiteboardpage)的不可变列表，也可以通过[getPageList](#getpagelist)获得|
 
 ## onCurrentBoardPageChanged
 
@@ -786,7 +786,7 @@ office文件需要在线转换格式，所以画面呈现会相对慢一些。
 
 |参数|描述|
 |----|----|
-|[page]|当前显示的白板页信息，也可以通过[getCurrentPage](#getcurrentpage)获得|
+|[page](#whiteboardpage)|当前显示的白板页信息，也可以通过[getCurrentPage](#getcurrentpage)获得|
 
 ## onBoardPageInfoChanged
 
@@ -797,11 +797,11 @@ office文件需要在线转换格式，所以画面呈现会相对慢一些。
 目前仅白板页的缩略图地址发生变化时才会触发此事件，每当白板发生翻页时都会自动更新上一个页面的缩略图，
 所以通常情况下此事件触发的白板页信息不是当前正在显示的页面。
 
-* 由于页号[WhiteBoardPage.pageNumber]的变化是新增和删除页导致，可能同时影响大量的页信息，所以页号变化没有单独的事件，只能监听[onBoardPageList](#onboardpagelist)观察整个列表的变化。
+* 由于页号[WhiteBoardPage.pageNumber](#whiteboardpage)的变化是新增和删除页导致，可能同时影响大量的页信息，所以页号变化没有单独的事件，只能监听[onBoardPageList](#onboardpagelist)观察整个列表的变化。
 
 |参数|描述|
 |----|----|
-|[page]|有参数变化的新的页信息，当前仅有缩略图地址变化[WhiteBoardPage.thumbnails]|
+|[page](#whiteboardpage)|有参数变化的新的页信息，当前仅有缩略图地址变化[WhiteBoardPage.thumbnails](#whiteboardpage)|
 
 ## onBoardSizeChanged
 
@@ -813,7 +813,7 @@ office文件需要在线转换格式，所以画面呈现会相对慢一些。
 
 |参数|描述|
 |----|----|
-|[viewport]|白板的可视区数据|
+|[viewport](#whiteboardviewport)|白板的可视区数据|
 
 ## onBoardScroll
 
@@ -825,7 +825,7 @@ office文件需要在线转换格式，所以画面呈现会相对慢一些。
 
 |参数|描述|
 |----|----|
-|[viewport]|白板的可视区数据|
+|[viewport](#whiteboardviewport)|白板的可视区数据|
 
 ## onBackgroundColorChanged
 
@@ -851,7 +851,7 @@ office文件需要在线转换格式，所以画面呈现会相对慢一些。
 
 |参数|描述|
 |----|----|
-|[info]|当前激活的widget信息，null表示用户还没有操作，比如刚刚翻页后|
+|[info](#activewidgetinfo)|当前激活的widget信息，null表示用户还没有操作，比如刚刚翻页后|
 
 ## onFilePageChanged
 
@@ -865,7 +865,7 @@ office文件需要在线转换格式，所以画面呈现会相对慢一些。
 
 |参数|描述|
 |----|----|
-|[info]|新的widget信息|
+|[info](#activewidgetinfo)|新的widget信息|
 
 ## onWidgetActionEvent
 
@@ -880,7 +880,7 @@ widget被执行了某些关键动作
 
 |参数|描述|
 |----|----|
-|[event]|widget事件信息|
+|[event](#widgetactionevent)|widget事件信息|
 
 ## onRecoveryStateChanged
 
@@ -900,7 +900,7 @@ widget被执行了某些关键动作
 # WhiteBoardView
 
 白板的显示控件，用于显示白板内容，当前仅支持同时显示一个白板，如果同时放置了多个白板控件，仅最后一个控件会刷新内容。
-布局时此控件的大小最好设定为与白板的虚拟大小[WhiteBoardSize]的宽高比保持一致，否则多余的边缘会留白。
+布局时此控件的大小最好设定为与白板的虚拟大小[WhiteBoardSize](#whiteboardsize)的宽高比保持一致，否则多余的边缘会留白。
 
 # JoinConfig
 
@@ -977,4 +977,126 @@ widget被执行了某些关键动作
 创建一个选择输入模式配置
 
 此模式可以在白板中框选内容。
+
+# FileConfig
+
+向白板插入文件时描述文件信息的配置
+
+构造函数
+    - `public FileConfig(@NonNull File file)`
+    - `public FileConfig(@NonNull File file , @Nullable String name)`
+    - `public FileConfig(@NonNull File file , @Nullable String name , float left , float top)`
+    
+|参数|类型|可空|描述|
+|----|----|----|----|
+|file|File|否|要插入的文件，此文件必须有支持的类型后缀，否则会被系统忽略，支持的类型参考[insertFile](#insertfile)|
+|name|String|是|指定文件的实际名称，留空会使用file的名称，此名称不会影响系统对file类型的校验，仅做标识用途，比如file本身是随机串文件名，此处可以赋予它有意义的文件名，此名称会在[ActiveWidgetInfo](#activewidgetinfo)中拿到|
+|left|float|否|插入文件时的初始位置的左上角横坐标，默认为0|
+|top|float|否|插入文件时的初始位置的左上角纵坐标，默认为0|
+
+# ActiveWidgetInfo
+
+被激活的widget信息
+
+白板中的一切都是widget，包括白板，文件，图片，选择框等等，具体参考[WidgetType]。
+当用户操作了一个widget或者在它上面书写时，这个widget会被激活，会触发[onWidgetActive](#onwidgetactive)事件。
+
+|参数|类型|可空|描述|
+|----|----|----|----|
+|id|String|否|widgetId，此widget的唯一标识符，后续对widget的操作都会用到此id，比如[jumpFilePage](#jumpfilepage)和[deleteFile](#deletefile)|
+|type|[WidgetType]|否|指示了此widget的类型|
+|userId|String|是|此widget创建者的userId，通常白板页是没有创建者的，由服务器创建|
+|name|String|是|widget名称，如果此widget是文件或图片时|
+|resourceId|String|是|资源id，sdk内部用于标识实际文件的索引，用户通常无需关心|
+|path|String|是|文件路径，如果widget是文件或图片，此为它的本地路径（如果插入的原文件是office文件，则此路径是它转换后的pdf路径，并非原始文件）|
+|currentPageNumber|int|否|如果widget是文件时，此为当前文件的页码，从1开始|
+|pageCount|int|否|如果widget是文件时，此为文件的总页数（如果原文件是office文件，则此页数是转换成pdf后的实际页数）|
+
+# Room
+
+房间信息
+
+加入白板房间成功后会收到此数据。
+
+|参数|类型|可空|描述|
+|----|----|----|----|
+|roomId|String|否|房间的id，与[joinRoom](#joinroom)时的roomId一致|
+|fileGroupId|String|否|白板中的文件在服务器存储的文件组id，用户无需关心|
+|chatRoomId|int|否|房间中的聊天室id，暂不支持|
+
+# RoomMember
+
+房间中的成员信息
+
+|参数|类型|可空|描述|
+|----|----|----|----|
+|userId|String|否|用户业务系统中的稳定用户id|
+|sessionId|String|否|用户会话id，用于唯一标识用户，如果成员在[joinRoom](#joinroom)时未传递此参数，则此参数会由白板自动生成|
+|roleId|int|否|角色id，默认为0，通常用来标识此用户身份，方便定制用户权限系统|
+|nickname|String|是|用户名或昵称|
+|avatar|String|是|用户头像地址|
+
+# WhiteBoardPage
+
+白板页信息
+
+|参数|类型|可空|描述|
+|----|----|----|----|
+|pageId|String|否|白板页id，每个页面的唯一标识符，后续对白板页的操作会用到，比如[jumpBoardPage](#jumpboardpage)，[deleteBoardPage](#deleteboardpage)等|
+|pageNumber|int|否|页面序号，从1开始，标识了此页是白板中的第几页|
+|thumbnails|String|否|白板页缩略图url，没有时为空字符串|
+
+# WhiteBoardSize
+
+白板尺寸信息
+
+此信息的数值基于白板内部的虚拟大小和坐标系，并非实际渲染窗口的纹理大小（实际的纹理大小由[WhiteBoardView](#whiteboardview)的像素大小决定）。
+以下参数由服务器创建白板房间时指定，通常在一个房间中此信息是固定不变的。
+
+|参数|类型|描述|
+|----|----|----|
+|maxWidth|int|白板最大宽度|
+|maxHeight|int|白板最大高度|
+|displayWidth|int|白板显示宽度（可视区的宽度，当前仅支持与maxWidth保持一致，即只能垂直延展）|
+|displayHeight|int|白板显示高度（可视区的高度，当此参数小于maxHeight时白板可上下滚动）|
+
+## WhiteBoardSize.ZERO
+
+`public static final WhiteBoardSize ZERO = new WhiteBoardSize(0 , 0 , 0 , 0);`
+
+一个空尺寸，在未加入白板时获取到的值。
+
+# WhiteBoardViewport
+
+白板当前可视区信息
+
+所有数值基于白板内部的虚拟大小和坐标系，并非实际渲染窗口的纹理大小。
+当白板页滚动时会刷新此数据。
+
+|参数|类型|描述|
+|----|----|----|
+|size|[WhiteBoardSize](#whiteboardsize)|白板尺寸|
+|offsetX|float|当前白板水平偏移（当前仅支持垂直滚动，所以此值总是0）|
+|offsetY|float|当前白板垂直偏移|
+
+## WhiteBoardViewport.IDLE
+
+`public static final WhiteBoardViewport IDLE = new WhiteBoardViewport(WhiteBoardSize.ZERO , 0 , 0);`
+
+一个空闲值，在未加入白板时获取到的值。
+
+# WidgetActionEvent
+
+widget动作事件
+
+描述了对文件或图片的关键操作信息，包括加载情况，由谁插入或删除等。
+由[onWidgetActionEvent](#onwidgetactionevent)提供。
+
+|参数|类型|可空|描述|
+|----|----|----|----|
+|sessionId|String|否|动作发出者的sessionId|
+|type|[WidgetType]|否|widget类型|
+|action|[WidgetAction]|否|动作类型|
+|name|String|是|widget名称|
+
 
