@@ -16,7 +16,7 @@ repositories {
 }
 
 dependencies {
-    implementation 'com.latitech.android:whiteboard:0.0.8'
+    implementation 'com.latitech.android:whiteboard:0.0.9'
 
     // 可选，如果项目使用了androidx可以添加此项开启sdk的可空/非空参数注解的识别，在kotlin环境非常有用。
     compileOnly 'androidx.annotation:annotation:1.1.0'
@@ -306,7 +306,7 @@ class MyApplication : Application(){
 
 白板截图
 
-仅在[WhiteBoardView](#whiteboardview)附加到布局中时有效（即必须有可见的白板），回调[ScreenshotsCallback]将在非主线程执行。
+仅在[WhiteBoardView](#whiteboardview)附加到布局中时有效（即必须有可见的白板），回调[ScreenshotsCallback](#screenshotscallback)将在非主线程执行。
 
 |参数|描述|
 |----|----|
@@ -520,7 +520,7 @@ office文件需要在线转换格式，所以画面呈现会相对慢一些。
 也可以监听[onBoardStatusChanged](#onboardstatuschanged)。
 
 - 返回 
-    - 当前的白板状态[BoardStatus]。
+    - 当前的白板状态[BoardStatus](#boardstatus)。
 
 ## getRoom
 
@@ -652,7 +652,7 @@ office文件需要在线转换格式，所以画面呈现会相对慢一些。
 
 成功加入白板房间
 
-[joinRoom](#joinroom)成功后的第一个关键事件（[onBoardStatusChanged](#onboardstatuschanged)返回[BoardStatus.SUCCESSFUL]会先一步触发）。
+[joinRoom](#joinroom)成功后的第一个关键事件（[onBoardStatusChanged](#onboardstatuschanged)返回[BoardStatus.SUCCESSFUL](#boardstatussuccessful)会先一步触发）。
 在这里可以处理一些加入房间成功时的初始化工作。
 * 在断线重连成功时同样会触发此事件，之后才会触发[onReconnected](#onreconnected)事件。
 
@@ -673,7 +673,7 @@ office文件需要在线转换格式，所以画面呈现会相对慢一些。
 
 |参数|描述|
 |----|----|
-|[errorCode]|失败错误码|
+|[errorCode](#whiteboarderrorcode)|失败错误码|
 
 ## onReconnecting
 
@@ -717,11 +717,11 @@ office文件需要在线转换格式，所以画面呈现会相对慢一些。
 
 从[joinRoom](#joinroom)到[leaveRoom](#leaveroom)之间，只要白板房间的状态发生变化就会触发此事件。
 同时此事件触发早于[onJoinSuccess](#onjoinsuccess)，[onJoinFailed](#onjoinfailed)，[onReconnecting](#onreconnecting)等独立事件。
-比如调用[joinRoom](#joinroom)后会立即触发[BoardStatus.LOADING]的变化，[onJoinSuccess](#onjoinsuccess)触发之前会先触发[BoardStatus.SUCCESSFUL]的变化。
+比如调用[joinRoom](#joinroom)后会立即触发[BoardStatus.LOADING](#boardstatusloading)的变化，[onJoinSuccess](#onjoinsuccess)触发之前会先触发[BoardStatus.SUCCESSFUL](#boardstatussuccessful)的变化。
 
 |参数|描述|
 |----|----|
-|[status]|新的白板状态|
+|[status](#boardstatus)|新的白板状态|
 
 ## onUserList
 
@@ -896,6 +896,21 @@ widget被执行了某些关键动作
 |----|----|
 |isEmpty|true表示回收站为空，false表示不为空，此时可以通过[recover](#recover)来还原一次擦除操作|
 
+# ScreenshotsCallback
+
+截图完成回调
+
+[screenshots](#screenshots)中使用。
+
+## ScreenshotsCallback.done
+
+`void done(@Nullable Bitmap bitmap)`
+
+截图完成
+
+|参数|描述|
+|----|----|
+|bitmap|截图得到的位图，如果为null表示截图失败，位图大小等于[WhiteBoardView](#whiteboardview)的像素大小|
 
 # WhiteBoardView
 
@@ -946,7 +961,7 @@ widget被执行了某些关键动作
 
 |参数|描述|
 |----|----|
-|[laserType]|激光笔类型|
+|[laserType](#lasertype)|激光笔类型|
 
 ## InputConfig.erase
 
@@ -966,7 +981,7 @@ widget被执行了某些关键动作
 
 |参数|描述|
 |----|----|
-|[geometryType]|图形类型|
+|[geometryType](#geometrytype)|图形类型|
 |color|图形边框的颜色|
 |thickness|图形边框粗细|
 
@@ -998,13 +1013,13 @@ widget被执行了某些关键动作
 
 被激活的widget信息
 
-白板中的一切都是widget，包括白板，文件，图片，选择框等等，具体参考[WidgetType]。
+白板中的一切都是widget，包括白板，文件，图片，选择框等等，具体参考[WidgetType](#widgettype)。
 当用户操作了一个widget或者在它上面书写时，这个widget会被激活，会触发[onWidgetActive](#onwidgetactive)事件。
 
 |参数|类型|可空|描述|
 |----|----|----|----|
 |id|String|否|widgetId，此widget的唯一标识符，后续对widget的操作都会用到此id，比如[jumpFilePage](#jumpfilepage)和[deleteFile](#deletefile)|
-|type|[WidgetType]|否|指示了此widget的类型|
+|type|[WidgetType](#widgettype)|否|指示了此widget的类型|
 |userId|String|是|此widget创建者的userId，通常白板页是没有创建者的，由服务器创建|
 |name|String|是|widget名称，如果此widget是文件或图片时|
 |resourceId|String|是|资源id，sdk内部用于标识实际文件的索引，用户通常无需关心|
@@ -1095,8 +1110,97 @@ widget动作事件
 |参数|类型|可空|描述|
 |----|----|----|----|
 |sessionId|String|否|动作发出者的sessionId|
-|type|[WidgetType]|否|widget类型|
-|action|[WidgetAction]|否|动作类型|
+|type|[WidgetType](#widgettype)|否|widget类型|
+|action|[WidgetAction](#widgetaction)|否|动作类型|
 |name|String|是|widget名称|
 
+# BoardStatus
 
+白板房间状态枚举
+
+## BoardStatus.IDLE
+
+空闲状态，表示没有进入白板
+
+## BoardStatus.LOADING
+
+正在进入白板，即调用[joinRoom](#joinroom)之后到成功或失败之前的状态。
+
+## BoardStatus.SUCCESSFUL
+
+加入白板成功
+
+## BoardStatus.FAILED
+
+加入白板失败
+
+## BoardStatus.RECONNECTING
+
+白板正在重连
+
+# GeometryType
+
+几何图形类型
+
+在[InputConfig.geometry](#inputconfiggeometry)中指定要绘制的几何图形。
+
+|名称|图形|
+|----|----|
+|RECTANGLE|矩形|
+|CIRCLE|圆形|
+|LINE|直线|
+|ARROW|箭头|
+
+# LaserType
+
+激光笔类型
+
+在[InputConfig.laserPen](#inputconfiglaserpen)中指定激光指示点的样式。
+
+|名称|样式|
+|----|----|
+|LASER_DOT|圆点|
+|LASER_HAND|手形图标|
+|LASER_ARROWS_WHITE|白色箭头|
+|LASER_ARROWS_BLACK|黑色箭头|
+
+# WidgetType
+
+widget类型，白板中的一切都是widget
+
+|名称|类型|
+|----|----|
+|BOARD|白板|
+|FILE|文件，包括pdf和office|
+|IMAGE|图片，jpg和png|
+|GEOMETRY|几何图形，由[InputConfig.geometry](#inputconfiggeometry)模式绘制|
+|SELECTION|选择框，由[InputConfig.select](#inputconfigselect)模式选中的内容|
+
+# WidgetAction
+
+widget动作类型
+
+在[onWidgetActionEvent](#onwidgetactionevent)中指示widget具体发生的动作事件。
+
+|名称|事件|
+|----|----|
+|UPLOAD|开始上传/插入新widget|
+|DELETE|删除widget|
+|SUCCESSFUL|widget加载成功|
+|FAILED|widget加载失败|
+
+# WhiteBoardErrorCode
+
+错误码
+
+|名称|值|错误含义|
+|----|----|----|
+|NETWORK_ERROR|100|网络不可用|
+|SERVER_ERROR|101|服务器错误或繁忙|
+|APP_ID_NOT_EXIST|200|appId不存在|
+|ROOM_ID_NOT_EXIST|201|roomId不存在|
+|USER_ID_EMPTY|202|userId为空|
+|TOKEN_ERROR|203|token错误|
+|CONNECT_ROOM_FAILED|300|连接房间失败|
+|PAGE_INFO_TIMEOUT|301|等待页数据下发超时|
+|ROOM_DISCONNECT|302|房间连接中断，可能是网络波动，也可能是房间中传输了错误数据导致被服务器切断|
