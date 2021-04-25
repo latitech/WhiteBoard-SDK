@@ -20,19 +20,58 @@ class RoomViewModel : ViewModel() {
     /**
      * 白板宽高比
      */
-    val whiteBoardRatio = MutableLiveData("2048:1440")
+    val whiteBoardRatio = MutableLiveData("2048:1440").apply {
+        WhiteBoard.addListener(object : AutoRemoveWhiteBoardListener {
+            override fun onBoardSizeChanged(viewport: WhiteBoardViewport) {
+                Log.i(TAG, "onBoardSizeChanged")
+                value = "${viewport.size.displayWidth}:${viewport.size.displayHeight}"
+            }
+        })
+    }
 
     /**
      * 页信息列表
      */
-    val pageList = MutableLiveData<List<WhiteBoardPage>>()
+    val pageList = MutableLiveData<List<WhiteBoardPage>>().apply {
+        WhiteBoard.addListener(object : AutoRemoveWhiteBoardListener {
+            override fun onBoardPageList(list: List<WhiteBoardPage>) {
+                Log.i(TAG, "onBoardPageList count:${list.size}")
+                value = list
+            }
+
+            override fun onBoardPageInfoChanged(page: WhiteBoardPage) {
+                Log.i(TAG, "onBoardPageInfoChanged ${page.pageNumber}")
+                value = WhiteBoard.getPageList()
+            }
+        })
+    }
 
     /**
      * 当前白板页
      */
-    val currentPage = MutableLiveData<WhiteBoardPage>()
+    val currentPage = MutableLiveData<WhiteBoardPage>().apply {
+        WhiteBoard.addListener(object : AutoRemoveWhiteBoardListener {
+            override fun onCurrentBoardPageChanged(page: WhiteBoardPage) {
+                Log.i(TAG, "onCurrentBoardPageChanged")
+                value = page
+            }
+        })
+    }
+
+    /**
+     * 当前是否可还原笔迹
+     */
+    val canRecovery = MutableLiveData<Boolean>().apply {
+        WhiteBoard.addListener(object : AutoRemoveWhiteBoardListener {
+            override fun onRecoveryStateChanged(isEmpty: Boolean) {
+                Log.i(TAG, "onRecoveryStateChanged")
+                value = !isEmpty
+            }
+        })
+    }
 
     init {
+
         WhiteBoard.addListener(object : AutoRemoveWhiteBoardListener {
             override fun onJoinSuccess(room: Room, me: RoomMember) {
                 Log.i(TAG, "onJoinSuccess")
@@ -70,30 +109,6 @@ class RoomViewModel : ViewModel() {
                 Log.i(TAG, "onUserLeave")
             }
 
-            override fun onBoardPageList(list: List<WhiteBoardPage>) {
-                Log.i(TAG, "onBoardPageList")
-                pageList.value = list
-            }
-
-            override fun onCurrentBoardPageChanged(page: WhiteBoardPage) {
-                Log.i(TAG, "onCurrentBoardPageChanged")
-                currentPage.value = page
-            }
-
-            override fun onBoardPageInfoChanged(page: WhiteBoardPage) {
-                Log.i(TAG, "onBoardPageInfoChanged")
-            }
-
-            override fun onBoardSizeChanged(viewport: WhiteBoardViewport) {
-                Log.i(TAG, "onBoardSizeChanged")
-
-                whiteBoardRatio.value = "${viewport.size.displayWidth}:${viewport.size.displayHeight}"
-            }
-
-            override fun onBoardScroll(viewport: WhiteBoardViewport) {
-                Log.i(TAG, "onBoardScroll")
-            }
-
             override fun onBackgroundColorChanged(backgroundColor: Int) {
                 Log.i(TAG, "onBackgroundColorChanged")
             }
@@ -108,10 +123,6 @@ class RoomViewModel : ViewModel() {
 
             override fun onWidgetActionEvent(event: WidgetActionEvent) {
                 Log.i(TAG, "onWidgetActionEvent")
-            }
-
-            override fun onRecoveryStateChanged(isEmpty: Boolean) {
-                Log.i(TAG, "onRecoveryStateChanged")
             }
         })
     }

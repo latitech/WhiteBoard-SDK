@@ -29,88 +29,117 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginEnd="16dp"
-                    android:text="@{viewModel.currentPage.pageNumber + `/` + viewModel.pageList.size()}" />
-
                 <Button
                     android:id="@+id/insert_image"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
                     android:text="插入图片" />
 
                 <Button
                     android:id="@+id/camera"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
                     android:text="拍照" />
 
                 <Button
                     android:id="@+id/insert_file"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
                     android:text="插入文件" />
 
                 <Button
                     android:id="@+id/select"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
                     android:text="选择" />
 
                 <Button
                     android:id="@+id/pan"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
                     android:text="笔" />
 
                 <Button
                     android:id="@+id/pan_color"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginEnd="16dp"
                     android:text="换笔颜色" />
 
                 <Button
                     android:id="@+id/eraser"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
                     android:text="橡皮" />
-
-                <Button
-                    android:id="@+id/restore"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="撤销擦除" />
-
-                <Button
-                    android:id="@+id/pre_page"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="上一页" />
-
-                <Button
-                    android:id="@+id/next_page"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="下一页" />
-
-                <Button
-                    android:id="@+id/new_page"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="新建页" />
 
                 <Button
                     android:id="@+id/screenshots"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
                     android:text="截屏" />
 
             </LinearLayout>
 
         </HorizontalScrollView>
+
+        <LinearLayout
+            android:id="@+id/page_navigation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/cardview_light_background"
+            android:orientation="horizontal"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/horizontalScrollView">
+
+            <ImageView
+                android:id="@+id/pre_page"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:foreground="?selectableItemBackgroundBorderless"
+                android:padding="8dp"
+                android:text="上一页"
+                app:srcCompat="@drawable/ic_baseline_arrow_back_ios_24" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{viewModel.currentPage.pageNumber + `/` + viewModel.pageList.size()}" />
+
+            <ImageView
+                android:id="@+id/next_page"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:foreground="?selectableItemBackgroundBorderless"
+                android:padding="8dp"
+                android:text="下一页"
+                app:srcCompat="@drawable/ic_baseline_arrow_forward_ios_24" />
+
+            <ImageView
+                android:id="@+id/new_page"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:foreground="?selectableItemBackgroundBorderless"
+                android:padding="8dp"
+                android:text="新建页"
+                app:srcCompat="@drawable/ic_baseline_add_24" />
+
+        </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/page_list"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/page_navigation" />
 
         <com.latitech.whiteboard.WhiteBoardView
             android:id="@+id/white_board"
@@ -119,8 +148,19 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintDimensionRatio="@{viewModel.whiteBoardRatio}"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/horizontalScrollView" />
+            app:layout_constraintStart_toEndOf="@id/page_list"
+            app:layout_constraintTop_toBottomOf="@id/horizontalScrollView" />
+
+        <Button
+            android:id="@+id/restore"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="还原笔迹"
+            app:layout_constraintEnd_toEndOf="@+id/white_board"
+            app:layout_constraintStart_toStartOf="@+id/white_board"
+            app:layout_constraintTop_toBottomOf="@id/horizontalScrollView"
+            app:visibleGone="@{viewModel.canRecovery}" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

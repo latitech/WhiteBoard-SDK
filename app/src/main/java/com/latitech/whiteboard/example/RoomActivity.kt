@@ -2,7 +2,6 @@ package com.latitech.whiteboard.example
 
 import android.Manifest
 import android.content.pm.PackageManager
-import android.graphics.Bitmap
 import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
@@ -13,12 +12,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.latitech.whiteboard.WhiteBoard
 import com.latitech.whiteboard.example.databinding.ActivityRoomBinding
-import com.latitech.whiteboard.listener.ScreenshotsCallback
 import com.latitech.whiteboard.model.FileConfig
 import com.latitech.whiteboard.model.InputConfig
 import org.jetbrains.anko.alert
 import java.io.File
-import java.nio.ByteBuffer
 
 /**
  * 白板房间
@@ -62,6 +59,14 @@ class RoomActivity : AppCompatActivity() {
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
 
+        binding.pageList.adapter = PageListAdapter(this, viewModel.currentPage).apply {
+            viewModel.pageList.observe(this@RoomActivity) {
+                if (it != null) {
+                    submitList(it)
+                }
+            }
+        }
+
         WhiteBoard.joinRoom(intent.getParcelableExtra(ROOM_DATA_TAG)!!)
     }
 
@@ -75,9 +80,9 @@ class RoomActivity : AppCompatActivity() {
 
         binding.camera.setOnClickListener {
             if (ContextCompat.checkSelfPermission(
-                            this,
-                            Manifest.permission.CAMERA
-                    ) == PackageManager.PERMISSION_GRANTED
+                    this,
+                    Manifest.permission.CAMERA
+                ) == PackageManager.PERMISSION_GRANTED
             ) {
                 imageTempPath = FileUtil.createImagePath(this)
                 openCamera.launch(FileUtil.createImageUri(this, imageTempPath))
@@ -116,7 +121,7 @@ class RoomActivity : AppCompatActivity() {
         }
 
         binding.restore.setOnClickListener {
-            WhiteBoard.revert()
+            WhiteBoard.recover()
         }
 
         binding.prePage.setOnClickListener {
@@ -153,12 +158,12 @@ class RoomActivity : AppCompatActivity() {
     }
 
     private val requestPermissionCamera =
-            registerForActivityResult(ActivityResultContracts.RequestPermission()) {
-                if (it) {
-                    imageTempPath = FileUtil.createImagePath(this)
-                    openCamera.launch(FileUtil.createImageUri(this, imageTempPath))
-                }
+        registerForActivityResult(ActivityResultContracts.RequestPermission()) {
+            if (it) {
+                imageTempPath = FileUtil.createImagePath(this)
+                openCamera.launch(FileUtil.createImageUri(this, imageTempPath))
             }
+        }
 
     private val openCamera = registerForActivityResult(ActivityResultContracts.TakePicture()) {
         val file = File(imageTempPath)

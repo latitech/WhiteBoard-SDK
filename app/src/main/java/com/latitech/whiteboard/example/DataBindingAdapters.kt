@@ -1,8 +1,11 @@
 package com.latitech.whiteboard.example
 
+import android.util.Log
 import android.view.View
+import android.widget.ImageView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.databinding.BindingAdapter
+import com.bumptech.glide.Glide
 
 /**
  * 通用数据绑定适配器
@@ -25,5 +28,24 @@ object DataBindingAdapters {
                 view.requestLayout()
             }
         }
+    }
+
+    /**
+     * 设置图片网络源
+     */
+    @JvmStatic
+    @BindingAdapter("srcUrl")
+    fun setImageUrl(imageView: ImageView, url: String?) {
+        Log.i("setImageUrl", "url $url")
+        Glide.with(imageView.context).load(url).into(imageView)
+    }
+
+    /**
+     * 可见性属性
+     */
+    @JvmStatic
+    @BindingAdapter("visibleGone")
+    fun showHide(view: View, show: Boolean) {
+        view.visibility = if (show) View.VISIBLE else View.GONE
     }
 }

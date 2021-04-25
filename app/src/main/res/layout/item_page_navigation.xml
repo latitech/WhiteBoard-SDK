@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="com.latitech.whiteboard.WhiteBoard" />
+
+        <import type="androidx.lifecycle.LiveData" />
+
+        <variable
+            name="page"
+            type="LiveData&lt;com.latitech.whiteboard.model.WhiteBoardPage>" />
+
+        <variable
+            name="isCurrentPage"
+            type="LiveData&lt;Boolean>" />
+    </data>
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:backgroundTint="@{isCurrentPage ? @color/teal_200 : @android:color/transparent}"
+        android:backgroundTintMode="src_over"
+        android:onClick="@{()->WhiteBoard.jumpBoardPage(page.pageId)}">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="120dp"
+                android:layout_height="90dp"
+                app:srcUrl="@{page.thumbnails}" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <com.google.android.material.button.MaterialButton
+                    style="@style/Widget.MaterialComponents.Button.TextButton.Dialog.Flush"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:onClick="@{()->WhiteBoard.insertBoardPage(page.pageId)}"
+                    android:text="插入页" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{String.valueOf(page.pageNumber)}" />
+
+                <com.google.android.material.button.MaterialButton
+                    style="@style/Widget.MaterialComponents.Button.TextButton.Dialog.Flush"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:onClick="@{()->WhiteBoard.deleteBoardPage(page.pageId)}"
+                    android:text="删除页" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+</layout>
