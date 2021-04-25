@@ -7,6 +7,7 @@ import com.latitech.whiteboard.WhiteBoard
 import com.latitech.whiteboard.listener.AutoRemoveWhiteBoardListener
 import com.latitech.whiteboard.model.*
 import com.latitech.whiteboard.type.BoardStatus
+import com.latitech.whiteboard.type.WidgetType
 
 /**
  * 房间功能
@@ -70,6 +71,18 @@ class RoomViewModel : ViewModel() {
         })
     }
 
+    /**
+     * 当前激活的widget，仅保留文件和图片类型
+     */
+    val activeWidget = MutableLiveData<ActiveWidgetInfo?>().apply {
+        WhiteBoard.addListener(object : AutoRemoveWhiteBoardListener {
+            override fun onWidgetActive(info: ActiveWidgetInfo?) {
+                Log.i(TAG, "onWidgetActive")
+                value = info?.takeIf { it.type == WidgetType.FILE || it.type == WidgetType.IMAGE }
+            }
+        })
+    }
+
     init {
 
         WhiteBoard.addListener(object : AutoRemoveWhiteBoardListener {
@@ -111,10 +124,6 @@ class RoomViewModel : ViewModel() {
 
             override fun onBackgroundColorChanged(backgroundColor: Int) {
                 Log.i(TAG, "onBackgroundColorChanged")
-            }
-
-            override fun onWidgetActive(info: ActiveWidgetInfo?) {
-                Log.i(TAG, "onWidgetActive")
             }
 
             override fun onFilePageChanged(info: ActiveWidgetInfo) {

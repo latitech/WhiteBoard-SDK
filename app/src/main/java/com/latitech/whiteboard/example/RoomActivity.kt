@@ -14,6 +14,7 @@ import com.latitech.whiteboard.WhiteBoard
 import com.latitech.whiteboard.example.databinding.ActivityRoomBinding
 import com.latitech.whiteboard.model.FileConfig
 import com.latitech.whiteboard.model.InputConfig
+import com.latitech.whiteboard.type.WidgetType
 import org.jetbrains.anko.alert
 import java.io.File
 
@@ -153,6 +154,24 @@ class RoomActivity : AppCompatActivity() {
                     }
                 }
 
+            }
+        }
+
+        binding.deleteFile.setOnClickListener {
+            viewModel.activeWidget.value?.let {
+                WhiteBoard.deleteFile(it.id)
+            }
+        }
+
+        binding.preFilePage.setOnClickListener {
+            viewModel.activeWidget.value?.takeIf { it.type == WidgetType.FILE && it.currentPageNumber > 1 }?.let {
+                WhiteBoard.jumpFilePage(it.id, it.currentPageNumber - 1)
+            }
+        }
+
+        binding.nextFilePage.setOnClickListener {
+            viewModel.activeWidget.value?.takeIf { it.type == WidgetType.FILE && it.currentPageNumber < it.pageCount }?.let {
+                WhiteBoard.jumpFilePage(it.id, it.currentPageNumber + 1)
             }
         }
     }
