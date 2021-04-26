@@ -10,5 +10,7 @@ class MyApplication : Application(){
         super.onCreate()
 
         WhiteBoard.init(this,BuildConfig.DEBUG)
+
+        WhiteBoard.setDefaultInputMode(NormalPenStyle().inputConfig)
     }
 }

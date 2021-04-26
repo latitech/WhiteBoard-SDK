@@ -35,7 +35,7 @@
                     android:id="@+id/insert_image"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
+                    android:layout_marginHorizontal="8dp"
                     android:text="插入图片" />
 
                 <Button
@@ -60,18 +60,18 @@
                     android:text="选择" />
 
                 <Button
-                    android:id="@+id/pan"
+                    android:id="@+id/pen"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="8dp"
-                    android:text="笔" />
+                    android:text="普通笔" />
 
                 <Button
-                    android:id="@+id/pan_color"
+                    android:id="@+id/mark"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="16dp"
-                    android:text="换笔颜色" />
+                    android:layout_marginEnd="8dp"
+                    android:text="荧光笔" />
 
                 <Button
                     android:id="@+id/eraser"
@@ -79,6 +79,20 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="8dp"
                     android:text="橡皮" />
+
+                <Button
+                    android:id="@+id/laser"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:text="激光笔" />
+
+                <Button
+                    android:id="@+id/geometry"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:text="几何图形" />
 
                 <Button
                     android:id="@+id/screenshots"

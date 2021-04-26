@@ -62,8 +62,8 @@ object FileUtil {
     /**
      * 创建临时图片路径
      */
-    fun createImagePath(activity: Activity): String {
-        val dir = activity.externalCacheDir ?: activity.cacheDir
+    fun createImagePath(context: Context): String {
+        val dir = context.externalCacheDir ?: context.cacheDir
         return dir.path + File.separator + System.currentTimeMillis() + ".jpg"
     }
 
@@ -73,9 +73,9 @@ object FileUtil {
      * @return 路径uri
      * filePath 图片路径
      */
-    fun createImageUri(activity: Activity, filePath: String): Uri = if (Build.VERSION.SDK_INT < 24) {
+    fun createImageUri(context: Context, filePath: String): Uri = if (Build.VERSION.SDK_INT < 24) {
         Uri.fromFile(File(filePath))
     } else {
-        FileProvider.getUriForFile(activity, activity.packageName + ".provider", File(filePath))
+        FileProvider.getUriForFile(context, context.packageName + ".provider", File(filePath))
     }
 }

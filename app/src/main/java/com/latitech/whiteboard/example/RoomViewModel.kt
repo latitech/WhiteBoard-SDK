@@ -83,6 +83,41 @@ class RoomViewModel : ViewModel() {
         })
     }
 
+    /**
+     * 普通笔配置
+     */
+    val normalPenStyle = NormalPenStyle()
+
+    /**
+     * 马克笔配置
+     */
+    val markPenStyle = MarkPenStyle()
+
+    /**
+     * 橡皮配置
+     */
+    val eraserStyle = EraserStyle()
+
+    /**
+     * 激光笔配置
+     */
+    val laserStyle = LaserStyle()
+
+    /**
+     * 几何图形样式
+     */
+    val geometryStyle = GeometryStyle()
+
+    /**
+     * 当前输入模式
+     */
+    var currentInputType = MutableLiveData(InputType.NORMAL)
+
+    /**
+     * 临时图片路径（拍照用）
+     */
+    var imageTempPath = ""
+
     init {
 
         WhiteBoard.addListener(object : AutoRemoveWhiteBoardListener {
@@ -134,6 +169,23 @@ class RoomViewModel : ViewModel() {
                 Log.i(TAG, "onWidgetActionEvent")
             }
         })
+    }
+
+    /**
+     * 改变输入模式
+     *
+     * @param inputType 新的输入模式
+     */
+    fun changeInputType(inputType: InputType) {
+        currentInputType.value = inputType
+        when (inputType) {
+            InputType.NORMAL -> WhiteBoard.setInputMode(normalPenStyle.inputConfig)
+            InputType.MARK -> WhiteBoard.setInputMode(markPenStyle.inputConfig)
+            InputType.LASER -> WhiteBoard.setInputMode(laserStyle.inputConfig)
+            InputType.ERASE -> WhiteBoard.setInputMode(eraserStyle.inputConfig)
+            InputType.SELECT -> WhiteBoard.setInputMode(InputConfig.select())
+            InputType.GEOMETRY -> WhiteBoard.setInputMode(geometryStyle.inputConfig)
+        }
     }
 
     override fun onCleared() {

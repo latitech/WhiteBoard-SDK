@@ -2,7 +2,6 @@ package com.latitech.whiteboard.example
 
 import android.Manifest
 import android.content.pm.PackageManager
-import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.widget.ImageView
@@ -38,11 +37,6 @@ class RoomActivity : AppCompatActivity() {
     }
 
     /**
-     * 临时图片路径
-     */
-    private var imageTempPath = ""
-
-    /**
      * 视图模型
      */
     private val viewModel by viewModels<RoomViewModel>()
@@ -76,20 +70,11 @@ class RoomActivity : AppCompatActivity() {
         binding.whiteBoard.setZOrderMediaOverlay(true)
 
         binding.insertImage.setOnClickListener {
-            openPicture.launch("image/*")
+            openGallery.launch("image/*")
         }
 
         binding.camera.setOnClickListener {
-            if (ContextCompat.checkSelfPermission(
-                    this,
-                    Manifest.permission.CAMERA
-                ) == PackageManager.PERMISSION_GRANTED
-            ) {
-                imageTempPath = FileUtil.createImagePath(this)
-                openCamera.launch(FileUtil.createImageUri(this, imageTempPath))
-            } else {
-                requestPermissionCamera.launch(Manifest.permission.CAMERA)
-            }
+            openCamera()
         }
 
         binding.insertFile.setOnClickListener {
@@ -98,27 +83,6 @@ class RoomActivity : AppCompatActivity() {
 
         binding.select.setOnClickListener {
             WhiteBoard.setInputMode(InputConfig.select())
-        }
-
-        binding.pan.setOnClickListener {
-            WhiteBoard.setInputMode(InputConfig.pen(Color.BLACK, 2f))
-        }
-
-        var black = true
-
-        binding.panColor.setOnClickListener {
-            black = !black
-            if (black) {
-                // 普通笔
-                WhiteBoard.setInputMode(InputConfig.pen(Color.BLACK, 2f))
-            } else {
-                // 荧光笔
-                WhiteBoard.setInputMode(InputConfig.pen(0x5F8F5CF3, 30f))
-            }
-        }
-
-        binding.eraser.setOnClickListener {
-            WhiteBoard.setInputMode(InputConfig.erase(20f))
         }
 
         binding.restore.setOnClickListener {
@@ -164,35 +128,167 @@ class RoomActivity : AppCompatActivity() {
         }
 
         binding.preFilePage.setOnClickListener {
-            viewModel.activeWidget.value?.takeIf { it.type == WidgetType.FILE && it.currentPageNumber > 1 }?.let {
-                WhiteBoard.jumpFilePage(it.id, it.currentPageNumber - 1)
-            }
+            viewModel.activeWidget.value?.takeIf { it.type == WidgetType.FILE && it.currentPageNumber > 1 }
+                ?.let {
+                    WhiteBoard.jumpFilePage(it.id, it.currentPageNumber - 1)
+                }
         }
 
         binding.nextFilePage.setOnClickListener {
-            viewModel.activeWidget.value?.takeIf { it.type == WidgetType.FILE && it.currentPageNumber < it.pageCount }?.let {
-                WhiteBoard.jumpFilePage(it.id, it.currentPageNumber + 1)
+            viewModel.activeWidget.value?.takeIf { it.type == WidgetType.FILE && it.currentPageNumber < it.pageCount }
+                ?.let {
+                    WhiteBoard.jumpFilePage(it.id, it.currentPageNumber + 1)
+                }
+        }
+
+        val normalPenWindow = normalPenWindow()
+
+        binding.pen.setOnClickListener {
+            if (viewModel.currentInputType.value != InputType.NORMAL) {
+                viewModel.changeInputType(InputType.NORMAL)
+            } else {
+                normalPenWindow.show(it)
+            }
+        }
+
+        val markPenWindow = markPenWindow()
+
+        binding.mark.setOnClickListener {
+            if (viewModel.currentInputType.value != InputType.MARK) {
+                viewModel.changeInputType(InputType.MARK)
+            } else {
+                markPenWindow.show(it)
+            }
+        }
+
+        val eraserWindow = eraserWindow()
+
+        binding.eraser.setOnClickListener {
+            if (viewModel.currentInputType.value != InputType.ERASE) {
+                viewModel.changeInputType(InputType.ERASE)
+            } else {
+                eraserWindow.show(it)
+            }
+        }
+
+        val laserWindow = laserWindow()
+
+        binding.laser.setOnClickListener {
+            if (viewModel.currentInputType.value != InputType.LASER) {
+                viewModel.changeInputType(InputType.LASER)
+            } else {
+                laserWindow.show(it)
+            }
+        }
+
+        val geometryWindow = geometryWindow()
+
+        binding.geometry.setOnClickListener {
+            if (viewModel.currentInputType.value != InputType.GEOMETRY) {
+                viewModel.changeInputType(InputType.GEOMETRY)
+            } else {
+                geometryWindow.show(it)
             }
         }
     }
 
-    private val requestPermissionCamera =
-        registerForActivityResult(ActivityResultContracts.RequestPermission()) {
-            if (it) {
-                imageTempPath = FileUtil.createImagePath(this)
-                openCamera.launch(FileUtil.createImageUri(this, imageTempPath))
-            }
+    /**
+     * 创建普通笔颜色选择面板
+     */
+    private fun normalPenWindow() = PalettePopup(this).apply {
+        addColorSelection(NormalPenStyle.colors, viewModel.normalPenStyle.colorIndex) {
+            viewModel.normalPenStyle.colorIndex = it
         }
+        addSizeSelection(NormalPenStyle.sizes, viewModel.normalPenStyle.sizeIndex) {
+            viewModel.normalPenStyle.sizeIndex = it
+        }
+    }
 
-    private val openCamera = registerForActivityResult(ActivityResultContracts.TakePicture()) {
-        val file = File(imageTempPath)
+    /**
+     * 创建马克笔颜色选择面板
+     */
+    private fun markPenWindow() = PalettePopup(this).apply {
+        addColorSelection(MarkPenStyle.colors, viewModel.markPenStyle.colorIndex) {
+            viewModel.markPenStyle.colorIndex = it
+        }
+        addSizeSelection(MarkPenStyle.sizes, viewModel.markPenStyle.sizeIndex) {
+            viewModel.markPenStyle.sizeIndex = it
+        }
+    }
 
+    /**
+     * 创建橡皮大小选择面板
+     */
+    private fun eraserWindow() = PalettePopup(this).apply {
+        addSizeSelection(EraserStyle.sizes, viewModel.eraserStyle.sizeIndex) {
+            viewModel.eraserStyle.sizeIndex = it
+        }
+    }
+
+    /**
+     * 创建激光笔图形选择面板
+     */
+    private fun laserWindow() = PalettePopup(this).apply {
+        addIconSelection(LaserStyle.icons.keys, viewModel.laserStyle.iconKey) {
+            viewModel.laserStyle.iconKey = it
+        }
+    }
+
+    /**
+     * 创建几何图形选择面板
+     */
+    private fun geometryWindow() = PalettePopup(this).apply {
+        addIconSelection(GeometryStyle.icons.keys, viewModel.geometryStyle.iconKey) {
+            viewModel.geometryStyle.iconKey = it
+        }
+        addColorSelection(GeometryStyle.colors, viewModel.geometryStyle.colorIndex) {
+            viewModel.geometryStyle.colorIndex = it
+        }
+        addSizeSelection(GeometryStyle.sizes, viewModel.geometryStyle.sizeIndex) {
+            viewModel.geometryStyle.sizeIndex = it
+        }
+    }
+
+    /**
+     * 照相
+     */
+    private fun openCamera() {
+        if (ContextCompat.checkSelfPermission(
+                this,
+                Manifest.permission.CAMERA
+            ) == PackageManager.PERMISSION_GRANTED
+        ) {
+            viewModel.imageTempPath = FileUtil.createImagePath(this)
+            takePicture.launch(FileUtil.createImageUri(this, viewModel.imageTempPath))
+        } else {
+            requestPermissionCamera.launch(Manifest.permission.CAMERA)
+        }
+    }
+
+    /**
+     * 拍照
+     */
+    private val takePicture = registerForActivityResult(ActivityResultContracts.TakePicture()) {
+        val file = File(viewModel.imageTempPath)
         if (file.exists()) {
             WhiteBoard.insertFile(FileConfig(file))
         }
     }
 
-    private val openPicture = registerForActivityResult(ActivityResultContracts.GetContent()) {
+    /**
+     * 请求相机权限
+     */
+    private val requestPermissionCamera =
+        registerForActivityResult(ActivityResultContracts.RequestPermission()) {
+            if (it) {
+                openCamera()
+            }
+        }
+
+    /**
+     * 选择图片
+     */
+    private val openGallery = registerForActivityResult(ActivityResultContracts.GetContent()) {
         if (it == null) {
             return@registerForActivityResult
         }
@@ -200,12 +296,15 @@ class RoomActivity : AppCompatActivity() {
         val path = FileUtil.getPathFromUri(this, it)
 
         if (path != null) {
-            Log.v(TAG, "onPictureSuccess path:$path")
+            Log.v(TAG, "openGallery path:$path")
 
             WhiteBoard.insertFile(FileConfig(File(path)))
         }
     }
 
+    /**
+     * 选择文件
+     */
     private val openFile = registerForActivityResult(ActivityResultContracts.GetContent()) {
         if (it == null) {
             return@registerForActivityResult
@@ -214,7 +313,7 @@ class RoomActivity : AppCompatActivity() {
         val path = FileUtil.getPathFromUri(this, it)
 
         if (path != null) {
-            Log.v(TAG, "onFileSuccess path:$path")
+            Log.v(TAG, "openFile path:$path")
 
             WhiteBoard.insertFile(FileConfig(File(path)))
         }
