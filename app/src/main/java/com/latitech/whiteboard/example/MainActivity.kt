@@ -10,18 +10,13 @@ class MainActivity : AppCompatActivity() {
 
     companion object {
 
-        /**
-         * 应用id
-         */
         private const val APP_ID = "a4b26ecae3744e3fb60ff679e186cd98"
 
-        /**
-         * 房间id
-         */
-        private const val ROOM_ID = "0f6d3faba9104b4e84c26edb706e10f0"
+        private const val ROOM_ID = "399bbd57486b4a83b68485f353dd7153"
 
+        private const val USER_ID = "0457987b-82f7-409d-8d58-24b42dda76f2"
 
-        private const val TOKEN = "dd250b965a9aa6eeeab023d14c5dc698"
+        private const val TOKEN = "c0c9b8a3119190152dd5e6697eb78d6a"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,13 +27,11 @@ class MainActivity : AppCompatActivity() {
         binding.join.setOnClickListener {
             // 加入房间
             val params = JoinConfig(
-                    APP_ID,
-                    ROOM_ID,
-                    "c801e228-a612-4524-97e9-5829f3cf842e",
-                    TOKEN
-            ).apply {
-                roleId = 6
-            }
+                APP_ID,
+                ROOM_ID,
+                USER_ID,
+                TOKEN
+            )
 
             startActivity<RoomActivity>(RoomActivity.ROOM_DATA_TAG to params)
         }
