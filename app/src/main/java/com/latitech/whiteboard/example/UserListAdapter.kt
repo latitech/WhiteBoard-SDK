@@ -15,7 +15,9 @@ import com.latitech.whiteboard.model.RoomMember
  * 用户列表适配器
  */
 class UserListAdapter : ListAdapter<RoomMember, UserViewHolder>(UserDiffCallback) {
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = UserViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_user, parent, false))
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = UserViewHolder(
+        LayoutInflater.from(parent.context).inflate(R.layout.item_user, parent, false)
+    )
 
     override fun onBindViewHolder(holder: UserViewHolder, position: Int) {
         holder.binding.apply {
@@ -26,10 +28,14 @@ class UserListAdapter : ListAdapter<RoomMember, UserViewHolder>(UserDiffCallback
 }
 
 
-class UserViewHolder(itemView: View, val binding: ItemUserBinding = ItemUserBinding.bind(itemView)) : RecyclerView.ViewHolder(itemView)
+class UserViewHolder(
+    itemView: View,
+    val binding: ItemUserBinding = ItemUserBinding.bind(itemView)
+) : RecyclerView.ViewHolder(itemView)
 
 object UserDiffCallback : DiffUtil.ItemCallback<RoomMember>() {
-    override fun areItemsTheSame(oldItem: RoomMember, newItem: RoomMember) = oldItem.sessionId == newItem.sessionId
+    override fun areItemsTheSame(oldItem: RoomMember, newItem: RoomMember) =
+        oldItem.sessionId == newItem.sessionId
 
     override fun areContentsTheSame(oldItem: RoomMember, newItem: RoomMember) = oldItem == newItem
 }

@@ -196,14 +196,15 @@ class RoomViewModel : ViewModel() {
      */
     fun changeInputType(inputType: InputType) {
         currentInputType.value = inputType
-        when (inputType) {
-            InputType.NORMAL -> WhiteBoard.setInputMode(normalPenStyle.inputConfig)
-            InputType.MARK -> WhiteBoard.setInputMode(markPenStyle.inputConfig)
-            InputType.LASER -> WhiteBoard.setInputMode(laserStyle.inputConfig)
-            InputType.ERASE -> WhiteBoard.setInputMode(eraserStyle.inputConfig)
-            InputType.SELECT -> WhiteBoard.setInputMode(InputConfig.select())
-            InputType.GEOMETRY -> WhiteBoard.setInputMode(geometryStyle.inputConfig)
+        val config = when (inputType) {
+            InputType.NORMAL -> normalPenStyle.inputConfig
+            InputType.MARK -> markPenStyle.inputConfig
+            InputType.LASER -> laserStyle.inputConfig
+            InputType.ERASE -> eraserStyle.inputConfig
+            InputType.SELECT -> InputConfig.select()
+            InputType.GEOMETRY -> geometryStyle.inputConfig
         }
+        WhiteBoard.setInputMode(config)
     }
 
     override fun onCleared() {
