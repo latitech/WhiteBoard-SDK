@@ -6,6 +6,8 @@
 
         <import type="com.latitech.whiteboard.type.WidgetType" />
 
+        <import type="com.latitech.whiteboard.example.InputType" />
+
         <variable
             name="viewModel"
             type="com.latitech.whiteboard.example.RoomViewModel" />
@@ -57,42 +59,54 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="8dp"
-                    android:text="选择" />
+                    android:backgroundTint="@color/btn_bg_color_selector"
+                    android:text="选择"
+                    app:selected="@{viewModel.currentInputType == InputType.SELECT}" />
 
                 <Button
                     android:id="@+id/pen"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="8dp"
-                    android:text="普通笔" />
+                    android:backgroundTint="@color/btn_bg_color_selector"
+                    android:text="普通笔"
+                    app:selected="@{viewModel.currentInputType == InputType.NORMAL}" />
 
                 <Button
                     android:id="@+id/mark"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="8dp"
-                    android:text="荧光笔" />
+                    android:backgroundTint="@color/btn_bg_color_selector"
+                    android:text="荧光笔"
+                    app:selected="@{viewModel.currentInputType == InputType.MARK}" />
 
                 <Button
                     android:id="@+id/eraser"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="8dp"
-                    android:text="橡皮" />
+                    android:backgroundTint="@color/btn_bg_color_selector"
+                    android:text="橡皮"
+                    app:selected="@{viewModel.currentInputType == InputType.ERASE}" />
 
                 <Button
                     android:id="@+id/laser"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="8dp"
-                    android:text="激光笔" />
+                    android:backgroundTint="@color/btn_bg_color_selector"
+                    android:text="激光笔"
+                    app:selected="@{viewModel.currentInputType == InputType.LASER}" />
 
                 <Button
                     android:id="@+id/geometry"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="8dp"
-                    android:text="几何图形" />
+                    android:backgroundTint="@color/btn_bg_color_selector"
+                    android:text="几何图形"
+                    app:selected="@{viewModel.currentInputType == InputType.GEOMETRY}" />
 
                 <Button
                     android:id="@+id/screenshots"

@@ -1,6 +1,5 @@
 package com.latitech.whiteboard.example
 
-import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -36,7 +35,6 @@ object DataBindingAdapters {
     @JvmStatic
     @BindingAdapter("srcUrl")
     fun setImageUrl(imageView: ImageView, url: String?) {
-        Log.i("setImageUrl", "url $url")
         Glide.with(imageView.context).load(url).into(imageView)
     }
 
