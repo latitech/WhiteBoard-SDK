@@ -53,8 +53,30 @@ class RoomViewModel : ViewModel() {
     val currentPage = MutableLiveData<WhiteBoardPage>().apply {
         WhiteBoard.addListener(object : AutoRemoveWhiteBoardListener {
             override fun onCurrentBoardPageChanged(page: WhiteBoardPage) {
-                Log.i(TAG, "onCurrentBoardPageChanged")
+                Log.i(TAG, "onCurrentBoardPageChanged ${page.pageNumber}")
                 value = page
+            }
+        })
+    }
+
+    /**
+     * 当前在线用户列表
+     */
+    val userList = MutableLiveData<List<RoomMember>>().apply {
+        WhiteBoard.addListener(object : AutoRemoveWhiteBoardListener {
+            override fun onUserList(users: List<RoomMember>) {
+                Log.i(TAG, "onUserList")
+                value = users
+            }
+
+            override fun onUserJoin(user: RoomMember) {
+                Log.i(TAG, "onUserJoin $user")
+                value = WhiteBoard.getUsers()
+            }
+
+            override fun onUserLeave(user: RoomMember) {
+                Log.i(TAG, "onUserLeave $user")
+                value = WhiteBoard.getUsers()
             }
         })
     }
@@ -129,8 +151,8 @@ class RoomViewModel : ViewModel() {
                 Log.i(TAG, "onJoinFailed $errorCode")
             }
 
-            override fun onReconnecting(time: Int) {
-                Log.i(TAG, "onReconnecting")
+            override fun onReconnecting(times: Int) {
+                Log.i(TAG, "onReconnecting $times")
             }
 
             override fun onReconnected() {
@@ -142,19 +164,7 @@ class RoomViewModel : ViewModel() {
             }
 
             override fun onBoardStatusChanged(status: BoardStatus) {
-                Log.i(TAG, "onBoardStatusChanged")
-            }
-
-            override fun onUserList(users: List<RoomMember>) {
-                Log.i(TAG, "onUserList")
-            }
-
-            override fun onUserJoin(user: RoomMember) {
-                Log.i(TAG, "onUserJoin")
-            }
-
-            override fun onUserLeave(user: RoomMember) {
-                Log.i(TAG, "onUserLeave")
+                Log.i(TAG, "onBoardStatusChanged $status")
             }
 
             override fun onBackgroundColorChanged(backgroundColor: Int) {
@@ -162,11 +172,11 @@ class RoomViewModel : ViewModel() {
             }
 
             override fun onFilePageChanged(info: ActiveWidgetInfo) {
-                Log.i(TAG, "onFilePageChanged")
+                Log.i(TAG, "onFilePageChanged $info")
             }
 
             override fun onWidgetActionEvent(event: WidgetActionEvent) {
-                Log.i(TAG, "onWidgetActionEvent")
+                Log.i(TAG, "onWidgetActionEvent $event")
             }
         })
     }

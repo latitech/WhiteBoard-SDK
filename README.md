@@ -19,7 +19,7 @@ dependencies {
     implementation 'com.latitech.android:whiteboard:0.0.9'
 
     // 可选，如果项目使用了androidx可以添加此项开启sdk的可空/非空参数注解的识别，在kotlin环境非常有用。
-    compileOnly 'androidx.annotation:annotation:1.1.0'
+    compileOnly 'androidx.annotation:annotation:1.2.0'
 }
 
 android {
@@ -553,7 +553,7 @@ office文件需要在线转换格式，所以画面呈现会相对慢一些。
 此列表与监听[onUserList](#onuserlist)，[onUserJoin](#onuserjoin)，[onUserLeave](#onuserleave)收集获得的列表一致。
 
 - 返回
-    - 一个不可变的[RoomMember](#roommember)成员信息列表，如果未加入房间则会返回空列表。
+    - 一个只读的[RoomMember](#roommember)成员信息列表，如果未加入房间则会返回空列表。
     
 ## getPageList
 
@@ -564,7 +564,7 @@ office文件需要在线转换格式，所以画面呈现会相对慢一些。
 此列表与监听[onBoardPageList](#onboardpagelist)，[onBoardPageInfoChanged](#onboardpageinfochanged)处理后获得的列表一致。
 
 - 返回
-    - 一个不可变的[WhiteBoardPage](#whiteboardpage)白板页信息列表，如果未加入房间则会返回空列表。
+    - 一个只读的[WhiteBoardPage](#whiteboardpage)白板页信息列表，如果未加入房间则会返回空列表。
     
 ## getCurrentPage
 
@@ -737,7 +737,7 @@ office文件需要在线转换格式，所以画面呈现会相对慢一些。
 
 |参数|描述|
 |----|----|
-|users|已经在房间中的用户信息[RoomMember](#roommember)列表，此列表为不可变列表|
+|users|已经在房间中的用户信息[RoomMember](#roommember)列表，此列表为只读列表|
 
 ## onUserJoin
 
@@ -774,7 +774,7 @@ office文件需要在线转换格式，所以画面呈现会相对慢一些。
 
 |参数|描述|
 |----|----|
-|list|白板页信息[WhiteBoardPage](#whiteboardpage)的不可变列表，也可以通过[getPageList](#getpagelist)获得|
+|list|白板页信息[WhiteBoardPage](#whiteboardpage)的只读列表，也可以通过[getPageList](#getpagelist)获得|
 
 ## onCurrentBoardPageChanged
 

@@ -62,6 +62,12 @@ class RoomActivity : AppCompatActivity() {
             }
         }
 
+        binding.userList.adapter = UserListAdapter().apply {
+            viewModel.userList.observe(this@RoomActivity) {
+                submitList(it)
+            }
+        }
+
         WhiteBoard.joinRoom(intent.getParcelableExtra(ROOM_DATA_TAG)!!)
     }
 

@@ -39,6 +39,20 @@ object DataBindingAdapters {
     }
 
     /**
+     * 设置头像
+     */
+    @JvmStatic
+    @BindingAdapter("avatar")
+    fun setAvatar(imageView: ImageView, url: String?) {
+        Glide.with(imageView.context)
+            .load(url)
+            .circleCrop()
+            .error(R.drawable.ic_baseline_account_circle_24)
+            .placeholder(R.drawable.ic_baseline_account_circle_24)
+            .into(imageView)
+    }
+
+    /**
      * 可见性属性
      */
     @JvmStatic
