@@ -2,10 +2,12 @@
 
 package com.latitech.whiteboard.example
 
+import androidx.core.graphics.ColorUtils
 import com.latitech.whiteboard.WhiteBoard
 import com.latitech.whiteboard.model.InputConfig
 import com.latitech.whiteboard.type.GeometryType
 import com.latitech.whiteboard.type.LaserType
+import kotlin.math.pow
 
 /**
  * 普通笔配置
@@ -46,26 +48,26 @@ class NormalPenStyle {
          * 可选颜色
          */
         val colors = intArrayOf(
-                0xFF000000.toInt(),
-                0xFFFFA726.toInt(),
-                0xFFFFFF00.toInt(),
-                0xFF388E3C.toInt(),
-                0xFF2962FF.toInt(),
-                0xFFD500F9.toInt(),
-                0xFFFF0000.toInt(),
-                0xFFFFFFFF.toInt(),
-                0xFF8D6E63.toInt(),
+            0xFF000000.toInt(),
+            0xFFFFA726.toInt(),
+            0xFFFFFF00.toInt(),
+            0xFF388E3C.toInt(),
+            0xFF2962FF.toInt(),
+            0xFFD500F9.toInt(),
+            0xFFFF0000.toInt(),
+            0xFFFFFFFF.toInt(),
+            0xFF8D6E63.toInt(),
         )
 
         /**
          * 可选粗细
          */
         val sizes = floatArrayOf(
-                0.5f,
-                1f,
-                3f,
-                5f,
-                8f,
+            0.5f,
+            1f,
+            3f,
+            5f,
+            8f,
         )
     }
 }
@@ -109,23 +111,23 @@ class MarkPenStyle {
          * 可选颜色
          */
         val colors = intArrayOf(
-                0x6F03DAC5,
-                0x6FFFFF00,
-                0x6FFF0000,
-                0x6F2962FF,
-                0x6FBB86FC,
+            0x6F03DAC5,
+            0x6FFFFF00,
+            0x6FFF0000,
+            0x6F2962FF,
+            0x6FBB86FC,
         )
 
         /**
          * 可选粗细
          */
         val sizes = floatArrayOf(
-                5f,
-                10f,
-                15f,
-                20f,
-                25f,
-                30f,
+            5f,
+            10f,
+            15f,
+            20f,
+            25f,
+            30f,
         )
     }
 }
@@ -158,10 +160,10 @@ class EraserStyle {
          * 可选面积（在白板虚拟尺寸中的大小）
          */
         val sizes = floatArrayOf(
-                60f,
-                100f,
-                160f,
-                240f,
+            60f,
+            100f,
+            160f,
+            240f,
         )
     }
 }
@@ -193,10 +195,10 @@ class LaserStyle {
          * 可选图形
          */
         val icons = mapOf(
-                R.drawable.ic_baseline_adjust_24 to LaserType.LASER_DOT,
-                R.drawable.ic_outline_pan_tool_24 to LaserType.LASER_HAND,
-                R.drawable.ic_outline_near_me_24 to LaserType.LASER_ARROWS_WHITE,
-                R.drawable.ic_baseline_north_west_24 to LaserType.LASER_ARROWS_BLACK,
+            R.drawable.ic_baseline_adjust_24 to LaserType.LASER_DOT,
+            R.drawable.ic_outline_pan_tool_24 to LaserType.LASER_HAND,
+            R.drawable.ic_outline_near_me_24 to LaserType.LASER_ARROWS_WHITE,
+            R.drawable.ic_baseline_north_west_24 to LaserType.LASER_ARROWS_BLACK,
         )
     }
 }
@@ -246,7 +248,12 @@ class GeometryStyle {
     /**
      * 生成当前配置
      */
-    val inputConfig get() = InputConfig.geometry(icons[iconKey]!!, colors[colorIndex], sizes[sizeIndex])
+    val inputConfig
+        get() = InputConfig.geometry(
+            icons[iconKey]!!,
+            colors[colorIndex],
+            sizes[sizeIndex]
+        )
 
     companion object {
 
@@ -254,31 +261,31 @@ class GeometryStyle {
          * 可选图形
          */
         val icons = mapOf(
-                R.drawable.ic_outline_crop_landscape_24 to GeometryType.RECTANGLE,
-                R.drawable.ic_outline_brightness_1_24 to GeometryType.CIRCLE,
-                R.drawable.ic_baseline_north_west_24 to GeometryType.ARROW,
-                R.drawable.ic_baseline_horizontal_rule_24 to GeometryType.LINE,
+            R.drawable.ic_outline_crop_landscape_24 to GeometryType.RECTANGLE,
+            R.drawable.ic_outline_brightness_1_24 to GeometryType.CIRCLE,
+            R.drawable.ic_baseline_north_west_24 to GeometryType.ARROW,
+            R.drawable.ic_baseline_horizontal_rule_24 to GeometryType.LINE,
         )
 
         /**
          * 可选颜色
          */
         val colors = intArrayOf(
-                0xFF000000.toInt(),
-                0xFFFFFF00.toInt(),
-                0xFF388E3C.toInt(),
-                0xFFD500F9.toInt(),
-                0xFFFF0000.toInt(),
+            0xFF000000.toInt(),
+            0xFFFFFF00.toInt(),
+            0xFF388E3C.toInt(),
+            0xFFD500F9.toInt(),
+            0xFFFF0000.toInt(),
         )
 
         /**
          * 可选粗细
          */
         val sizes = floatArrayOf(
-                1f,
-                3f,
-                5f,
-                8f,
+            1f,
+            3f,
+            5f,
+            8f,
         )
     }
 }
@@ -316,4 +323,123 @@ enum class InputType {
      * 几何图形
      */
     GEOMETRY,
+}
+
+/**
+ * 白板背景主题
+ *
+ * @property color 当前使用的背景色
+ */
+class BoardTheme(val color: Int) {
+
+    /**
+     * 当前主题类型
+     */
+    val themeType by lazy {
+        val hsl = FloatArray(3)
+
+        ColorUtils.colorToHSL(color, hsl)
+
+        if (hsl[2] in 0.0..0.18) {
+            return@lazy BoardThemeType.BLACK
+        }
+
+        if (hsl[1] in 0.0..0.17) {
+            return@lazy BoardThemeType.WHITE
+        }
+
+        if (hsl[0] in 70.0..180.0) {
+            return@lazy BoardThemeType.GREEN
+        }
+
+        BoardThemeType.OTHER
+    }
+
+    /**
+     * 是否是亮色主题
+     */
+    val isLight by lazy {
+        (ColorUtils.calculateLuminance(color) + 0.05).pow(2) > 0.15
+    }
+
+    /**
+     * 是否是暗色主题
+     */
+    val isDark get() = !isLight
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+
+        other as BoardTheme
+
+        if (color != other.color) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        return color
+    }
+
+    companion object {
+
+        /**
+         * 通过主题类型创建主题实例
+         *
+         * @param type 主题类型
+         */
+        fun fromType(type: BoardThemeType) = BoardTheme(type.color())
+
+        /**
+         * 白色主题
+         */
+        fun white() = fromType(BoardThemeType.WHITE)
+
+        /**
+         * 黑色主题
+         */
+        fun black() = fromType(BoardThemeType.BLACK)
+
+        /**
+         * 绿色主题
+         */
+        fun green() = fromType(BoardThemeType.GREEN)
+    }
+}
+
+/**
+ * 几种预置主题类型
+ */
+enum class BoardThemeType {
+
+    /**
+     * 白色
+     */
+    WHITE,
+
+    /**
+     * 黑色
+     */
+    BLACK,
+
+    /**
+     * 绿色
+     */
+    GREEN,
+
+    /**
+     * 其它颜色
+     */
+    OTHER;
+
+    /**
+     * 获取类型对应的颜色
+     */
+    fun color() = when (this) {
+        WHITE -> 0xFFF5F5F5.toInt()
+        BLACK -> 0xFF212121.toInt()
+        GREEN -> 0xFF1F795E.toInt()
+        OTHER -> 0xFFF5F5F5.toInt()
+    }
 }

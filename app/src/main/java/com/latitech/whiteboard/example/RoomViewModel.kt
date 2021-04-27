@@ -118,6 +118,18 @@ class RoomViewModel : ViewModel() {
     }
 
     /**
+     * 当前白板背景主题
+     */
+    val theme = MutableLiveData(BoardTheme.white()).apply {
+        WhiteBoard.addListener(object : AutoRemoveWhiteBoardListener {
+            override fun onBackgroundColorChanged(backgroundColor: Int) {
+                Log.i(TAG, "onBackgroundColorChanged")
+                value = BoardTheme(backgroundColor)
+            }
+        })
+    }
+
+    /**
      * 普通笔配置
      */
     val normalPenStyle = NormalPenStyle()
@@ -173,10 +185,6 @@ class RoomViewModel : ViewModel() {
 
             override fun onDisconnected() {
                 Log.i(TAG, "onDisconnected")
-            }
-
-            override fun onBackgroundColorChanged(backgroundColor: Int) {
-                Log.i(TAG, "onBackgroundColorChanged")
             }
 
             override fun onFilePageChanged(info: ActiveWidgetInfo) {

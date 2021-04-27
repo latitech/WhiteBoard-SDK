@@ -8,4 +8,11 @@
         <item>正在重连</item>
     </string-array>
 
+    <string-array name="board_theme_names">
+        <item>白色</item>
+        <item>黑色</item>
+        <item>绿色</item>
+        <item>未知</item>
+    </string-array>
+
 </resources>

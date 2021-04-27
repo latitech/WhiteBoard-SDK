@@ -196,6 +196,12 @@ class RoomActivity : AppCompatActivity() {
                 geometryWindow.show(it)
             }
         }
+
+        val themeWindow = themeWindow()
+
+        binding.theme.setOnClickListener {
+            themeWindow.show(it)
+        }
     }
 
     /**
@@ -252,6 +258,21 @@ class RoomActivity : AppCompatActivity() {
         }
         addSizeSelection(GeometryStyle.sizes, viewModel.geometryStyle.sizeIndex) {
             viewModel.geometryStyle.sizeIndex = it
+        }
+    }
+
+    /**
+     * 创建背景主题颜色选择面板
+     */
+    private fun themeWindow() = PalettePopup(this).apply {
+        val colors = intArrayOf(
+            BoardThemeType.WHITE.color(),
+            BoardThemeType.BLACK.color(),
+            BoardThemeType.GREEN.color(),
+        )
+
+        addColorSelection(colors, viewModel.theme.value!!.themeType.ordinal) {
+            WhiteBoard.setBackgroundColor(colors[it])
         }
     }
 
