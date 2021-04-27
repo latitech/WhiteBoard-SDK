@@ -19,6 +19,18 @@ import com.latitech.whiteboard.type.WidgetType
 class RoomViewModel : ViewModel() {
 
     /**
+     * 当前房间状态
+     */
+    val roomStatus = MutableLiveData(WhiteBoard.getStatus()).apply {
+        WhiteBoard.addListener(object : AutoRemoveWhiteBoardListener {
+            override fun onBoardStatusChanged(status: BoardStatus) {
+                Log.i(TAG, "onBoardStatusChanged $status")
+                value = status
+            }
+        })
+    }
+
+    /**
      * 白板宽高比
      */
     val whiteBoardRatio = MutableLiveData("2048:1440").apply {
@@ -161,10 +173,6 @@ class RoomViewModel : ViewModel() {
 
             override fun onDisconnected() {
                 Log.i(TAG, "onDisconnected")
-            }
-
-            override fun onBoardStatusChanged(status: BoardStatus) {
-                Log.i(TAG, "onBoardStatusChanged $status")
             }
 
             override fun onBackgroundColorChanged(backgroundColor: Int) {

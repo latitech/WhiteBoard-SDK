@@ -19,13 +19,30 @@
         android:background="@color/cardview_dark_background"
         android:orientation="vertical">
 
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/room_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"
+            app:contentPadding="8dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{@stringArray/room_status_names[viewModel.roomStatus.ordinal()]}" />
+
+        </com.google.android.material.card.MaterialCardView>
+
         <HorizontalScrollView
             android:id="@+id/horizontalScrollView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
             android:background="@color/cardview_light_background"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toEndOf="@id/room_status"
             app:layout_constraintTop_toTopOf="parent">
 
             <LinearLayout
@@ -123,10 +140,11 @@
             android:id="@+id/page_navigation"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
             android:background="@color/cardview_light_background"
             android:orientation="horizontal"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/horizontalScrollView">
+            app:layout_constraintTop_toBottomOf="@id/room_status">
 
             <ImageView
                 android:id="@+id/pre_page"

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="room_status_names">
+        <item>未连接</item>
+        <item>正在连接</item>
+        <item>已连接</item>
+        <item>连接失败</item>
+        <item>正在重连</item>
+    </string-array>
+
+</resources>
