@@ -192,52 +192,56 @@
             app:layout_constraintTop_toBottomOf="@id/horizontalScrollView"
             app:visibleGone="@{viewModel.canRecovery}" />
 
-        <LinearLayout
+        <com.google.android.material.card.MaterialCardView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@color/cardview_light_background"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/horizontalScrollView"
             app:visibleGone="@{viewModel.activeWidget!=null}">
 
-            <ImageView
-                android:id="@+id/delete_file"
+
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:contentDescription="删除文件"
-                android:foreground="?selectableItemBackgroundBorderless"
-                android:padding="16dp"
-                app:srcCompat="@drawable/ic_baseline_delete_outline_24" />
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
 
-            <ImageView
-                android:id="@+id/pre_file_page"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:contentDescription="上一页"
-                android:foreground="?selectableItemBackgroundBorderless"
-                android:padding="16dp"
-                app:srcCompat="@drawable/ic_baseline_arrow_back_ios_24"
-                app:visibleGone="@{viewModel.activeWidget.type == WidgetType.FILE}" />
+                <ImageView
+                    android:id="@+id/delete_file"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="删除文件"
+                    android:foreground="?selectableItemBackgroundBorderless"
+                    android:padding="16dp"
+                    app:srcCompat="@drawable/ic_baseline_delete_outline_24" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@{viewModel.activeWidget.currentPageNumber + `/` + viewModel.activeWidget.pageCount}"
-                app:visibleGone="@{viewModel.activeWidget.type == WidgetType.FILE}" />
+                <ImageView
+                    android:id="@+id/pre_file_page"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="上一页"
+                    android:foreground="?selectableItemBackgroundBorderless"
+                    android:padding="16dp"
+                    app:srcCompat="@drawable/ic_baseline_arrow_back_ios_24"
+                    app:visibleGone="@{viewModel.activeWidget.type == WidgetType.FILE}" />
 
-            <ImageView
-                android:id="@+id/next_file_page"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:contentDescription="下一页"
-                android:foreground="?selectableItemBackgroundBorderless"
-                android:padding="16dp"
-                app:srcCompat="@drawable/ic_baseline_arrow_forward_ios_24"
-                app:visibleGone="@{viewModel.activeWidget.type == WidgetType.FILE}" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{viewModel.activeWidget.currentPageNumber + `/` + viewModel.activeWidget.pageCount}"
+                    app:visibleGone="@{viewModel.activeWidget.type == WidgetType.FILE}" />
 
-        </LinearLayout>
+                <ImageView
+                    android:id="@+id/next_file_page"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="下一页"
+                    android:foreground="?selectableItemBackgroundBorderless"
+                    android:padding="16dp"
+                    app:srcCompat="@drawable/ic_baseline_arrow_forward_ios_24"
+                    app:visibleGone="@{viewModel.activeWidget.type == WidgetType.FILE}" />
 
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
