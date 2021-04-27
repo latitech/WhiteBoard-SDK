@@ -65,5 +65,5 @@ dependencies {
 
     implementation 'com.github.bumptech.glide:okhttp3-integration:4.12.0'
 
-    implementation 'com.latitech.android:whiteboard:0.0.9'
+    implementation 'com.latitech.android:whiteboard:0.1.0'
 }
