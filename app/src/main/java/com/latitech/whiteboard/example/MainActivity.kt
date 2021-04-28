@@ -4,7 +4,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.latitech.whiteboard.example.databinding.ActivityMainBinding
 import com.latitech.whiteboard.model.JoinConfig
-import org.jetbrains.anko.startActivity
+import splitties.activities.start
 
 class MainActivity : AppCompatActivity() {
 
@@ -35,7 +35,9 @@ class MainActivity : AppCompatActivity() {
                 roleId = 6
             }
 
-            startActivity<RoomActivity>(RoomActivity.ROOM_DATA_TAG to params)
+            start<RoomActivity> {
+                putExtra(RoomActivity.ROOM_DATA_TAG, params)
+            }
         }
     }
 }

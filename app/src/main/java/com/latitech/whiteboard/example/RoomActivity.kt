@@ -14,7 +14,7 @@ import com.latitech.whiteboard.example.databinding.ActivityRoomBinding
 import com.latitech.whiteboard.model.FileConfig
 import com.latitech.whiteboard.model.InputConfig
 import com.latitech.whiteboard.type.WidgetType
-import org.jetbrains.anko.alert
+import splitties.alertdialog.appcompat.alertDialog
 import java.io.File
 
 /**
@@ -114,14 +114,12 @@ class RoomActivity : AppCompatActivity() {
                 }
                 Log.i(TAG, "screenshots ${it.width}x${it.height}")
                 runOnUiThread {
-                    alert {
-                        customView = ImageView(this@RoomActivity).apply {
+                    alertDialog {
+                        setView(ImageView(this@RoomActivity).apply {
                             setImageBitmap(it)
                             scaleType = ImageView.ScaleType.CENTER_INSIDE
-                        }
-
-                        show()
-                    }
+                        })
+                    }.show()
                 }
 
             }

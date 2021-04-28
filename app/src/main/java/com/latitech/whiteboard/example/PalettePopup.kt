@@ -9,13 +9,13 @@ import android.graphics.drawable.ColorDrawable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
 import android.widget.PopupWindow
 import androidx.core.view.isNotEmpty
+import androidx.core.view.setMargins
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 import com.latitech.whiteboard.example.databinding.PopupCardBinding
-import org.jetbrains.anko.dip
+import splitties.dimensions.dip
 
 /**
  * 通用调色盘弹窗，选择颜色和大小
@@ -35,7 +35,12 @@ class PalettePopup(private val context: Context) {
     init {
         val binding = PopupCardBinding.inflate(LayoutInflater.from(context))
         parent = binding.popupParent
-        popupWindow = PopupWindow(binding.root, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, true).apply {
+        popupWindow = PopupWindow(
+            binding.root,
+            ViewGroup.LayoutParams.WRAP_CONTENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT,
+            true
+        ).apply {
             isTouchable = true
             isOutsideTouchable = true
             setBackgroundDrawable(ColorDrawable())
@@ -49,7 +54,11 @@ class PalettePopup(private val context: Context) {
      * @param selected 初始选中的序号
      * @param changedListener 颜色选择事件参数为选中序号
      */
-    fun addColorSelection(colors: IntArray, selected: Int, changedListener: (selected: Int) -> Unit) {
+    fun addColorSelection(
+        colors: IntArray,
+        selected: Int,
+        changedListener: (selected: Int) -> Unit
+    ) {
         loadChipGroup().apply {
             colors.forEachIndexed { index, i ->
                 LayoutInflater.from(context).inflate(R.layout.palette_chip, this, false).let {
@@ -74,7 +83,11 @@ class PalettePopup(private val context: Context) {
      * @param selected 初始选中的序号
      * @param changedListener 大小选择事件参数为选中序号
      */
-    fun addSizeSelection(sizes: FloatArray, selected: Int, changedListener: (selected: Int) -> Unit) {
+    fun addSizeSelection(
+        sizes: FloatArray,
+        selected: Int,
+        changedListener: (selected: Int) -> Unit
+    ) {
         loadChipGroup().apply {
             val minSize = context.dip(16)
             val weight = context.dip(16).toFloat() / sizes.size
@@ -134,17 +147,20 @@ class PalettePopup(private val context: Context) {
      */
     private fun loadChipGroup(): ChipGroup {
         if (parent.isNotEmpty()) {
-            parent.addView(View(context).apply {
-                setBackgroundColor(Color.DKGRAY)
-            }, ViewGroup.MarginLayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, context.dip(1)).apply {
-                topMargin = context.dip(8)
-                bottomMargin = context.dip(8)
-            })
+            parent.addView(
+                View(context).apply {
+                    setBackgroundColor(Color.DKGRAY)
+                },
+                ViewGroup.MarginLayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, context.dip(1))
+                    .apply {
+                        setMargins(context.dip(8))
+                    })
         }
 
-        return LayoutInflater.from(context).inflate(R.layout.palette_chip_group, parent, false).let {
-            parent.addView(it)
-            it as ChipGroup
-        }
+        return LayoutInflater.from(context).inflate(R.layout.palette_chip_group, parent, false)
+            .let {
+                parent.addView(it)
+                it as ChipGroup
+            }
     }
 }
