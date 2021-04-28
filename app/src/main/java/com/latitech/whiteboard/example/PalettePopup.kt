@@ -61,10 +61,7 @@ class PalettePopup(private val context: Context) {
     ) {
         loadChipGroup().apply {
             colors.forEachIndexed { index, i ->
-                LayoutInflater.from(context).inflate(R.layout.palette_chip, this, false).let {
-                    addView(it)
-                    it as Chip
-                }.apply {
+                loadChip(this).apply {
                     chipIconTint = ColorStateList.valueOf(i)
                     id = index
                 }
@@ -93,10 +90,7 @@ class PalettePopup(private val context: Context) {
             val weight = context.dip(16).toFloat() / sizes.size
 
             sizes.forEachIndexed { index, _ ->
-                LayoutInflater.from(context).inflate(R.layout.palette_chip, this, false).let {
-                    addView(it)
-                    it as Chip
-                }.apply {
+                loadChip(this).apply {
                     chipIconSize = weight * index + minSize
                     id = index
                 }
@@ -118,10 +112,7 @@ class PalettePopup(private val context: Context) {
     fun addIconSelection(icons: Set<Int>, selected: Int, changedListener: (selected: Int) -> Unit) {
         loadChipGroup().apply {
             icons.forEach {
-                LayoutInflater.from(context).inflate(R.layout.palette_chip, this, false).let {
-                    addView(it)
-                    it as Chip
-                }.apply {
+                loadChip(this).apply {
                     setChipIconResource(it)
                     id = it
                 }
@@ -162,5 +153,15 @@ class PalettePopup(private val context: Context) {
                 parent.addView(it)
                 it as ChipGroup
             }
+    }
+
+    /**
+     * 加载一个[Chip]
+     */
+    private fun loadChip(root: ViewGroup): Chip {
+        return LayoutInflater.from(context).inflate(R.layout.palette_chip, root, false).let {
+            root.addView(it)
+            it as Chip
+        }
     }
 }
