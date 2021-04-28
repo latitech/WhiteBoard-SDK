@@ -6,6 +6,7 @@ import android.net.Uri
 import android.os.Build
 import android.provider.OpenableColumns
 import androidx.core.content.FileProvider
+import androidx.core.net.toUri
 import java.io.File
 
 /**
@@ -74,7 +75,7 @@ object FileUtil {
      * filePath 图片路径
      */
     fun createImageUri(context: Context, filePath: String): Uri = if (Build.VERSION.SDK_INT < 24) {
-        Uri.fromFile(File(filePath))
+        File(filePath).toUri()
     } else {
         FileProvider.getUriForFile(context, context.packageName + ".provider", File(filePath))
     }
