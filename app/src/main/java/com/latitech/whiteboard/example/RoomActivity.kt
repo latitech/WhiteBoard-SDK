@@ -112,12 +112,12 @@ class RoomActivity : AppCompatActivity() {
                 if (it == null) {
                     return@screenshots
                 }
-
+                Log.i(TAG, "screenshots ${it.width}x${it.height}")
                 runOnUiThread {
                     alert {
                         customView = ImageView(this@RoomActivity).apply {
                             setImageBitmap(it)
-                            scaleType = ImageView.ScaleType.FIT_XY
+                            scaleType = ImageView.ScaleType.CENTER_INSIDE
                         }
 
                         show()
