@@ -145,8 +145,6 @@ class RoomActivity : AppCompatActivity() {
                 }
         }
 
-        val normalPenWindow = normalPenWindow()
-
         binding.pen.setOnClickListener {
             if (viewModel.currentInputType.value != InputType.NORMAL) {
                 viewModel.changeInputType(InputType.NORMAL)
@@ -154,8 +152,6 @@ class RoomActivity : AppCompatActivity() {
                 normalPenWindow.show(it)
             }
         }
-
-        val markPenWindow = markPenWindow()
 
         binding.mark.setOnClickListener {
             if (viewModel.currentInputType.value != InputType.MARK) {
@@ -165,8 +161,6 @@ class RoomActivity : AppCompatActivity() {
             }
         }
 
-        val eraserWindow = eraserWindow()
-
         binding.eraser.setOnClickListener {
             if (viewModel.currentInputType.value != InputType.ERASE) {
                 viewModel.changeInputType(InputType.ERASE)
@@ -174,8 +168,6 @@ class RoomActivity : AppCompatActivity() {
                 eraserWindow.show(it)
             }
         }
-
-        val laserWindow = laserWindow()
 
         binding.laser.setOnClickListener {
             if (viewModel.currentInputType.value != InputType.LASER) {
@@ -185,8 +177,6 @@ class RoomActivity : AppCompatActivity() {
             }
         }
 
-        val geometryWindow = geometryWindow()
-
         binding.geometry.setOnClickListener {
             if (viewModel.currentInputType.value != InputType.GEOMETRY) {
                 viewModel.changeInputType(InputType.GEOMETRY)
@@ -194,8 +184,6 @@ class RoomActivity : AppCompatActivity() {
                 geometryWindow.show(it)
             }
         }
-
-        val themeWindow = themeWindow()
 
         binding.theme.setOnClickListener {
             themeWindow.show(it)
@@ -205,72 +193,84 @@ class RoomActivity : AppCompatActivity() {
     /**
      * 创建普通笔颜色选择面板
      */
-    private fun normalPenWindow() = PalettePopup(this).apply {
-        addColorSelection(NormalPenStyle.colors, viewModel.normalPenStyle.colorIndex) {
-            viewModel.normalPenStyle.colorIndex = it
-        }
-        addSizeSelection(NormalPenStyle.sizes, viewModel.normalPenStyle.sizeIndex) {
-            viewModel.normalPenStyle.sizeIndex = it
+    private val normalPenWindow by lazy {
+        PalettePopup(this).apply {
+            addColorSelection(NormalPenStyle.colors, viewModel.normalPenStyle.colorIndex) {
+                viewModel.normalPenStyle.colorIndex = it
+            }
+            addSizeSelection(NormalPenStyle.sizes, viewModel.normalPenStyle.sizeIndex) {
+                viewModel.normalPenStyle.sizeIndex = it
+            }
         }
     }
 
     /**
      * 创建马克笔颜色选择面板
      */
-    private fun markPenWindow() = PalettePopup(this).apply {
-        addColorSelection(MarkPenStyle.colors, viewModel.markPenStyle.colorIndex) {
-            viewModel.markPenStyle.colorIndex = it
-        }
-        addSizeSelection(MarkPenStyle.sizes, viewModel.markPenStyle.sizeIndex) {
-            viewModel.markPenStyle.sizeIndex = it
+    private val markPenWindow by lazy {
+        PalettePopup(this).apply {
+            addColorSelection(MarkPenStyle.colors, viewModel.markPenStyle.colorIndex) {
+                viewModel.markPenStyle.colorIndex = it
+            }
+            addSizeSelection(MarkPenStyle.sizes, viewModel.markPenStyle.sizeIndex) {
+                viewModel.markPenStyle.sizeIndex = it
+            }
         }
     }
 
     /**
      * 创建橡皮大小选择面板
      */
-    private fun eraserWindow() = PalettePopup(this).apply {
-        addSizeSelection(EraserStyle.sizes, viewModel.eraserStyle.sizeIndex) {
-            viewModel.eraserStyle.sizeIndex = it
+    private val eraserWindow by lazy {
+        PalettePopup(this).apply {
+            addSizeSelection(EraserStyle.sizes, viewModel.eraserStyle.sizeIndex) {
+                viewModel.eraserStyle.sizeIndex = it
+            }
         }
     }
 
     /**
      * 创建激光笔图形选择面板
      */
-    private fun laserWindow() = PalettePopup(this).apply {
-        addIconSelection(LaserStyle.icons.keys, viewModel.laserStyle.iconKey) {
-            viewModel.laserStyle.iconKey = it
+    private val laserWindow by lazy {
+        PalettePopup(this).apply {
+            addIconSelection(LaserStyle.icons.keys, viewModel.laserStyle.iconKey) {
+                viewModel.laserStyle.iconKey = it
+            }
         }
     }
 
     /**
      * 创建几何图形选择面板
      */
-    private fun geometryWindow() = PalettePopup(this).apply {
-        addIconSelection(GeometryStyle.icons.keys, viewModel.geometryStyle.iconKey) {
-            viewModel.geometryStyle.iconKey = it
-        }
-        addColorSelection(GeometryStyle.colors, viewModel.geometryStyle.colorIndex) {
-            viewModel.geometryStyle.colorIndex = it
-        }
-        addSizeSelection(GeometryStyle.sizes, viewModel.geometryStyle.sizeIndex) {
-            viewModel.geometryStyle.sizeIndex = it
+    private val geometryWindow by lazy {
+        PalettePopup(this).apply {
+            addIconSelection(GeometryStyle.icons.keys, viewModel.geometryStyle.iconKey) {
+                viewModel.geometryStyle.iconKey = it
+            }
+            addColorSelection(GeometryStyle.colors, viewModel.geometryStyle.colorIndex) {
+                viewModel.geometryStyle.colorIndex = it
+            }
+            addSizeSelection(GeometryStyle.sizes, viewModel.geometryStyle.sizeIndex) {
+                viewModel.geometryStyle.sizeIndex = it
+            }
         }
     }
 
     /**
      * 创建背景主题颜色选择面板
      */
-    private fun themeWindow() = PalettePopup(this).apply {
-        val colors = intArrayOf(
-            BoardThemeType.WHITE.color(),
-            BoardThemeType.BLACK.color(),
-            BoardThemeType.GREEN.color(),
-        )
+    private val themeWindow by lazy {
+        PalettePopup(this).apply {
+            val colors = intArrayOf(
+                BoardThemeType.WHITE.color(),
+                BoardThemeType.BLACK.color(),
+                BoardThemeType.GREEN.color(),
+            )
 
-        addColorSelection(colors, viewModel.theme.value!!.themeType.ordinal) {
-            WhiteBoard.setBackgroundColor(colors[it])
+            addColorSelection(colors, viewModel.theme.value!!.themeType.ordinal) {
+                WhiteBoard.setBackgroundColor(colors[it])
+            }
         }
     }
 
