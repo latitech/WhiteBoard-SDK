@@ -56,9 +56,7 @@ class RoomActivity : AppCompatActivity() {
 
         binding.pageList.adapter = PageListAdapter(this, viewModel.currentPage).apply {
             viewModel.pageList.observe(this@RoomActivity) {
-                if (it != null) {
-                    submitList(it)
-                }
+                submitList(it)
             }
         }
 
