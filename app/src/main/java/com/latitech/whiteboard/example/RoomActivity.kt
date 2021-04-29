@@ -86,7 +86,7 @@ class RoomActivity : AppCompatActivity() {
         }
 
         binding.select.setOnClickListener {
-            WhiteBoard.setInputMode(InputConfig.select())
+            viewModel.changeInputType(InputType.SELECT)
         }
 
         binding.restore.setOnClickListener {
