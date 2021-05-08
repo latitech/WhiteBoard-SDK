@@ -31,9 +31,7 @@ class MainActivity : AppCompatActivity() {
                 ROOM_ID,
                 USER_ID,
                 TOKEN
-            ).apply {
-                roleId = 6
-            }
+            )
 
             start<RoomActivity> {
                 putExtra(RoomActivity.ROOM_DATA_TAG, params)
