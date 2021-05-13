@@ -1,6 +1,5 @@
 package com.latitech.whiteboard.example
 
-import android.app.Activity
 import android.content.Context
 import android.net.Uri
 import android.os.Build
