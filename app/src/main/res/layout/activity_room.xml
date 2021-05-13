@@ -19,207 +19,6 @@
         android:background="@color/cardview_dark_background"
         android:orientation="vertical">
 
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/room_status"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="4dp"
-            app:contentPadding="8dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@{@stringArray/room_status_names[viewModel.roomStatus.ordinal()]}" />
-
-        </com.google.android.material.card.MaterialCardView>
-
-        <HorizontalScrollView
-            android:id="@+id/horizontalScrollView"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="4dp"
-            android:background="@color/cardview_light_background"
-            app:layout_constraintEnd_toStartOf="@id/theme_controller"
-            app:layout_constraintStart_toEndOf="@id/room_status"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <Button
-                    android:id="@+id/insert_image"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="8dp"
-                    android:text="插入图片" />
-
-                <Button
-                    android:id="@+id/camera"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
-                    android:text="拍照" />
-
-                <Button
-                    android:id="@+id/insert_file"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
-                    android:text="插入文件" />
-
-                <Button
-                    android:id="@+id/select"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
-                    android:backgroundTint="@color/btn_bg_color_selector"
-                    android:text="选择"
-                    app:selected="@{viewModel.currentInputType == InputType.SELECT}" />
-
-                <Button
-                    android:id="@+id/pen"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
-                    android:backgroundTint="@color/btn_bg_color_selector"
-                    android:text="普通笔"
-                    app:selected="@{viewModel.currentInputType == InputType.NORMAL}" />
-
-                <Button
-                    android:id="@+id/mark"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
-                    android:backgroundTint="@color/btn_bg_color_selector"
-                    android:text="荧光笔"
-                    app:selected="@{viewModel.currentInputType == InputType.MARK}" />
-
-                <Button
-                    android:id="@+id/eraser"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
-                    android:backgroundTint="@color/btn_bg_color_selector"
-                    android:text="橡皮"
-                    app:selected="@{viewModel.currentInputType == InputType.ERASE}" />
-
-                <Button
-                    android:id="@+id/laser"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
-                    android:backgroundTint="@color/btn_bg_color_selector"
-                    android:text="激光笔"
-                    app:selected="@{viewModel.currentInputType == InputType.LASER}" />
-
-                <Button
-                    android:id="@+id/geometry"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
-                    android:backgroundTint="@color/btn_bg_color_selector"
-                    android:text="几何图形"
-                    app:selected="@{viewModel.currentInputType == InputType.GEOMETRY}" />
-
-                <Button
-                    android:id="@+id/screenshots"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
-                    android:text="截屏" />
-
-            </LinearLayout>
-
-        </HorizontalScrollView>
-
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/theme_controller"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:paddingHorizontal="8dp">
-
-                <Button
-                    android:id="@+id/theme"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@{`背景:` + (viewModel.theme.light ? `亮` : `暗`)}" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:text="@{@stringArray/board_theme_names[viewModel.theme.themeType.ordinal()]}" />
-
-            </LinearLayout>
-
-        </com.google.android.material.card.MaterialCardView>
-
-        <LinearLayout
-            android:id="@+id/page_navigation"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:background="@color/cardview_light_background"
-            android:orientation="horizontal"
-            android:gravity="center_vertical"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/room_status">
-
-            <ImageView
-                android:id="@+id/pre_page"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:foreground="?selectableItemBackgroundBorderless"
-                android:padding="8dp"
-                android:text="上一页"
-                app:srcCompat="@drawable/ic_baseline_arrow_back_ios_24" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@{viewModel.currentPage.pageNumber + `/` + viewModel.pageList.size()}" />
-
-            <ImageView
-                android:id="@+id/next_page"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:foreground="?selectableItemBackgroundBorderless"
-                android:padding="8dp"
-                android:text="下一页"
-                app:srcCompat="@drawable/ic_baseline_arrow_forward_ios_24" />
-
-            <ImageView
-                android:id="@+id/new_page"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:foreground="?selectableItemBackgroundBorderless"
-                android:padding="8dp"
-                android:text="新建页"
-                app:srcCompat="@drawable/ic_baseline_add_24" />
-
-        </LinearLayout>
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/page_list"
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/page_navigation" />
-
         <com.latitech.whiteboard.WhiteBoardView
             android:id="@+id/white_board"
             android:layout_width="0dp"
@@ -227,28 +26,82 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintDimensionRatio="@{viewModel.whiteBoardRatio}"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/page_list"
-            app:layout_constraintTop_toBottomOf="@id/horizontalScrollView" />
-
-        <Button
-            android:id="@+id/restore"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="还原笔迹"
-            app:layout_constraintEnd_toEndOf="@+id/white_board"
-            app:layout_constraintStart_toStartOf="@+id/white_board"
-            app:layout_constraintTop_toBottomOf="@id/horizontalScrollView"
-            app:visibleGone="@{viewModel.canRecovery}" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <com.google.android.material.card.MaterialCardView
-            android:id="@+id/file_controller"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <androidx.appcompat.widget.AppCompatImageButton
+                    android:id="@+id/restore"
+                    style="@style/WhiteBoardActionButton"
+                    android:tint="?attr/colorOnPrimary"
+                    app:backgroundTint="?attr/colorSecondary"
+                    app:srcCompat="@drawable/ic_baseline_undo_24"
+                    app:visibleGone="@{viewModel.canRecovery}" />
+
+                <androidx.appcompat.widget.AppCompatImageButton
+                    android:id="@+id/select"
+                    style="@style/WhiteBoardActionButton"
+                    app:selected="@{viewModel.currentInputType == InputType.SELECT}"
+                    app:srcCompat="@drawable/ic_selection" />
+
+                <androidx.appcompat.widget.AppCompatImageButton
+                    android:id="@+id/pen"
+                    style="@style/WhiteBoardActionButton"
+                    android:tint="@{viewModel.normalPenStyle.Companion.colors[viewModel.normalPenStyle.colorIndex]}"
+                    app:selected="@{viewModel.currentInputType == InputType.NORMAL}"
+                    app:srcCompat="@drawable/ic_pen_normal" />
+
+                <androidx.appcompat.widget.AppCompatImageButton
+                    android:id="@+id/mark"
+                    style="@style/WhiteBoardActionButton"
+                    android:tint="@{viewModel.markPenStyle.Companion.colors[viewModel.markPenStyle.colorIndex]}"
+                    app:selected="@{viewModel.currentInputType == InputType.MARK}"
+                    app:srcCompat="@drawable/ic_pen_mark" />
+
+                <androidx.appcompat.widget.AppCompatImageButton
+                    android:id="@+id/eraser"
+                    style="@style/WhiteBoardActionButton"
+                    app:selected="@{viewModel.currentInputType == InputType.ERASE}"
+                    app:srcCompat="@drawable/ic_eraser" />
+
+                <androidx.appcompat.widget.AppCompatImageButton
+                    android:id="@+id/laser"
+                    style="@style/WhiteBoardActionButton"
+                    app:selected="@{viewModel.currentInputType == InputType.LASER}"
+                    app:srcCompat="@drawable/ic_pen_laser" />
+
+                <androidx.appcompat.widget.AppCompatImageButton
+                    android:id="@+id/geometry"
+                    style="@style/WhiteBoardActionButton"
+                    app:selected="@{viewModel.currentInputType == InputType.GEOMETRY}"
+                    app:srcCompat="@drawable/ic_geometry" />
+
+                <androidx.appcompat.widget.AppCompatImageButton
+                    android:id="@+id/insert_file"
+                    style="@style/WhiteBoardActionButton"
+                    app:srcCompat="@drawable/ic_file_upload" />
+
+            </LinearLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/page_navigation"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/theme_controller"
-            app:visibleGone="@{viewModel.activeWidget!=null}">
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -256,23 +109,59 @@
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
-                <ImageView
-                    android:id="@+id/delete_file"
+                <androidx.appcompat.widget.AppCompatImageButton
+                    android:id="@+id/page_menu"
+                    style="@style/WhiteBoardActionButton"
+                    app:srcCompat="@drawable/ic_baseline_dashboard_24" />
+
+                <androidx.appcompat.widget.AppCompatImageButton
+                    android:id="@+id/pre_page"
+                    style="@style/WhiteBoardActionButton"
+                    app:srcCompat="@drawable/ic_sharp_arrow_back_ios_24" />
+
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:contentDescription="删除文件"
-                    android:foreground="?selectableItemBackgroundBorderless"
-                    android:padding="16dp"
+                    android:text="@{viewModel.currentPage.pageNumber + `/` + viewModel.pageList.size()}" />
+
+                <androidx.appcompat.widget.AppCompatImageButton
+                    android:id="@+id/next_page"
+                    style="@style/WhiteBoardActionButton"
+                    app:srcCompat="@drawable/ic_sharp_arrow_forward_ios_24" />
+
+                <androidx.appcompat.widget.AppCompatImageButton
+                    android:id="@+id/new_page"
+                    style="@style/WhiteBoardActionButton"
+                    app:srcCompat="@drawable/ic_baseline_add_24" />
+
+            </LinearLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/file_controller"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:visibleGone="@{viewModel.activeWidget != null}">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <androidx.appcompat.widget.AppCompatImageButton
+                    android:id="@+id/delete_file"
+                    style="@style/WhiteBoardActionButton"
                     app:srcCompat="@drawable/ic_baseline_delete_outline_24" />
 
-                <ImageView
+                <androidx.appcompat.widget.AppCompatImageButton
                     android:id="@+id/pre_file_page"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:contentDescription="上一页"
-                    android:foreground="?selectableItemBackgroundBorderless"
-                    android:padding="16dp"
-                    app:srcCompat="@drawable/ic_baseline_arrow_back_ios_24"
+                    style="@style/WhiteBoardActionButton"
+                    app:srcCompat="@drawable/ic_sharp_arrow_back_ios_24"
                     app:visibleGone="@{viewModel.activeWidget.type == WidgetType.FILE}" />
 
                 <TextView
@@ -281,27 +170,82 @@
                     android:text="@{viewModel.activeWidget.currentPageNumber + `/` + viewModel.activeWidget.pageCount}"
                     app:visibleGone="@{viewModel.activeWidget.type == WidgetType.FILE}" />
 
-                <ImageView
+                <androidx.appcompat.widget.AppCompatImageButton
                     android:id="@+id/next_file_page"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:contentDescription="下一页"
-                    android:foreground="?selectableItemBackgroundBorderless"
-                    android:padding="16dp"
-                    app:srcCompat="@drawable/ic_baseline_arrow_forward_ios_24"
+                    style="@style/WhiteBoardActionButton"
+                    app:srcCompat="@drawable/ic_sharp_arrow_forward_ios_24"
                     app:visibleGone="@{viewModel.activeWidget.type == WidgetType.FILE}" />
 
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/settings_controller"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingHorizontal="8dp">
+
+                <androidx.appcompat.widget.AppCompatImageButton
+                    android:id="@+id/members"
+                    style="@style/WhiteBoardActionButton"
+                    app:srcCompat="@drawable/ic_baseline_people_outline_24" />
+
+                <Button
+                    android:id="@+id/screenshots"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:text="截屏" />
+
+                <Button
+                    android:id="@+id/theme"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{`背景:` + @stringArray/board_theme_names[viewModel.theme.themeType.ordinal()]}" />
+
+            </LinearLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/page_list"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:background="@color/cardview_light_background"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toTopOf="@id/page_navigation"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:visibleGone="@{viewModel.pageListVisible}" />
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/user_list"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
+            android:background="@color/cardview_light_background"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toTopOf="@id/settings_controller"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:visibleGone="@{viewModel.memberListVisible}" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"
+            android:text="@{@stringArray/room_status_names[viewModel.roomStatus.ordinal()]}"
+            android:textColor="@{viewModel.theme.light ? @color/material_on_surface_disabled : @color/material_on_primary_disabled}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/file_controller" />
+            app:layout_constraintStart_toStartOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

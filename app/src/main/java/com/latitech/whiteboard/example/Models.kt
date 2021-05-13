@@ -3,6 +3,8 @@
 package com.latitech.whiteboard.example
 
 import androidx.core.graphics.ColorUtils
+import androidx.databinding.BaseObservable
+import androidx.databinding.Bindable
 import com.latitech.whiteboard.WhiteBoard
 import com.latitech.whiteboard.model.InputConfig
 import com.latitech.whiteboard.type.GeometryType
@@ -12,17 +14,16 @@ import kotlin.math.pow
 /**
  * 普通笔配置
  */
-class NormalPenStyle {
+class NormalPenStyle : BaseObservable() {
 
     /**
      * 当前使用的颜色序号
      */
+    @get:Bindable
     var colorIndex = 0
         set(value) {
-            if (value == field) {
-                return
-            }
             field = value
+            notifyPropertyChanged(BR.colorIndex)
             WhiteBoard.setInputMode(inputConfig)
         }
 
@@ -31,9 +32,6 @@ class NormalPenStyle {
      */
     var sizeIndex = 0
         set(value) {
-            if (value == field) {
-                return
-            }
             field = value
             WhiteBoard.setInputMode(inputConfig)
         }
@@ -42,6 +40,11 @@ class NormalPenStyle {
      * 生成当前配置
      */
     val inputConfig get() = InputConfig.pen(colors[colorIndex], sizes[sizeIndex])
+
+    override fun notifyPropertyChanged(fieldId: Int) {
+        super.notifyPropertyChanged(fieldId)
+        WhiteBoard.setInputMode(inputConfig)
+    }
 
     companion object {
         /**
@@ -75,17 +78,16 @@ class NormalPenStyle {
 /**
  * 马克笔配置
  */
-class MarkPenStyle {
+class MarkPenStyle : BaseObservable() {
 
     /**
      * 当前使用的颜色序号
      */
+    @get:Bindable
     var colorIndex = 0
         set(value) {
-            if (value == field) {
-                return
-            }
             field = value
+            notifyPropertyChanged(BR.colorIndex)
             WhiteBoard.setInputMode(inputConfig)
         }
 
@@ -94,9 +96,6 @@ class MarkPenStyle {
      */
     var sizeIndex = 0
         set(value) {
-            if (value == field) {
-                return
-            }
             field = value
             WhiteBoard.setInputMode(inputConfig)
         }
@@ -104,18 +103,18 @@ class MarkPenStyle {
     /**
      * 生成当前配置
      */
-    val inputConfig get() = InputConfig.pen(colors[colorIndex], sizes[sizeIndex])
+    val inputConfig get() = InputConfig.pen(colors[colorIndex] and 0x6FFFFFFF, sizes[sizeIndex])
 
     companion object {
         /**
          * 可选颜色
          */
         val colors = intArrayOf(
-            0x6F03DAC5,
-            0x6FFFFF00,
-            0x6FFF0000,
-            0x6F2962FF,
-            0x6FBB86FC,
+            0xFF03DAC5.toInt(),
+            0xFFFFFF00.toInt(),
+            0xFFFF0000.toInt(),
+            0xFF2962FF.toInt(),
+            0xFFBB86FC.toInt(),
         )
 
         /**
@@ -142,9 +141,6 @@ class EraserStyle {
      */
     var sizeIndex = 0
         set(value) {
-            if (value == field) {
-                return
-            }
             field = value
             WhiteBoard.setInputMode(inputConfig)
         }
@@ -175,11 +171,8 @@ class LaserStyle {
     /**
      * 当前使用的图形res（作为key）
      */
-    var iconKey = R.drawable.ic_baseline_adjust_24
+    var iconKey = R.drawable.ic_laser_point
         set(value) {
-            if (value == field) {
-                return
-            }
             field = value
             WhiteBoard.setInputMode(inputConfig)
         }
@@ -195,10 +188,10 @@ class LaserStyle {
          * 可选图形
          */
         val icons = mapOf(
-            R.drawable.ic_baseline_adjust_24 to LaserType.LASER_DOT,
-            R.drawable.ic_outline_pan_tool_24 to LaserType.LASER_HAND,
-            R.drawable.ic_outline_near_me_24 to LaserType.LASER_ARROWS_WHITE,
-            R.drawable.ic_baseline_north_west_24 to LaserType.LASER_ARROWS_BLACK,
+            R.drawable.ic_laser_point to LaserType.LASER_DOT,
+            R.drawable.ic_laser_hand to LaserType.LASER_HAND,
+            R.drawable.ic_laser_arrow_outline to LaserType.LASER_ARROWS_WHITE,
+            R.drawable.ic_laser_arrow_filled to LaserType.LASER_ARROWS_BLACK,
         )
     }
 }
@@ -212,11 +205,8 @@ class GeometryStyle {
     /**
      * 当前使用的图形res（作为key）
      */
-    var iconKey = R.drawable.ic_outline_crop_landscape_24
+    var iconKey = R.drawable.ic_geometry_rect
         set(value) {
-            if (value == field) {
-                return
-            }
             field = value
             WhiteBoard.setInputMode(inputConfig)
         }
@@ -226,9 +216,6 @@ class GeometryStyle {
      */
     var colorIndex = 0
         set(value) {
-            if (value == field) {
-                return
-            }
             field = value
             WhiteBoard.setInputMode(inputConfig)
         }
@@ -238,9 +225,6 @@ class GeometryStyle {
      */
     var sizeIndex = 0
         set(value) {
-            if (value == field) {
-                return
-            }
             field = value
             WhiteBoard.setInputMode(inputConfig)
         }
@@ -261,10 +245,10 @@ class GeometryStyle {
          * 可选图形
          */
         val icons = mapOf(
-            R.drawable.ic_outline_crop_landscape_24 to GeometryType.RECTANGLE,
-            R.drawable.ic_outline_brightness_1_24 to GeometryType.CIRCLE,
-            R.drawable.ic_baseline_north_west_24 to GeometryType.ARROW,
-            R.drawable.ic_baseline_horizontal_rule_24 to GeometryType.LINE,
+            R.drawable.ic_geometry_rect to GeometryType.RECTANGLE,
+            R.drawable.ic_geometry_circle to GeometryType.CIRCLE,
+            R.drawable.ic_geometry_arrow to GeometryType.ARROW,
+            R.drawable.ic_geometry_line to GeometryType.LINE,
         )
 
         /**

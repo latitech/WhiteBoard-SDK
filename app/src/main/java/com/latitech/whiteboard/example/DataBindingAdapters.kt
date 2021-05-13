@@ -7,57 +7,43 @@ import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
 
 /**
- * 通用数据绑定适配器
- *
- * @author 超悟空
- * @version 1.0 2019/10/29
- * @since 1.0 2019/10/29
- **/
-object DataBindingAdapters {
-
-    /**
-     * ConstraintLayout的layout_constraintDimensionRatio属性绑定
-     */
-    @JvmStatic
-    @BindingAdapter("layout_constraintDimensionRatio")
-    fun setConstraintDimensionRatio(view: View, ratio: String) {
-        view.layoutParams.let {
-            if (it is ConstraintLayout.LayoutParams) {
-                it.dimensionRatio = ratio
-                view.requestLayout()
-            }
+ * ConstraintLayout的layout_constraintDimensionRatio属性绑定
+ */
+@BindingAdapter("layout_constraintDimensionRatio")
+fun View.setConstraintDimensionRatio(ratio: String) {
+    layoutParams.let {
+        if (it is ConstraintLayout.LayoutParams) {
+            it.dimensionRatio = ratio
+            requestLayout()
         }
     }
+}
 
-    /**
-     * 设置图片网络源
-     */
-    @JvmStatic
-    @BindingAdapter("srcUrl")
-    fun setImageUrl(imageView: ImageView, url: String?) {
-        Glide.with(imageView.context).load(url).into(imageView)
-    }
+/**
+ * 设置图片网络源
+ */
+@BindingAdapter("srcUrl")
+fun ImageView.setImageUrl(url: String?) {
+    Glide.with(context).load(url).into(this)
+}
 
-    /**
-     * 设置头像
-     */
-    @JvmStatic
-    @BindingAdapter("avatar")
-    fun setAvatar(imageView: ImageView, url: String?) {
-        Glide.with(imageView.context)
-            .load(url)
-            .circleCrop()
-            .error(R.drawable.ic_baseline_account_circle_24)
-            .placeholder(R.drawable.ic_baseline_account_circle_24)
-            .into(imageView)
-    }
+/**
+ * 设置头像
+ */
+@BindingAdapter("avatar")
+fun ImageView.setAvatar(url: String?) {
+    Glide.with(context)
+        .load(url)
+        .circleCrop()
+        .error(R.drawable.ic_baseline_account_circle_24)
+        .placeholder(R.drawable.ic_baseline_account_circle_24)
+        .into(this)
+}
 
-    /**
-     * 可见性属性
-     */
-    @JvmStatic
-    @BindingAdapter("visibleGone")
-    fun showHide(view: View, show: Boolean) {
-        view.visibility = if (show) View.VISIBLE else View.GONE
-    }
+/**
+ * 可见性属性
+ */
+@BindingAdapter("visibleGone")
+fun View.showHide(show: Boolean) {
+    visibility = if (show) View.VISIBLE else View.GONE
 }

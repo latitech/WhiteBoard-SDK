@@ -6,6 +6,7 @@ import android.content.Context
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -30,7 +31,7 @@ class PalettePopup(private val context: Context) {
     /**
      * 弹窗
      */
-    private val popupWindow: PopupWindow
+    val popupWindow: PopupWindow
 
     init {
         val binding = PopupCardBinding.inflate(LayoutInflater.from(context))
@@ -130,7 +131,7 @@ class PalettePopup(private val context: Context) {
      * @param anchor 锚点
      */
     fun show(anchor: View) {
-        popupWindow.showAsDropDown(anchor, context.dip(-64), context.dip(16))
+        popupWindow.showAsDropDown(anchor, 0, context.dip(8))
     }
 
     /**

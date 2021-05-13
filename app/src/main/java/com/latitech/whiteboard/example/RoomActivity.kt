@@ -4,18 +4,21 @@ import android.Manifest
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.util.Log
+import android.view.Gravity
 import android.widget.ImageView
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.PopupMenu
 import androidx.core.content.ContextCompat
 import com.latitech.whiteboard.WhiteBoard
 import com.latitech.whiteboard.example.databinding.ActivityRoomBinding
 import com.latitech.whiteboard.model.FileConfig
-import com.latitech.whiteboard.model.InputConfig
 import com.latitech.whiteboard.type.WidgetType
 import splitties.alertdialog.appcompat.alertDialog
+import splitties.dimensions.dip
 import java.io.File
+
 
 /**
  * 白板房间
@@ -73,16 +76,8 @@ class RoomActivity : AppCompatActivity() {
 
         binding.whiteBoard.setZOrderMediaOverlay(true)
 
-        binding.insertImage.setOnClickListener {
-            openGallery.launch("image/*")
-        }
-
-        binding.camera.setOnClickListener {
-            openCamera()
-        }
-
         binding.insertFile.setOnClickListener {
-            openFile.launch("*/*")
+            insertFilePopupMenu.show()
         }
 
         binding.select.setOnClickListener {
@@ -91,6 +86,10 @@ class RoomActivity : AppCompatActivity() {
 
         binding.restore.setOnClickListener {
             WhiteBoard.recover()
+        }
+
+        binding.pageMenu.setOnClickListener {
+            viewModel.pageListVisible.value = !viewModel.pageListVisible.value!!
         }
 
         binding.prePage.setOnClickListener {
@@ -184,7 +183,16 @@ class RoomActivity : AppCompatActivity() {
         }
 
         binding.theme.setOnClickListener {
-            themeWindow.show(it)
+            themeWindow.popupWindow.showAtLocation(
+                it.rootView,
+                Gravity.END or Gravity.BOTTOM,
+                0,
+                dip(56)
+            )
+        }
+
+        binding.members.setOnClickListener {
+            viewModel.memberListVisible.value = !viewModel.memberListVisible.value!!
         }
     }
 
@@ -268,6 +276,23 @@ class RoomActivity : AppCompatActivity() {
 
             addColorSelection(colors, viewModel.theme.value!!.themeType.ordinal) {
                 WhiteBoard.setBackgroundColor(colors[it])
+            }
+        }
+    }
+
+    /**
+     * 插入文件/图片的选项弹窗
+     */
+    private val insertFilePopupMenu by lazy {
+        PopupMenu(this, binding.insertFile).apply {
+            inflate(R.menu.insert_file_menu)
+            setOnMenuItemClickListener {
+                when (it.itemId) {
+                    R.id.camera -> openCamera()
+                    R.id.gallery -> openGallery.launch("image/*")
+                    R.id.file -> openFile.launch("*/*")
+                }
+                true
             }
         }
     }

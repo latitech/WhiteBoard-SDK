@@ -37,7 +37,7 @@
                 app:srcUrl="@{page.thumbnails}" />
 
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
@@ -51,6 +51,7 @@
                 <com.google.android.material.textview.MaterialTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:minWidth="16dp"
                     android:text="@{String.valueOf(page.pageNumber)}" />
 
                 <com.google.android.material.button.MaterialButton

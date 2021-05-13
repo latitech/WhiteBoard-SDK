@@ -130,6 +130,16 @@ class RoomViewModel : ViewModel() {
     }
 
     /**
+     * 页列表是否可见
+     */
+    val pageListVisible = MutableLiveData(false)
+
+    /**
+     * 成员列表是否可见
+     */
+    val memberListVisible = MutableLiveData(false)
+
+    /**
      * 普通笔配置
      */
     val normalPenStyle = NormalPenStyle()
