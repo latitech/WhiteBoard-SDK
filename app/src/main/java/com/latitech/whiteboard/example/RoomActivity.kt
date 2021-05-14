@@ -19,7 +19,6 @@ import splitties.alertdialog.appcompat.alertDialog
 import splitties.dimensions.dip
 import java.io.File
 
-
 /**
  * 白板房间
  *
@@ -118,7 +117,6 @@ class RoomActivity : AppCompatActivity() {
                         })
                     }.show()
                 }
-
             }
         }
 

@@ -27,7 +27,6 @@ class UserListAdapter : ListAdapter<RoomMember, UserViewHolder>(UserDiffCallback
     }
 }
 
-
 class UserViewHolder(
     itemView: View,
     val binding: ItemUserBinding = ItemUserBinding.bind(itemView)
