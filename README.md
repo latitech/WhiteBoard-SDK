@@ -16,7 +16,7 @@ repositories {
 }
 
 dependencies {
-    implementation 'com.latitech.android:whiteboard:0.2.2'
+    implementation 'com.latitech.android:whiteboard:0.3.0'
 
     // 可选，如果项目使用了androidx可以添加此项开启sdk的可空/非空参数注解的识别，在kotlin环境非常有用。
     compileOnly 'androidx.annotation:annotation:1.2.0'
@@ -38,6 +38,29 @@ android {
             targetCompatibility JavaVersion.VERSION_1_8
     }
 }
+
+```
+
+## 混淆配置
+
+```proguard
+
+-dontwarn com.latitech.whiteboard.**
+
+# 由jni调用
+-keep class com.latitech.whiteboard.core.EGLEnvironment {
+    private void onRequestRender();
+    private void onRenderListenerError();
+}
+-keep class com.latitech.whiteboard.core.NativeListener {
+    private <methods>;
+}
+-keep class com.latitech.whiteboard.core.ResourceInfo {*;}
+
+# 阿里云oss
+-keep class com.alibaba.sdk.android.oss.** { *; }
+-dontwarn okio.**
+-dontwarn org.apache.commons.codec.binary.**
 
 ```
 
