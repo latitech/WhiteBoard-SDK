@@ -16,9 +16,8 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/cardview_dark_background"
-        android:orientation="vertical">
-
+        android:background="@color/cardview_dark_background">
+        
         <com.latitech.whiteboard.WhiteBoardView
             android:id="@+id/white_board"
             android:layout_width="0dp"

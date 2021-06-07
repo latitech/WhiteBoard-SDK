@@ -1,3 +1,11 @@
+## 0.4.1
+
+* BREAKING: `WhiteBoardView`控件实现由`SurfaceView`更换为`TextureView`以便更好的支持透明背景和属性变换
+
+## 0.4.0
+
+* 支持透明背景色
+
 ## 0.3.3
 
 * 修复尺寸计算错误，支持多种白板宽高比
@@ -36,7 +44,7 @@
 
 ## 0.1.0
 
-* BREAKING:移除`revert`方法
+* BREAKING: 移除`revert`方法
 * 修复重连错误
 * 列表类数据总是使用新列表实例
 

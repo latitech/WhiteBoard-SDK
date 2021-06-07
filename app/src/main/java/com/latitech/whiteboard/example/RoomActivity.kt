@@ -72,9 +72,6 @@ class RoomActivity : AppCompatActivity() {
     }
 
     override fun onContentChanged() {
-
-        binding.whiteBoard.setZOrderMediaOverlay(true)
-
         binding.insertFile.setOnClickListener {
             insertFilePopupMenu.show()
         }
@@ -270,6 +267,7 @@ class RoomActivity : AppCompatActivity() {
                 BoardThemeType.WHITE.color(),
                 BoardThemeType.BLACK.color(),
                 BoardThemeType.GREEN.color(),
+                BoardThemeType.TRANSLUCENT.color(),
             )
 
             addColorSelection(colors, viewModel.theme.value!!.themeType.ordinal) {

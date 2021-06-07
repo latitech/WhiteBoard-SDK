@@ -2,6 +2,7 @@
 
 package com.latitech.whiteboard.example
 
+import android.graphics.Color
 import androidx.core.graphics.ColorUtils
 import androidx.databinding.BaseObservable
 import androidx.databinding.Bindable
@@ -320,6 +321,10 @@ class BoardTheme(val color: Int) {
      * 当前主题类型
      */
     val themeType by lazy {
+        if (Color.alpha(color) <= 16) {
+            return@lazy BoardThemeType.TRANSLUCENT
+        }
+
         val hsl = FloatArray(3)
 
         ColorUtils.colorToHSL(color, hsl)
@@ -389,6 +394,11 @@ class BoardTheme(val color: Int) {
          * 绿色主题
          */
         fun green() = fromType(BoardThemeType.GREEN)
+
+        /**
+         * 透明色主题
+         */
+        fun translucent() = fromType(BoardThemeType.TRANSLUCENT)
     }
 }
 
@@ -413,6 +423,11 @@ enum class BoardThemeType {
     GREEN,
 
     /**
+     * 透明色
+     */
+    TRANSLUCENT,
+
+    /**
      * 其它颜色
      */
     OTHER;
@@ -424,6 +439,7 @@ enum class BoardThemeType {
         WHITE -> 0xFFF5F5F5.toInt()
         BLACK -> 0xFF212121.toInt()
         GREEN -> 0xFF1F795E.toInt()
+        TRANSLUCENT -> 0x00000000
         OTHER -> 0xFFF5F5F5.toInt()
     }
 }
