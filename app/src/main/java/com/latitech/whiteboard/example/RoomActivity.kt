@@ -72,6 +72,8 @@ class RoomActivity : AppCompatActivity() {
     }
 
     override fun onContentChanged() {
+        binding.whiteBoard.isOpaque = false
+
         binding.insertFile.setOnClickListener {
             insertFilePopupMenu.show()
         }
