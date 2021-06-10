@@ -1,3 +1,7 @@
+## 0.4.2
+
+* 对非法头像地址增加容错处理
+
 ## 0.4.1
 
 * BREAKING: `WhiteBoardView`控件实现由`SurfaceView`更换为`TextureView`以便更好的支持透明背景和属性变换
