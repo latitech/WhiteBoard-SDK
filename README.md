@@ -16,7 +16,7 @@ repositories {
 }
 
 dependencies {
-    implementation 'com.latitech.android:whiteboard:0.4.2'
+    implementation 'com.latitech.android:whiteboard:0.4.4'
 
     // 可选，如果项目使用了androidx可以添加此项开启sdk的可空/非空参数注解的识别，在kotlin环境非常有用。
     compileOnly 'androidx.annotation:annotation:1.2.0'
@@ -466,7 +466,7 @@ class MyApplication : Application(){
 删除白板页
 
 删除成功后一定会收到[onBoardPageList](#onboardpagelist)回调，如果删除的是当前页会同时触发[onCurrentBoardPageChanged](#oncurrentboardpagechanged)，
-如果删除当前页是仅有的一页，白板会删除当前页并立即创建一个新的空白页，效果类似与清空白板。
+如果删除当前页时仅有的一页，则白板会忽略本次操作。
 
 |参数|描述|
 |----|----|
@@ -1024,6 +1024,7 @@ widget被执行了某些关键动作
     - `public FileConfig(@NonNull File file)`
     - `public FileConfig(@NonNull File file , @Nullable String name)`
     - `public FileConfig(@NonNull File file , @Nullable String name , float left , float top)`
+    - `public FileConfig(@NonNull File file , @Nullable String name , float left , float top , int boxWidth , int boxHeight)`
     
 |参数|类型|可空|描述|
 |----|----|----|----|
@@ -1031,6 +1032,8 @@ widget被执行了某些关键动作
 |name|String|是|指定文件的实际名称，留空会使用file的名称，此名称不会影响系统对file类型的校验，仅做标识用途，比如file本身是随机串文件名，此处可以赋予它有意义的文件名，此名称会在[ActiveWidgetInfo](#activewidgetinfo)中拿到|
 |left|float|否|插入文件时的初始位置的左上角横坐标，默认为0|
 |top|float|否|插入文件时的初始位置的左上角纵坐标，默认为0|
+|boxWidth|int|否|文件外框的宽度，0表示使用文件自身的宽度|
+|boxHeight|int|否|文件外框的高度，0表示使用文件自身的高度|
 
 # ActiveWidgetInfo
 
