@@ -16,7 +16,7 @@ repositories {
 }
 
 dependencies {
-    implementation 'com.latitech.android:whiteboard:0.4.7'
+    implementation 'com.latitech.android:whiteboard:0.4.8'
 
     // 可选，如果项目使用了androidx可以添加此项开启sdk的可空/非空参数注解的识别，在kotlin环境非常有用。
     compileOnly 'androidx.annotation:annotation:1.2.0'
@@ -1018,13 +1018,9 @@ widget被执行了某些关键动作
 
 # FileConfig
 
-向白板插入文件时描述文件信息的配置
+`private FileConfig(Builder builder)`
 
-构造函数
-    - `public FileConfig(@NonNull File file)`
-    - `public FileConfig(@NonNull File file , @Nullable String name)`
-    - `public FileConfig(@NonNull File file , @Nullable String name , float left , float top)`
-    - `public FileConfig(@NonNull File file , @Nullable String name , float left , float top , int boxWidth , int boxHeight)`
+向白板插入文件时描述文件信息的配置
     
 |参数|类型|可空|描述|
 |----|----|----|----|
@@ -1034,6 +1030,43 @@ widget被执行了某些关键动作
 |top|float|否|插入文件时的初始位置的左上角纵坐标，默认为0|
 |boxWidth|int|否|文件外框的宽度，0表示使用文件自身的宽度|
 |boxHeight|int|否|文件外框的高度，0表示使用文件自身的高度|
+
+# FileConfig.Builder
+
+`public Builder(@NonNull File file)`
+
+文件配置信息构造器，用于创建[FileConfig](#fileconfig)
+
+`file`为要插入的文件，此文件必须有支持的类型后缀，否则会被系统忽略，支持的类型参考[insertFile](#insertfile)
+
+## FileConfig.Builder.fileName
+
+`public Builder fileName(@Nullable String name)`
+
+指定文件的实际名称，留空使用`file`的名称，
+此名称不会影响系统对file类型的校验，仅做标识用途，比如file本身是随机串文件名，
+此处可以赋予它有意义的文件名，此名称会在[ActiveWidgetInfo](#activewidgetinfo)中拿到
+
+## FileConfig.Builder.location
+
+`public Builder location(float x , float y)`
+
+设定文件插入白板时的初始位置，即文件的左上角坐标，基于白板虚拟坐标系
+
+## FileConfig.Builder.boxSize
+
+`public Builder boxSize(int width , int height)`
+
+设定文件外框的大小，基于白板虚拟坐标系
+
+`width`为文件外框的宽度，0表示使用文件自身的宽度，不允许传负数
+`height`为文件外框的高度，0表示使用文件自身的高度，不允许传负数
+
+## FileConfig.Builder.build
+
+`public FileConfig build()`
+
+根据`Builder`中的参数生成[FileConfig](#fileconfig)对象
 
 # ActiveWidgetInfo
 

@@ -317,7 +317,7 @@ class RoomActivity : AppCompatActivity() {
     private val takePicture = registerForActivityResult(ActivityResultContracts.TakePicture()) {
         val file = File(viewModel.imageTempPath)
         if (file.exists()) {
-            WhiteBoard.insertFile(FileConfig(file))
+            WhiteBoard.insertFile(FileConfig.Builder(file).build())
         }
     }
 
@@ -344,7 +344,7 @@ class RoomActivity : AppCompatActivity() {
         if (path != null) {
             Log.v(TAG, "openGallery path:$path")
 
-            WhiteBoard.insertFile(FileConfig(File(path)))
+            WhiteBoard.insertFile(FileConfig.Builder(File(path)).build())
         }
     }
 
@@ -361,7 +361,7 @@ class RoomActivity : AppCompatActivity() {
         if (path != null) {
             Log.v(TAG, "openFile path:$path")
 
-            WhiteBoard.insertFile(FileConfig(File(path)))
+            WhiteBoard.insertFile(FileConfig.Builder(File(path)).build())
         }
     }
 }
