@@ -361,7 +361,7 @@ class RoomActivity : AppCompatActivity() {
         if (path != null) {
             Log.v(TAG, "openFile path:$path")
 
-            WhiteBoard.insertFile(FileConfig.Builder(File(path)).build())
+            WhiteBoard.insertFile(FileConfig.Builder(File(path)).boxSize(800, 800).build())
         }
     }
 }
