@@ -14,11 +14,11 @@ class MainActivity : AppCompatActivity() {
 
         private const val APP_ID = "a4b26ecae3744e3fb60ff679e186cd98"
 
-        private const val ROOM_ID = "399bbd57486b4a83b68485f353dd7153"
+        private const val ROOM_ID = "32f13181ef444be1b5d2ad0f95db2432"
 
-        private const val USER_ID = "0457987b-82f7-409d-8d58-24b42dda76f2"
+        private const val USER_ID = "test"
 
-        private const val TOKEN = "c0c9b8a3119190152dd5e6697eb78d6a"
+        private const val TOKEN = "b4f475ed67f3005aa733afc2784cdd0c"
 
         // 测试服务器测试号
 
