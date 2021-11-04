@@ -91,7 +91,6 @@ class MainActivity : AppCompatActivity() {
                         }
 
                         override fun onAnimationEnd(animation: Animator) {
-
                             (parent as ViewGroup).removeView(this@apply)
                         }
                     })
