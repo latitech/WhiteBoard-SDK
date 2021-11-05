@@ -2,9 +2,17 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:drawable="@android:color/white" />
 
-    <item>
+    <item
+        android:left="16dp"
+        android:right="16dp">
         <bitmap
-            android:gravity="fill"
-            android:src="@mipmap/launch_image" />
+            android:gravity="bottom|center_horizontal"
+            android:src="@mipmap/launch_bottom" />
+    </item>
+
+    <item android:top="24dp">
+        <bitmap
+            android:gravity="top|center_horizontal"
+            android:src="@mipmap/launch_top" />
     </item>
 </layer-list>

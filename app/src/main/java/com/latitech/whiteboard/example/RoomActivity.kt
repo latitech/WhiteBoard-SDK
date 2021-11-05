@@ -36,6 +36,11 @@ class RoomActivity : AppCompatActivity() {
          * 传递房间data
          */
         const val ROOM_DATA_TAG = "room_data_tag"
+
+        /**
+         * 传递房间邀请码
+         */
+        const val ROOM_CODE_TAG = "room_code_tag"
     }
 
     /**

@@ -65,6 +65,8 @@ dependencies {
     implementation "androidx.vectordrawable:vectordrawable:1.1.0"
 
     implementation 'com.github.bumptech.glide:okhttp3-integration:4.12.0'
+    implementation 'com.squareup.okhttp3:okhttp:4.9.1'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.2'
 
     implementation 'com.latitech.android:whiteboard:0.6.1'
 }

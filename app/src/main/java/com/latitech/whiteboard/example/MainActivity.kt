@@ -5,36 +5,21 @@ import android.animation.AnimatorListenerAdapter
 import android.os.Bundle
 import android.view.ViewGroup
 import android.widget.ImageView
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.res.ResourcesCompat
+import androidx.lifecycle.lifecycleScope
 import com.latitech.whiteboard.example.databinding.ActivityMainBinding
-import com.latitech.whiteboard.model.JoinConfig
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.launch
 import splitties.activities.start
 
 class MainActivity : AppCompatActivity() {
 
-    companion object {
-
-        // 正式服务器测试号
-
-        private const val APP_ID = "a4b26ecae3744e3fb60ff679e186cd98"
-
-        private const val ROOM_ID = "32f13181ef444be1b5d2ad0f95db2432"
-
-        private const val USER_ID = "test"
-
-        private const val TOKEN = "b4f475ed67f3005aa733afc2784cdd0c"
-
-        // 测试服务器测试号
-
-//        private const val APP_ID = "a4b26ecae3744e3fb60ff679e186cd98"
-//
-//        private const val ROOM_ID = "d8471edb7b364744941f60eba4df2887"
-//
-//        private const val USER_ID = "test"
-//
-//        private const val TOKEN = "c63987b65858dcdf38a7611d9c6fcd77"
-    }
+    /**
+     * 视图模型
+     */
+    private val viewModel by viewModels<MainViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(R.style.Theme_WhiteBoardSDK)
@@ -45,23 +30,39 @@ class MainActivity : AppCompatActivity() {
 
         splashTransition()
 
-        binding.join.setOnClickListener {
-            // 加入房间
-            val params = JoinConfig(
-                APP_ID,
-                ROOM_ID,
-                USER_ID,
-                TOKEN
-            )
+        binding.joinButton.setOnClickListener {
+            joinRoom(binding.roomCodeInput.editableText.trim().toString())
+        }
 
-            start<RoomActivity> {
-                putExtra(RoomActivity.ROOM_DATA_TAG, params)
-            }
+        binding.createCard.setOnClickListener {
+            createRoom()
         }
     }
 
     /**
-     * 闪屏页转换
+     * 加入房间
+     */
+    private fun joinRoom(code: String) = lifecycleScope.launch {
+        // 加入房间
+        val params = viewModel.getRoomConfig(code)
+
+        start<RoomActivity> {
+            putExtra(RoomActivity.ROOM_DATA_TAG, params)
+            putExtra(RoomActivity.ROOM_CODE_TAG, code)
+        }
+    }
+
+    /**
+     * 创建房间
+     */
+    private fun createRoom() = lifecycleScope.launch {
+        val code = viewModel.createRoom()
+
+        joinRoom(code)
+    }
+
+    /**
+     * 启动页转换
      */
     private fun splashTransition() {
         ImageView(this).apply {
@@ -84,16 +85,15 @@ class MainActivity : AppCompatActivity() {
             animate()
                 .alpha(0.0f)
                 .setDuration(1000)
-                .setListener(
-                    object : AnimatorListenerAdapter() {
-                        override fun onAnimationCancel(animation: Animator) {
-                            onAnimationEnd(animation)
-                        }
+                .setListener(object : AnimatorListenerAdapter() {
+                    override fun onAnimationCancel(animation: Animator) {
+                        onAnimationEnd(animation)
+                    }
 
-                        override fun onAnimationEnd(animation: Animator) {
-                            (parent as ViewGroup).removeView(this@apply)
-                        }
-                    })
+                    override fun onAnimationEnd(animation: Animator) {
+                        (parent as ViewGroup).removeView(this@apply)
+                    }
+                })
         }
     }
 }
