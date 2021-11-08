@@ -172,23 +172,23 @@
                     style="@style/WhiteBoardActionButton"
                     app:srcCompat="@drawable/ic_baseline_delete_outline_24" />
 
-                <androidx.appcompat.widget.AppCompatImageButton
-                    android:id="@+id/pre_file_page"
-                    style="@style/WhiteBoardActionButton"
-                    app:srcCompat="@drawable/ic_sharp_arrow_back_ios_24"
-                    app:visibleGone="@{viewModel.activeWidget.type == WidgetType.FILE}" />
+<!--                <androidx.appcompat.widget.AppCompatImageButton-->
+<!--                    android:id="@+id/pre_file_page"-->
+<!--                    style="@style/WhiteBoardActionButton"-->
+<!--                    app:srcCompat="@drawable/ic_sharp_arrow_back_ios_24"-->
+<!--                    app:visibleGone="@{viewModel.activeWidget.type == WidgetType.FILE}" />-->
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@{viewModel.activeWidget.currentPageNumber + `/` + viewModel.activeWidget.pageCount}"
-                    app:visibleGone="@{viewModel.activeWidget.type == WidgetType.FILE}" />
+<!--                <TextView-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:text="@{viewModel.activeWidget.currentPageNumber + `/` + viewModel.activeWidget.pageCount}"-->
+<!--                    app:visibleGone="@{viewModel.activeWidget.type == WidgetType.FILE}" />-->
 
-                <androidx.appcompat.widget.AppCompatImageButton
-                    android:id="@+id/next_file_page"
-                    style="@style/WhiteBoardActionButton"
-                    app:srcCompat="@drawable/ic_sharp_arrow_forward_ios_24"
-                    app:visibleGone="@{viewModel.activeWidget.type == WidgetType.FILE}" />
+<!--                <androidx.appcompat.widget.AppCompatImageButton-->
+<!--                    android:id="@+id/next_file_page"-->
+<!--                    style="@style/WhiteBoardActionButton"-->
+<!--                    app:srcCompat="@drawable/ic_sharp_arrow_forward_ios_24"-->
+<!--                    app:visibleGone="@{viewModel.activeWidget.type == WidgetType.FILE}" />-->
 
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
