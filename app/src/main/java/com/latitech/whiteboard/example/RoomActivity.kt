@@ -58,6 +58,8 @@ class RoomActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
+        viewModel.roomCode = intent.getStringExtra(ROOM_CODE_TAG)!!
+
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
 

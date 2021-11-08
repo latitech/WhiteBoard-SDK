@@ -19,6 +19,11 @@ import com.latitech.whiteboard.type.WidgetType
 class RoomViewModel : ViewModel() {
 
     /**
+     * 房间号
+     */
+    var roomCode = ""
+
+    /**
      * 当前房间状态
      */
     val roomStatus = MutableLiveData(WhiteBoard.getStatus()).apply {
