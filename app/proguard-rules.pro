@@ -19,3 +19,20 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+
+-dontwarn com.latitech.whiteboard.**
+
+# 由jni调用
+-keep class com.latitech.whiteboard.core.EGLEnvironment {
+    private void onRequestRender();
+    private void onRenderListenerError();
+}
+-keep class com.latitech.whiteboard.core.NativeListener {
+    private <methods>;
+}
+-keep class com.latitech.whiteboard.core.ResourceInfo {*;}
+
+# 阿里云oss
+-keep class com.alibaba.sdk.android.oss.** { *; }
+-dontwarn okio.**
+-dontwarn org.apache.commons.codec.binary.**
