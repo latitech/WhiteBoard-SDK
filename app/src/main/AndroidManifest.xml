@@ -18,6 +18,7 @@
         android:theme="@style/Theme.WhiteBoardSDK">
         <activity
             android:name=".MainActivity"
+            android:windowSoftInputMode="stateHidden"
             android:theme="@style/LaunchTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -10,7 +10,7 @@
             android:src="@mipmap/launch_bottom" />
     </item>
 
-    <item android:top="24dp">
+    <item android:top="32dp">
         <bitmap
             android:gravity="top|center_horizontal"
             android:src="@mipmap/launch_top" />

@@ -10,11 +10,19 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.res.ResourcesCompat
 import androidx.lifecycle.lifecycleScope
 import com.latitech.whiteboard.example.databinding.ActivityMainBinding
-import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 import splitties.activities.start
+import splitties.toast.toast
+import java.io.IOException
 
 class MainActivity : AppCompatActivity() {
+
+    companion object {
+        /**
+         * 标记是否已经启动
+         */
+        private const val STARTED = "whiteboard_started"
+    }
 
     /**
      * 视图模型
@@ -28,7 +36,9 @@ class MainActivity : AppCompatActivity() {
         val binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        splashTransition()
+        if (savedInstanceState?.containsKey(STARTED) != true) {
+            splashTransition()
+        }
 
         binding.joinButton.setOnClickListener {
             joinRoom(binding.roomCodeInput.editableText.trim().toString())
@@ -39,12 +49,22 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putBoolean(STARTED, true)
+    }
+
     /**
      * 加入房间
      */
     private fun joinRoom(code: String) = lifecycleScope.launch {
         // 加入房间
-        val params = viewModel.getRoomConfig(code)
+        val params = try {
+            viewModel.getRoomConfig(code)
+        } catch (e: IOException) {
+            toast("加入房间失败")
+            return@launch
+        }
 
         start<RoomActivity> {
             putExtra(RoomActivity.ROOM_DATA_TAG, params)
@@ -56,7 +76,12 @@ class MainActivity : AppCompatActivity() {
      * 创建房间
      */
     private fun createRoom() = lifecycleScope.launch {
-        val code = viewModel.createRoom()
+        val code = try {
+            viewModel.createRoom()
+        } catch (e: IOException) {
+            toast("创建房间失败")
+            return@launch
+        }
 
         joinRoom(code)
     }

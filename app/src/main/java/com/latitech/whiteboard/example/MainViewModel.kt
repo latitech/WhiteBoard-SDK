@@ -2,8 +2,19 @@
 
 package com.latitech.whiteboard.example
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import com.latitech.whiteboard.model.JoinConfig
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.withContext
+import okhttp3.*
+import okhttp3.HttpUrl.Companion.toHttpUrl
+import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.RequestBody.Companion.toRequestBody
+import org.json.JSONObject
+import java.io.IOException
+
 
 /**
  * 首页功能
@@ -12,34 +23,70 @@ class MainViewModel : ViewModel() {
 
     companion object {
 
-        // 正式服务器测试号
+        /**
+         * demo 使用的演示api接口地址
+         */
+        private const val BASE_URL = "https://sdktest.efaceboard.cn:8888/Chatboard"
 
-        private const val APP_ID = "a4b26ecae3744e3fb60ff679e186cd98"
+        /**
+         * 白板垂直方向延展倍数，从1开始。
+         * 白板总高度为：单屏高度*延展倍数
+         */
+        private const val EXTENDS = 2
 
-        private const val ROOM_ID = "32f13181ef444be1b5d2ad0f95db2432"
+        /**
+         * 白板宽高比
+         */
+        private const val ASPECT_RATIO = 1.6
 
-        private const val USER_ID = "test"
+        /**
+         * 白板默认背景色枚举，1是浅灰，2是黑色，3是绿色
+         */
+        private const val BACKGROUND_COLOR = 1
 
-        private const val TOKEN = "b4f475ed67f3005aa733afc2784cdd0c"
-
-        // 测试服务器测试号
-
-//        private const val APP_ID = "a4b26ecae3744e3fb60ff679e186cd98"
-//
-//        private const val ROOM_ID = "d8471edb7b364744941f60eba4df2887"
-//
-//        private const val USER_ID = "test"
-//
-//        private const val TOKEN = "c63987b65858dcdf38a7611d9c6fcd77"
+        /**
+         * application/json content-type
+         */
+        private val JSON = "application/json; charset=utf-8".toMediaType()
     }
+
+    /**
+     * okhttp
+     */
+    private val okHttpClient by lazy { OkHttpClient() }
 
     /**
      * 创建房间
      *
      * @return 邀请码
+     *
+     * @throws IOException 如果网络请求失败或接口执行失败
      */
-    suspend fun createRoom() :String{
-        return ""
+    suspend fun createRoom(): String = withContext(Dispatchers.IO) {
+        val body = """
+            {
+                "bgColor":$BACKGROUND_COLOR,
+                "extendTimes":$EXTENDS,
+                "widthHeightThan":$ASPECT_RATIO
+            }
+        """.toRequestBody(JSON)
+
+        val request = Request.Builder()
+            .url("$BASE_URL/board/create")
+            .post(body)
+            .build()
+
+        okHttpClient.newCall(request).execute().use { response ->
+            if (!response.isSuccessful) throw IOException("create room failed")
+
+            val jsonObject = JSONObject(response.body!!.string())
+
+            if (!jsonObject.getBoolean("state")) {
+                throw IOException("create room failed")
+            }
+
+            jsonObject.getString("result")
+        }
     }
 
     /**
@@ -47,12 +94,31 @@ class MainViewModel : ViewModel() {
      *
      * @param code 邀请码
      */
-    suspend fun getRoomConfig(code:String): JoinConfig {
-        return JoinConfig(
-            APP_ID,
-            ROOM_ID,
-            USER_ID,
-            TOKEN
-        )
+    suspend fun getRoomConfig(code: String): JoinConfig = withContext(Dispatchers.IO) {
+        val url = "$BASE_URL/board/getProperty".toHttpUrl().newBuilder()
+            .addQueryParameter("inviteCode", code).build()
+
+        val request = Request.Builder()
+            .url(url)
+            .build()
+
+        okHttpClient.newCall(request).execute().use { response ->
+            if (!response.isSuccessful) throw IOException("create room failed")
+
+            val jsonObject = JSONObject(response.body!!.string())
+
+            if (!jsonObject.getBoolean("state")) {
+                throw IOException("create room failed")
+            }
+
+            jsonObject.getJSONObject("result").let {
+                JoinConfig(
+                    it.getString("appId"),
+                    it.getString("meetingId"),
+                    it.getString("userId"),
+                    it.getString("token")
+                )
+            }
+        }
     }
 }
