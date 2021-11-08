@@ -132,20 +132,6 @@ class RoomActivity : AppCompatActivity() {
             }
         }
 
-        binding.preFilePage.setOnClickListener {
-            viewModel.activeWidget.value?.takeIf { it.type == WidgetType.FILE && it.currentPageNumber > 1 }
-                ?.let {
-                    WhiteBoard.jumpFilePage(it.id, it.currentPageNumber - 1)
-                }
-        }
-
-        binding.nextFilePage.setOnClickListener {
-            viewModel.activeWidget.value?.takeIf { it.type == WidgetType.FILE && it.currentPageNumber < it.pageCount }
-                ?.let {
-                    WhiteBoard.jumpFilePage(it.id, it.currentPageNumber + 1)
-                }
-        }
-
         binding.pen.setOnClickListener {
             if (viewModel.currentInputType.value != InputType.NORMAL) {
                 viewModel.changeInputType(InputType.NORMAL)
