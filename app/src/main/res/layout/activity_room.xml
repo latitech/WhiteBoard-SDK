@@ -22,13 +22,15 @@
             android:id="@+id/white_board"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginVertical="2dp"
+            app:layout_constraintBottom_toTopOf="@id/barrier_bottom"
             app:layout_constraintDimensionRatio="@{viewModel.whiteBoardRatio}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@id/barrier_top" />
 
         <com.google.android.material.card.MaterialCardView
+            android:id="@+id/board_toolbar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="parent"
@@ -95,6 +97,69 @@
         </com.google.android.material.card.MaterialCardView>
 
         <com.google.android.material.card.MaterialCardView
+            android:id="@+id/room_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:contentPadding="8dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{`房间号：` + viewModel.roomCode}" />
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <androidx.constraintlayout.widget.Barrier
+            android:id="@+id/barrier_top"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:barrierDirection="bottom"
+            app:constraint_referenced_ids="board_toolbar,room_info" />
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/file_controller"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/room_info"
+            app:visibleGone="@{viewModel.activeWidget != null}">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <androidx.appcompat.widget.AppCompatImageButton
+                    android:id="@+id/delete_file"
+                    style="@style/WhiteBoardActionButton"
+                    app:srcCompat="@drawable/ic_baseline_delete_outline_24" />
+
+                <!--                <androidx.appcompat.widget.AppCompatImageButton-->
+                <!--                    android:id="@+id/pre_file_page"-->
+                <!--                    style="@style/WhiteBoardActionButton"-->
+                <!--                    app:srcCompat="@drawable/ic_sharp_arrow_back_ios_24"-->
+                <!--                    app:visibleGone="@{viewModel.activeWidget.type == WidgetType.FILE}" />-->
+
+                <!--                <TextView-->
+                <!--                    android:layout_width="wrap_content"-->
+                <!--                    android:layout_height="wrap_content"-->
+                <!--                    android:text="@{viewModel.activeWidget.currentPageNumber + `/` + viewModel.activeWidget.pageCount}"-->
+                <!--                    app:visibleGone="@{viewModel.activeWidget.type == WidgetType.FILE}" />-->
+
+                <!--                <androidx.appcompat.widget.AppCompatImageButton-->
+                <!--                    android:id="@+id/next_file_page"-->
+                <!--                    style="@style/WhiteBoardActionButton"-->
+                <!--                    app:srcCompat="@drawable/ic_sharp_arrow_forward_ios_24"-->
+                <!--                    app:visibleGone="@{viewModel.activeWidget.type == WidgetType.FILE}" />-->
+
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
             android:id="@+id/page_navigation"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -138,62 +203,6 @@
         </com.google.android.material.card.MaterialCardView>
 
         <com.google.android.material.card.MaterialCardView
-            android:id="@+id/room_info"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:contentPadding="8dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@{`房间号：` + viewModel.roomCode}" />
-
-        </com.google.android.material.card.MaterialCardView>
-
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/file_controller"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="4dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/room_info"
-            app:visibleGone="@{viewModel.activeWidget != null}">
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
-
-                <androidx.appcompat.widget.AppCompatImageButton
-                    android:id="@+id/delete_file"
-                    style="@style/WhiteBoardActionButton"
-                    app:srcCompat="@drawable/ic_baseline_delete_outline_24" />
-
-<!--                <androidx.appcompat.widget.AppCompatImageButton-->
-<!--                    android:id="@+id/pre_file_page"-->
-<!--                    style="@style/WhiteBoardActionButton"-->
-<!--                    app:srcCompat="@drawable/ic_sharp_arrow_back_ios_24"-->
-<!--                    app:visibleGone="@{viewModel.activeWidget.type == WidgetType.FILE}" />-->
-
-<!--                <TextView-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:text="@{viewModel.activeWidget.currentPageNumber + `/` + viewModel.activeWidget.pageCount}"-->
-<!--                    app:visibleGone="@{viewModel.activeWidget.type == WidgetType.FILE}" />-->
-
-<!--                <androidx.appcompat.widget.AppCompatImageButton-->
-<!--                    android:id="@+id/next_file_page"-->
-<!--                    style="@style/WhiteBoardActionButton"-->
-<!--                    app:srcCompat="@drawable/ic_sharp_arrow_forward_ios_24"-->
-<!--                    app:visibleGone="@{viewModel.activeWidget.type == WidgetType.FILE}" />-->
-
-            </LinearLayout>
-        </com.google.android.material.card.MaterialCardView>
-
-        <com.google.android.material.card.MaterialCardView
             android:id="@+id/settings_controller"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -229,6 +238,13 @@
 
         </com.google.android.material.card.MaterialCardView>
 
+        <androidx.constraintlayout.widget.Barrier
+            android:id="@+id/barrier_bottom"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:barrierDirection="top"
+            app:constraint_referenced_ids="page_navigation,settings_controller" />
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/page_list"
             android:layout_width="wrap_content"
@@ -261,7 +277,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="4dp"
             android:text="@{@stringArray/room_status_names[viewModel.roomStatus.ordinal()]}"
-            android:textColor="@{viewModel.theme.light ? @color/material_on_surface_disabled : @color/material_on_primary_disabled}"
+            android:textColor="@color/material_on_primary_disabled"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
