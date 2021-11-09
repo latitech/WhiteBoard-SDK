@@ -22,12 +22,12 @@
             android:id="@+id/white_board"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_marginVertical="2dp"
+            android:layout_margin="2dp"
             app:layout_constraintBottom_toTopOf="@id/barrier_bottom"
             app:layout_constraintDimensionRatio="@{viewModel.whiteBoardRatio}"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/board_toolbar"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/barrier_top" />
+            app:layout_constraintTop_toBottomOf="@id/room_info" />
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/board_toolbar"
@@ -39,15 +39,7 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <androidx.appcompat.widget.AppCompatImageButton
-                    android:id="@+id/restore"
-                    style="@style/WhiteBoardActionButton"
-                    android:tint="?attr/colorOnPrimary"
-                    app:backgroundTint="?attr/colorSecondary"
-                    app:srcCompat="@drawable/ic_baseline_undo_24"
-                    app:visibleGone="@{viewModel.canRecovery}" />
+                android:orientation="vertical">
 
                 <androidx.appcompat.widget.AppCompatImageButton
                     android:id="@+id/select"
@@ -92,6 +84,14 @@
                     style="@style/WhiteBoardActionButton"
                     app:srcCompat="@drawable/ic_file_upload" />
 
+                <androidx.appcompat.widget.AppCompatImageButton
+                    android:id="@+id/restore"
+                    style="@style/WhiteBoardActionButton"
+                    android:tint="?attr/colorOnPrimary"
+                    app:backgroundTint="?attr/colorSecondary"
+                    app:srcCompat="@drawable/ic_baseline_undo_24"
+                    app:visibleGone="@{viewModel.canRecovery}" />
+
             </LinearLayout>
 
         </com.google.android.material.card.MaterialCardView>
@@ -104,27 +104,33 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <TextView
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@{`房间号：` + viewModel.roomCode}" />
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:text="@{@stringArray/room_status_names[viewModel.roomStatus.ordinal()]}" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{`房间号：` + viewModel.roomCode}" />
+
+            </LinearLayout>
 
         </com.google.android.material.card.MaterialCardView>
-
-        <androidx.constraintlayout.widget.Barrier
-            android:id="@+id/barrier_top"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:barrierDirection="bottom"
-            app:constraint_referenced_ids="board_toolbar,room_info" />
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/file_controller"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="4dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/room_info"
+            android:layout_marginStart="4dp"
+            app:layout_constraintStart_toEndOf="@id/room_info"
+            app:layout_constraintTop_toTopOf="parent"
             app:visibleGone="@{viewModel.activeWidget != null}">
 
             <LinearLayout
@@ -213,8 +219,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:paddingHorizontal="8dp">
+                android:orientation="horizontal">
 
                 <androidx.appcompat.widget.AppCompatImageButton
                     android:id="@+id/members"
@@ -223,13 +228,14 @@
 
                 <Button
                     android:id="@+id/screenshots"
+                    style="@style/Widget.AppCompat.Button.Small"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
                     android:text="截屏" />
 
                 <Button
                     android:id="@+id/theme"
+                    style="@style/Widget.AppCompat.Button.Small"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@{`背景:` + @stringArray/board_theme_names[viewModel.theme.themeType.ordinal()]}" />
@@ -263,24 +269,15 @@
             android:id="@+id/user_list"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
+            android:layout_marginTop="4dp"
             android:layout_marginBottom="2dp"
             android:background="@color/cardview_light_background"
             android:elevation="2dp"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toTopOf="@id/settings_controller"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/board_toolbar"
             app:visibleGone="@{viewModel.memberListVisible}" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="4dp"
-            android:text="@{@stringArray/room_status_names[viewModel.roomStatus.ordinal()]}"
-            android:textColor="@color/material_on_primary_disabled"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
