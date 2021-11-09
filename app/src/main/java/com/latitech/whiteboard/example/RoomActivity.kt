@@ -354,7 +354,14 @@ class RoomActivity : AppCompatActivity() {
         if (path != null) {
             Log.v(TAG, "openFile path:$path")
 
-            WhiteBoard.insertFile(FileConfig.Builder(File(path)).boxSize(800, 800).build())
+            FileConfig.Builder(File(path))
+                .location(
+                    WhiteBoard.getViewport().size.displayWidth / 5f,
+                    WhiteBoard.getViewport().size.displayHeight / 5f
+                )
+                .boxSize(800, 800)
+                .build()
+                .let(WhiteBoard::insertFile)
         }
     }
 }

@@ -37,7 +37,7 @@ class MainViewModel : ViewModel() {
         /**
          * 白板宽高比
          */
-        private const val ASPECT_RATIO = 1.6
+        private const val ASPECT_RATIO = 0.5
 
         /**
          * 白板默认背景色枚举，1是浅灰，2是黑色，3是绿色

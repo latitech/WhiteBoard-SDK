@@ -18,17 +18,15 @@
         android:theme="@style/Theme.WhiteBoardSDK">
         <activity
             android:name=".MainActivity"
-            android:windowSoftInputMode="stateHidden"
-            android:theme="@style/LaunchTheme">
+            android:theme="@style/LaunchTheme"
+            android:windowSoftInputMode="stateHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".RoomActivity"
-            android:screenOrientation="sensorLandscape" />
+        <activity android:name=".RoomActivity" />
 
         <provider
             android:name="androidx.core.content.FileProvider"
