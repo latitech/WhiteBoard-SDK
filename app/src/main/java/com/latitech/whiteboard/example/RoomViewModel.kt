@@ -145,6 +145,11 @@ class RoomViewModel : ViewModel() {
     val memberListVisible = MutableLiveData(false)
 
     /**
+     * 工具条是否展开
+     */
+    val toolbarExpanded = MutableLiveData(true)
+
+    /**
      * 普通笔配置
      */
     val normalPenStyle = NormalPenStyle()

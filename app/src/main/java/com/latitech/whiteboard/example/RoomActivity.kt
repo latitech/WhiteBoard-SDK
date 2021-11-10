@@ -173,16 +173,19 @@ class RoomActivity : AppCompatActivity() {
         }
 
         binding.theme.setOnClickListener {
-            themeWindow.popupWindow.showAtLocation(
-                it.rootView,
-                Gravity.END or Gravity.BOTTOM,
-                0,
-                dip(56)
-            )
+            themeWindow.show(it)
         }
 
         binding.members.setOnClickListener {
             viewModel.memberListVisible.value = !viewModel.memberListVisible.value!!
+        }
+
+        binding.shrink.setOnClickListener {
+            viewModel.toolbarExpanded.value = false
+        }
+
+        binding.expand.setOnClickListener {
+            viewModel.toolbarExpanded.value = true
         }
     }
 

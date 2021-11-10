@@ -22,67 +22,42 @@
             android:id="@+id/white_board"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_margin="2dp"
-            app:layout_constraintBottom_toTopOf="@id/barrier_bottom"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintDimensionRatio="@{viewModel.whiteBoardRatio}"
-            app:layout_constraintEnd_toStartOf="@id/board_toolbar"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/room_info" />
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{`房间号：` + viewModel.roomCode}"
+            app:contentPadding="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{@stringArray/room_status_names[viewModel.roomStatus.ordinal()]}"
+            app:contentPadding="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/board_toolbar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:animateLayoutChanges="true"
                 android:orientation="vertical">
-
-                <androidx.appcompat.widget.AppCompatImageButton
-                    android:id="@+id/select"
-                    style="@style/WhiteBoardActionButton"
-                    app:selected="@{viewModel.currentInputType == InputType.SELECT}"
-                    app:srcCompat="@drawable/ic_selection" />
-
-                <androidx.appcompat.widget.AppCompatImageButton
-                    android:id="@+id/pen"
-                    style="@style/WhiteBoardActionButton"
-                    android:tint="@{viewModel.normalPenStyle.Companion.colors[viewModel.normalPenStyle.colorIndex]}"
-                    app:selected="@{viewModel.currentInputType == InputType.NORMAL}"
-                    app:srcCompat="@drawable/ic_pen_normal" />
-
-                <androidx.appcompat.widget.AppCompatImageButton
-                    android:id="@+id/mark"
-                    style="@style/WhiteBoardActionButton"
-                    android:tint="@{viewModel.markPenStyle.Companion.colors[viewModel.markPenStyle.colorIndex]}"
-                    app:selected="@{viewModel.currentInputType == InputType.MARK}"
-                    app:srcCompat="@drawable/ic_pen_mark" />
-
-                <androidx.appcompat.widget.AppCompatImageButton
-                    android:id="@+id/eraser"
-                    style="@style/WhiteBoardActionButton"
-                    app:selected="@{viewModel.currentInputType == InputType.ERASE}"
-                    app:srcCompat="@drawable/ic_eraser" />
-
-                <androidx.appcompat.widget.AppCompatImageButton
-                    android:id="@+id/laser"
-                    style="@style/WhiteBoardActionButton"
-                    app:selected="@{viewModel.currentInputType == InputType.LASER}"
-                    app:srcCompat="@drawable/ic_pen_laser" />
-
-                <androidx.appcompat.widget.AppCompatImageButton
-                    android:id="@+id/geometry"
-                    style="@style/WhiteBoardActionButton"
-                    app:selected="@{viewModel.currentInputType == InputType.GEOMETRY}"
-                    app:srcCompat="@drawable/ic_geometry" />
-
-                <androidx.appcompat.widget.AppCompatImageButton
-                    android:id="@+id/insert_file"
-                    style="@style/WhiteBoardActionButton"
-                    app:srcCompat="@drawable/ic_file_upload" />
 
                 <androidx.appcompat.widget.AppCompatImageButton
                     android:id="@+id/restore"
@@ -92,86 +67,86 @@
                     app:srcCompat="@drawable/ic_baseline_undo_24"
                     app:visibleGone="@{viewModel.canRecovery}" />
 
-            </LinearLayout>
-
-        </com.google.android.material.card.MaterialCardView>
-
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/room_info"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:contentPadding="8dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
-                    android:text="@{@stringArray/room_status_names[viewModel.roomStatus.ordinal()]}" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@{`房间号：` + viewModel.roomCode}" />
-
-            </LinearLayout>
-
-        </com.google.android.material.card.MaterialCardView>
-
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/file_controller"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
-            app:layout_constraintStart_toEndOf="@id/room_info"
-            app:layout_constraintTop_toTopOf="parent"
-            app:visibleGone="@{viewModel.activeWidget != null}">
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
-
                 <androidx.appcompat.widget.AppCompatImageButton
                     android:id="@+id/delete_file"
                     style="@style/WhiteBoardActionButton"
-                    app:srcCompat="@drawable/ic_baseline_delete_outline_24" />
+                    app:srcCompat="@drawable/ic_baseline_delete_outline_24"
+                    app:visibleGone="@{viewModel.activeWidget != null}" />
 
-                <!--                <androidx.appcompat.widget.AppCompatImageButton-->
-                <!--                    android:id="@+id/pre_file_page"-->
-                <!--                    style="@style/WhiteBoardActionButton"-->
-                <!--                    app:srcCompat="@drawable/ic_sharp_arrow_back_ios_24"-->
-                <!--                    app:visibleGone="@{viewModel.activeWidget.type == WidgetType.FILE}" />-->
+                <androidx.appcompat.widget.AppCompatImageButton
+                    android:id="@+id/select"
+                    style="@style/WhiteBoardActionButton"
+                    app:selected="@{viewModel.currentInputType == InputType.SELECT}"
+                    app:srcCompat="@drawable/ic_selection"
+                    app:visibleGone="@{viewModel.currentInputType == InputType.SELECT || viewModel.toolbarExpanded}" />
 
-                <!--                <TextView-->
-                <!--                    android:layout_width="wrap_content"-->
-                <!--                    android:layout_height="wrap_content"-->
-                <!--                    android:text="@{viewModel.activeWidget.currentPageNumber + `/` + viewModel.activeWidget.pageCount}"-->
-                <!--                    app:visibleGone="@{viewModel.activeWidget.type == WidgetType.FILE}" />-->
+                <androidx.appcompat.widget.AppCompatImageButton
+                    android:id="@+id/pen"
+                    style="@style/WhiteBoardActionButton"
+                    android:tint="@{viewModel.normalPenStyle.Companion.colors[viewModel.normalPenStyle.colorIndex]}"
+                    app:selected="@{viewModel.currentInputType == InputType.NORMAL}"
+                    app:srcCompat="@drawable/ic_pen_normal"
+                    app:visibleGone="@{viewModel.currentInputType == InputType.NORMAL || viewModel.toolbarExpanded}" />
 
-                <!--                <androidx.appcompat.widget.AppCompatImageButton-->
-                <!--                    android:id="@+id/next_file_page"-->
-                <!--                    style="@style/WhiteBoardActionButton"-->
-                <!--                    app:srcCompat="@drawable/ic_sharp_arrow_forward_ios_24"-->
-                <!--                    app:visibleGone="@{viewModel.activeWidget.type == WidgetType.FILE}" />-->
+                <androidx.appcompat.widget.AppCompatImageButton
+                    android:id="@+id/mark"
+                    style="@style/WhiteBoardActionButton"
+                    android:tint="@{viewModel.markPenStyle.Companion.colors[viewModel.markPenStyle.colorIndex]}"
+                    app:selected="@{viewModel.currentInputType == InputType.MARK}"
+                    app:srcCompat="@drawable/ic_pen_mark"
+                    app:visibleGone="@{viewModel.currentInputType == InputType.MARK || viewModel.toolbarExpanded}" />
+
+                <androidx.appcompat.widget.AppCompatImageButton
+                    android:id="@+id/eraser"
+                    style="@style/WhiteBoardActionButton"
+                    app:selected="@{viewModel.currentInputType == InputType.ERASE}"
+                    app:srcCompat="@drawable/ic_eraser"
+                    app:visibleGone="@{viewModel.currentInputType == InputType.ERASE || viewModel.toolbarExpanded}" />
+
+                <androidx.appcompat.widget.AppCompatImageButton
+                    android:id="@+id/laser"
+                    style="@style/WhiteBoardActionButton"
+                    app:selected="@{viewModel.currentInputType == InputType.LASER}"
+                    app:srcCompat="@drawable/ic_pen_laser"
+                    app:visibleGone="@{viewModel.currentInputType == InputType.LASER || viewModel.toolbarExpanded}" />
+
+                <androidx.appcompat.widget.AppCompatImageButton
+                    android:id="@+id/geometry"
+                    style="@style/WhiteBoardActionButton"
+                    app:selected="@{viewModel.currentInputType == InputType.GEOMETRY}"
+                    app:srcCompat="@drawable/ic_geometry"
+                    app:visibleGone="@{viewModel.currentInputType == InputType.GEOMETRY || viewModel.toolbarExpanded}" />
+
+                <androidx.appcompat.widget.AppCompatImageButton
+                    android:id="@+id/insert_file"
+                    style="@style/WhiteBoardActionButton"
+                    app:srcCompat="@drawable/ic_file_upload"
+                    app:visibleGone="@{viewModel.toolbarExpanded}" />
+
+                <androidx.appcompat.widget.AppCompatImageButton
+                    android:id="@+id/shrink"
+                    style="@style/WhiteBoardActionButton"
+                    android:rotation="90"
+                    app:srcCompat="@drawable/ic_baseline_double_arrow_24"
+                    app:visibleGone="@{viewModel.toolbarExpanded}" />
 
             </LinearLayout>
+
+            <View
+                android:id="@+id/expand"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="bottom"
+                app:visibleGone="@{!viewModel.toolbarExpanded}" />
+
         </com.google.android.material.card.MaterialCardView>
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/page_navigation"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent">
+            app:layout_constraintEnd_toEndOf="parent">
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -197,12 +172,14 @@
                 <androidx.appcompat.widget.AppCompatImageButton
                     android:id="@+id/next_page"
                     style="@style/WhiteBoardActionButton"
-                    app:srcCompat="@drawable/ic_sharp_arrow_forward_ios_24" />
+                    app:srcCompat="@drawable/ic_sharp_arrow_forward_ios_24"
+                    app:visibleGone="@{viewModel.currentPage.pageNumber &lt; viewModel.pageList.size()}" />
 
                 <androidx.appcompat.widget.AppCompatImageButton
                     android:id="@+id/new_page"
                     style="@style/WhiteBoardActionButton"
-                    app:srcCompat="@drawable/ic_baseline_add_24" />
+                    app:srcCompat="@drawable/ic_baseline_add_24"
+                    app:visibleGone="@{viewModel.currentPage.pageNumber == viewModel.pageList.size()}" />
 
             </LinearLayout>
 
@@ -212,8 +189,8 @@
             android:id="@+id/settings_controller"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent">
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -244,39 +221,30 @@
 
         </com.google.android.material.card.MaterialCardView>
 
-        <androidx.constraintlayout.widget.Barrier
-            android:id="@+id/barrier_bottom"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:barrierDirection="top"
-            app:constraint_referenced_ids="page_navigation,settings_controller" />
-
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/page_list"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
-            android:layout_marginTop="4dp"
-            android:layout_marginBottom="2dp"
+            android:layout_marginVertical="4dp"
             android:background="@color/cardview_light_background"
             android:elevation="2dp"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toTopOf="@id/page_navigation"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/room_info"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/settings_controller"
             app:visibleGone="@{viewModel.pageListVisible}" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/user_list"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
-            android:layout_marginTop="4dp"
-            android:layout_marginBottom="2dp"
+            android:layout_marginVertical="4dp"
             android:background="@color/cardview_light_background"
             android:elevation="2dp"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintBottom_toTopOf="@id/settings_controller"
+            app:layout_constraintBottom_toTopOf="@id/page_navigation"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/board_toolbar"
+            app:layout_constraintTop_toBottomOf="@id/settings_controller"
             app:visibleGone="@{viewModel.memberListVisible}" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
