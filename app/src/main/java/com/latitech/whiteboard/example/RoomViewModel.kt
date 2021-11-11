@@ -182,7 +182,7 @@ class RoomViewModel : ViewModel() {
     /**
      * 当前输入模式
      */
-    var currentInputType = MutableLiveData(InputType.NORMAL)
+    val currentInputType = MutableLiveData(InputType.NORMAL)
 
     /**
      * 临时图片路径（拍照用）

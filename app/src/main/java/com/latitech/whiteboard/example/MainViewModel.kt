@@ -2,19 +2,17 @@
 
 package com.latitech.whiteboard.example
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import com.latitech.whiteboard.model.JoinConfig
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.withContext
-import okhttp3.*
 import okhttp3.HttpUrl.Companion.toHttpUrl
 import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.OkHttpClient
+import okhttp3.Request
 import okhttp3.RequestBody.Companion.toRequestBody
 import org.json.JSONObject
 import java.io.IOException
-
 
 /**
  * 首页功能
