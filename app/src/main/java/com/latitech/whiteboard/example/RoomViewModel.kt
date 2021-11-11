@@ -145,6 +145,11 @@ class RoomViewModel : ViewModel() {
     val memberListVisible = MutableLiveData(false)
 
     /**
+     * 设置功能区是否可见
+     */
+    val settingsVisible = MutableLiveData(false)
+
+    /**
      * 工具条是否展开
      */
     val toolbarExpanded = MutableLiveData(true)

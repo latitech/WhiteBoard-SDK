@@ -52,26 +52,27 @@ class NormalPenStyle : BaseObservable() {
          * 可选颜色
          */
         val colors = intArrayOf(
-            0xFF000000.toInt(),
-            0xFFFFA726.toInt(),
-            0xFFFFFF00.toInt(),
-            0xFF388E3C.toInt(),
-            0xFF2962FF.toInt(),
-            0xFFD500F9.toInt(),
-            0xFFFF0000.toInt(),
+            0xFF101010.toInt(),
             0xFFFFFFFF.toInt(),
-            0xFF8D6E63.toInt(),
+            0xFFFFE10D.toInt(),
+            0xFFF89E01.toInt(),
+            0xFFA203C8.toInt(),
+            0xFF006FFF.toInt(),
+            0xFFB6CBDF.toInt(),
+            0xFFF34236.toInt(),
+            0xFF5DBA46.toInt(),
+            0xFF1F9E8C.toInt(),
         )
 
         /**
          * 可选粗细
          */
         val sizes = floatArrayOf(
-            0.5f,
-            1f,
-            3f,
-            5f,
-            8f,
+            4f,
+            10f,
+            16f,
+            22f,
+            28f,
         )
     }
 }
@@ -111,23 +112,22 @@ class MarkPenStyle : BaseObservable() {
          * 可选颜色
          */
         val colors = intArrayOf(
-            0xFF03DAC5.toInt(),
-            0xFFFFFF00.toInt(),
-            0xFFFF0000.toInt(),
-            0xFF2962FF.toInt(),
-            0xFFBB86FC.toInt(),
+            0xFFFFE800.toInt(),
+            0xFF20FFD2.toInt(),
+            0xFF00B8FF.toInt(),
+            0xFFFF5252.toInt(),
+            0xFFC300FF.toInt(),
         )
 
         /**
          * 可选粗细
          */
         val sizes = floatArrayOf(
-            5f,
-            10f,
-            15f,
             20f,
             25f,
             30f,
+            35f,
+            40f,
         )
     }
 }

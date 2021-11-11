@@ -187,6 +187,10 @@ class RoomActivity : AppCompatActivity() {
         binding.expand.setOnClickListener {
             viewModel.toolbarExpanded.value = true
         }
+
+        binding.settings.setOnClickListener {
+            viewModel.settingsVisible.value = !viewModel.settingsVisible.value!!
+        }
     }
 
     /**

@@ -205,18 +205,40 @@
                     style="@style/WhiteBoardActionButton"
                     app:srcCompat="@drawable/ic_baseline_people_outline_24" />
 
+                <androidx.appcompat.widget.AppCompatImageButton
+                    android:id="@+id/settings"
+                    style="@style/WhiteBoardActionButton"
+                    app:srcCompat="@drawable/ic_baseline_settings_24" />
+            </LinearLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/settings_controller"
+            app:visibleGone="@{viewModel.settingsVisible}">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
+
                 <Button
                     android:id="@+id/screenshots"
                     style="@style/Widget.AppCompat.Button.Small"
                     android:layout_width="wrap_content"
-                    android:layout_height="40dp"
+                    android:layout_height="wrap_content"
                     android:text="截屏" />
 
                 <Button
                     android:id="@+id/theme"
                     style="@style/Widget.AppCompat.Button.Small"
                     android:layout_width="wrap_content"
-                    android:layout_height="40dp"
+                    android:layout_height="wrap_content"
                     android:text="@{`背景:` + @stringArray/board_theme_names[viewModel.theme.themeType.ordinal()]}" />
 
             </LinearLayout>

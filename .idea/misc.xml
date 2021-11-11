@@ -17,6 +17,7 @@
         <entry key="..\:/AndroidStudioProjects/WhiteBoard-SDK/app/src/main/res/drawable/ic_baseline_east_24.xml" value="0.3338541666666667" />
         <entry key="..\:/AndroidStudioProjects/WhiteBoard-SDK/app/src/main/res/drawable/ic_baseline_lens_24.xml" value="0.3641025641025641" />
         <entry key="..\:/AndroidStudioProjects/WhiteBoard-SDK/app/src/main/res/drawable/ic_baseline_people_outline_24.xml" value="0.3641025641025641" />
+        <entry key="..\:/AndroidStudioProjects/WhiteBoard-SDK/app/src/main/res/drawable/ic_baseline_settings_24.xml" value="0.3338541666666667" />
         <entry key="..\:/AndroidStudioProjects/WhiteBoard-SDK/app/src/main/res/drawable/ic_baseline_undo_24.xml" value="0.3641025641025641" />
         <entry key="..\:/AndroidStudioProjects/WhiteBoard-SDK/app/src/main/res/drawable/ic_eraser.xml" value="0.3641025641025641" />
         <entry key="..\:/AndroidStudioProjects/WhiteBoard-SDK/app/src/main/res/drawable/ic_file_upload.xml" value="0.3641025641025641" />
@@ -39,6 +40,7 @@
         <entry key="..\:/AndroidStudioProjects/WhiteBoard-SDK/app/src/main/res/drawable/launch_background.xml" value="0.3338541666666667" />
         <entry key="..\:/AndroidStudioProjects/WhiteBoard-SDK/app/src/main/res/layout/activity_main.xml" value="0.28804347826086957" />
         <entry key="..\:/AndroidStudioProjects/WhiteBoard-SDK/app/src/main/res/layout/activity_room.xml" value="0.2776268115942029" />
+        <entry key="..\:/AndroidStudioProjects/WhiteBoard-SDK/app/src/main/res/menu/insert_file_menu.xml" value="0.31354166666666666" />
         <entry key="..\:/AndroidStudioProjects/WhiteBoard-SDK/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.3338541666666667" />
       </map>
     </option>
