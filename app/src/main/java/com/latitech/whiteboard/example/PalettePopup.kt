@@ -144,9 +144,7 @@ class PalettePopup(private val context: Context) {
                     setBackgroundColor(Color.DKGRAY)
                 },
                 ViewGroup.MarginLayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, context.dip(1))
-                    .apply {
-                        setMargins(context.dip(4))
-                    })
+            )
         }
 
         return LayoutInflater.from(context).inflate(R.layout.palette_chip_group, parent, false)
