@@ -106,18 +106,18 @@
                     app:visibleGone="@{viewModel.currentInputType == InputType.ERASE || viewModel.toolbarExpanded}" />
 
                 <androidx.appcompat.widget.AppCompatImageButton
-                    android:id="@+id/laser"
-                    style="@style/WhiteBoardActionButton"
-                    app:selected="@{viewModel.currentInputType == InputType.LASER}"
-                    app:srcCompat="@drawable/ic_pen_laser"
-                    app:visibleGone="@{viewModel.currentInputType == InputType.LASER || viewModel.toolbarExpanded}" />
-
-                <androidx.appcompat.widget.AppCompatImageButton
                     android:id="@+id/geometry"
                     style="@style/WhiteBoardActionButton"
                     app:selected="@{viewModel.currentInputType == InputType.GEOMETRY}"
                     app:srcCompat="@drawable/ic_geometry"
                     app:visibleGone="@{viewModel.currentInputType == InputType.GEOMETRY || viewModel.toolbarExpanded}" />
+
+                <androidx.appcompat.widget.AppCompatImageButton
+                    android:id="@+id/laser"
+                    style="@style/WhiteBoardActionButton"
+                    app:selected="@{viewModel.currentInputType == InputType.LASER}"
+                    app:srcCompat="@drawable/ic_pen_laser"
+                    app:visibleGone="@{viewModel.currentInputType == InputType.LASER || viewModel.toolbarExpanded}" />
 
                 <androidx.appcompat.widget.AppCompatImageButton
                     android:id="@+id/insert_file"

@@ -6,6 +6,7 @@ import android.content.Context
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -130,7 +131,7 @@ class PalettePopup(private val context: Context) {
      * @param anchor 锚点
      */
     fun show(anchor: View) {
-        popupWindow.showAsDropDown(anchor, 0, context.dip(8))
+        popupWindow.showAsDropDown(anchor, 0, -anchor.height, Gravity.END or Gravity.TOP)
     }
 
     /**
@@ -144,7 +145,7 @@ class PalettePopup(private val context: Context) {
                 },
                 ViewGroup.MarginLayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, context.dip(1))
                     .apply {
-                        setMargins(context.dip(8))
+                        setMargins(context.dip(4))
                     })
         }
 
