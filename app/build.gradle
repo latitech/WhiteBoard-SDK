@@ -70,5 +70,5 @@ dependencies {
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.2'
 
 //    implementation 'com.latitech.android:whiteboard:0.6.1'
-    implementation 'com.latitech.android:whiteboard-test:0.6.6'
+    implementation 'com.latitech.android:whiteboard-test:0.6.8'
 }
