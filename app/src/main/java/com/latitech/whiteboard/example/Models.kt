@@ -267,10 +267,10 @@ class GeometryStyle {
          * 可选粗细
          */
         val sizes = floatArrayOf(
-            1f,
-            3f,
-            5f,
+            4f,
             8f,
+            12f,
+            16f,
         )
     }
 }
