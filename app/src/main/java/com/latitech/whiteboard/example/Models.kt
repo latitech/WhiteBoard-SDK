@@ -38,9 +38,18 @@ class NormalPenStyle : BaseObservable() {
         }
 
     /**
+     * 是否支持压感
+     */
+    var supportPressure = false
+        set(value) {
+            field = value
+            WhiteBoard.setInputMode(inputConfig)
+        }
+
+    /**
      * 生成当前配置
      */
-    val inputConfig get() = InputConfig.pen(colors[colorIndex], sizes[sizeIndex])
+    val inputConfig get() = InputConfig.pen(colors[colorIndex], sizes[sizeIndex], supportPressure)
 
     override fun notifyPropertyChanged(fieldId: Int) {
         super.notifyPropertyChanged(fieldId)
@@ -103,9 +112,23 @@ class MarkPenStyle : BaseObservable() {
         }
 
     /**
+     * 是否支持压感
+     */
+    var supportPressure = false
+        set(value) {
+            field = value
+            WhiteBoard.setInputMode(inputConfig)
+        }
+
+    /**
      * 生成当前配置
      */
-    val inputConfig get() = InputConfig.pen(colors[colorIndex] and 0x6FFFFFFF, sizes[sizeIndex])
+    val inputConfig
+        get() = InputConfig.pen(
+            colors[colorIndex] and 0x6FFFFFFF,
+            sizes[sizeIndex],
+            supportPressure
+        )
 
     companion object {
         /**

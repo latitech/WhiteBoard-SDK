@@ -126,6 +126,34 @@ class PalettePopup(private val context: Context) {
     }
 
     /**
+     * 增加带有文字描述的选择面板
+     *
+     * @param texts 待选文本
+     * @param selected 初始选中的文本序号
+     * @param changedListener 文本选择事件参数为选中的文本序号
+     */
+    fun addTextSelection(
+        texts: Array<String>,
+        selected: Int,
+        changedListener: (selected: Int) -> Unit
+    ) {
+        loadChipGroup().apply {
+            texts.forEachIndexed { index, t ->
+                loadChip(this).apply {
+                    text = t
+                    textEndPadding = context.dip(8f)
+                    textStartPadding = context.dip(8f)
+                    id = index
+                }
+            }
+            check(selected)
+            setOnCheckedChangeListener { _, checkedId ->
+                changedListener(checkedId)
+            }
+        }
+    }
+
+    /**
      * 显示弹窗
      *
      * @param anchor 锚点

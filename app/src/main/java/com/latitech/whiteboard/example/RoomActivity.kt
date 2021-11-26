@@ -204,6 +204,12 @@ class RoomActivity : AppCompatActivity() {
             addSizeSelection(NormalPenStyle.sizes, viewModel.normalPenStyle.sizeIndex) {
                 viewModel.normalPenStyle.sizeIndex = it
             }
+            addTextSelection(
+                arrayOf("压感开", "压感关"),
+                if (viewModel.normalPenStyle.supportPressure) 0 else 1
+            ) {
+                viewModel.normalPenStyle.supportPressure = it == 0
+            }
         }
     }
 
@@ -217,6 +223,12 @@ class RoomActivity : AppCompatActivity() {
             }
             addSizeSelection(MarkPenStyle.sizes, viewModel.markPenStyle.sizeIndex) {
                 viewModel.markPenStyle.sizeIndex = it
+            }
+            addTextSelection(
+                arrayOf("压感开", "压感关"),
+                if (viewModel.markPenStyle.supportPressure) 0 else 1
+            ) {
+                viewModel.markPenStyle.supportPressure = it == 0
             }
         }
     }
