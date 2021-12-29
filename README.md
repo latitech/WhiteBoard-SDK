@@ -16,10 +16,10 @@ repositories {
 }
 
 dependencies {
-    implementation 'com.latitech.android:whiteboard:0.6.1'
+    implementation 'com.latitech.android:whiteboard:0.6.9'
 
     // 可选，如果项目使用了androidx可以添加此项开启sdk的可空/非空参数注解的识别，在kotlin环境非常有用。
-    compileOnly 'androidx.annotation:annotation:1.2.0'
+    compileOnly 'androidx.annotation:annotation:1.3.0'
 }
 
 android {
