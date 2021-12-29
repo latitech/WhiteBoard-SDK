@@ -1,3 +1,5 @@
+// Created by 超悟空 on 2018/10/18.
+
 package com.latitech.whiteboard.example
 
 import android.util.Log
@@ -11,10 +13,6 @@ import com.latitech.whiteboard.type.WidgetType
 
 /**
  * 房间功能
- *
- * @author 超悟空
- * @version 1.0 2018/10/18
- * @since 1.0 2018/10/18
  **/
 class RoomViewModel : ViewModel() {
 

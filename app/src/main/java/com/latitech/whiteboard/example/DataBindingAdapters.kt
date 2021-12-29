@@ -1,3 +1,5 @@
+// Created by 超悟空 on 2018/3/15.
+
 package com.latitech.whiteboard.example
 
 import android.view.View

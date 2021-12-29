@@ -1,3 +1,5 @@
+// Created by 超悟空 on 2017/10/20.
+
 package com.latitech.whiteboard.example
 
 import android.content.Context
@@ -10,10 +12,6 @@ import java.io.File
 
 /**
  * 解析FileProvider的工具
- *
- * @author 超悟空
- * @version 1.0 2017/10/20
- * @since 1.0 2017/10/20
  **/
 object FileUtil {
 

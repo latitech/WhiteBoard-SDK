@@ -5,11 +5,11 @@ package com.latitech.whiteboard.example
 import android.app.Application
 import com.latitech.whiteboard.WhiteBoard
 
-class MyApplication : Application(){
+class MyApplication : Application() {
     override fun onCreate() {
         super.onCreate()
 
-        WhiteBoard.init(this,BuildConfig.DEBUG)
+        WhiteBoard.init(this, BuildConfig.DEBUG)
 
         WhiteBoard.setDefaultInputMode(NormalPenStyle().inputConfig)
     }

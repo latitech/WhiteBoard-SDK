@@ -22,6 +22,11 @@ class MainActivity : AppCompatActivity() {
          * 标记是否已经启动
          */
         private const val STARTED = "whiteboard_started"
+
+        /**
+         * 北纬白板sdk的应用appId，需要替换为您自己申请的appId。
+         */
+        private const val SDK_APP_ID = ""
     }
 
     /**

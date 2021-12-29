@@ -1,10 +1,11 @@
+// Created by 超悟空 on 2018/3/15.
+
 package com.latitech.whiteboard.example
 
 import android.Manifest
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.util.Log
-import android.view.Gravity
 import android.widget.ImageView
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
@@ -14,17 +15,11 @@ import androidx.core.content.ContextCompat
 import com.latitech.whiteboard.WhiteBoard
 import com.latitech.whiteboard.example.databinding.ActivityRoomBinding
 import com.latitech.whiteboard.model.FileConfig
-import com.latitech.whiteboard.type.WidgetType
 import splitties.alertdialog.appcompat.alertDialog
-import splitties.dimensions.dip
 import java.io.File
 
 /**
  * 白板房间
- *
- * @author 超悟空
- * @version 1.0 2018/3/15
- * @since 1.0 2018/3/15
  **/
 class RoomActivity : AppCompatActivity() {
 
