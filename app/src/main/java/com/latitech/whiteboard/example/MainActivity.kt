@@ -63,7 +63,6 @@ class MainActivity : AppCompatActivity() {
      * 加入房间
      */
     private fun joinRoom(code: String) = lifecycleScope.launch {
-        // 加入房间
         val params = try {
             viewModel.getRoomConfig(code)
         } catch (e: IOException) {
