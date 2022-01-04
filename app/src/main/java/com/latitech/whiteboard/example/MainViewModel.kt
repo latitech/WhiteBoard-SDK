@@ -56,13 +56,16 @@ class MainViewModel : ViewModel() {
     /**
      * 创建房间
      *
+     * @param appId 北纬白板应用id
+     *
      * @return 邀请码
      *
      * @throws IOException 如果网络请求失败或接口执行失败
      */
-    suspend fun createRoom(): String = withContext(Dispatchers.IO) {
+    suspend fun createRoom(appId: String): String = withContext(Dispatchers.IO) {
         val body = """
             {
+                "appId":"$appId",
                 "bgColor":$BACKGROUND_COLOR,
                 "extendTimes":$EXTENDS,
                 "widthHeightThan":$ASPECT_RATIO
@@ -90,33 +93,36 @@ class MainViewModel : ViewModel() {
     /**
      * 获取房间配置信息
      *
+     * @param appId 北纬白板应用id
      * @param code 邀请码
      */
-    suspend fun getRoomConfig(code: String): JoinConfig = withContext(Dispatchers.IO) {
-        val url = "$BASE_URL/board/getProperty".toHttpUrl().newBuilder()
-            .addQueryParameter("inviteCode", code).build()
+    suspend fun getRoomConfig(appId: String, code: String): JoinConfig =
+        withContext(Dispatchers.IO) {
+            val url = "$BASE_URL/board/getProperty".toHttpUrl().newBuilder()
+                .addQueryParameter("appId", appId)
+                .addQueryParameter("inviteCode", code).build()
 
-        val request = Request.Builder()
-            .url(url)
-            .build()
+            val request = Request.Builder()
+                .url(url)
+                .build()
 
-        okHttpClient.newCall(request).execute().use { response ->
-            if (!response.isSuccessful) throw IOException("create room failed")
+            okHttpClient.newCall(request).execute().use { response ->
+                if (!response.isSuccessful) throw IOException("create room failed")
 
-            val jsonObject = JSONObject(response.body!!.string())
+                val jsonObject = JSONObject(response.body!!.string())
 
-            if (!jsonObject.getBoolean("state")) {
-                throw IOException("create room failed")
-            }
+                if (!jsonObject.getBoolean("state")) {
+                    throw IOException("create room failed")
+                }
 
-            jsonObject.getJSONObject("result").let {
-                JoinConfig(
-                    it.getString("appId"),
-                    it.getString("meetingId"),
-                    it.getString("userId"),
-                    it.getString("token")
-                )
+                jsonObject.getJSONObject("result").let {
+                    JoinConfig(
+                        it.getString("appId"),
+                        it.getString("meetingId"),
+                        it.getString("userId"),
+                        it.getString("token")
+                    )
+                }
             }
         }
-    }
 }

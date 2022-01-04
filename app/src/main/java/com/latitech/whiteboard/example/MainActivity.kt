@@ -64,7 +64,7 @@ class MainActivity : AppCompatActivity() {
      */
     private fun joinRoom(code: String) = lifecycleScope.launch {
         val params = try {
-            viewModel.getRoomConfig(code)
+            viewModel.getRoomConfig(SDK_APP_ID, code)
         } catch (e: IOException) {
             toast("加入房间失败")
             return@launch
@@ -81,7 +81,7 @@ class MainActivity : AppCompatActivity() {
      */
     private fun createRoom() = lifecycleScope.launch {
         val code = try {
-            viewModel.createRoom()
+            viewModel.createRoom(SDK_APP_ID)
         } catch (e: IOException) {
             toast("创建房间失败")
             return@launch
