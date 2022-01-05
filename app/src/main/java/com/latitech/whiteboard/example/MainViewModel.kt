@@ -24,7 +24,7 @@ class MainViewModel : ViewModel() {
         /**
          * demo 使用的演示api接口地址
          */
-        private const val BASE_URL = "https://sdktest.efaceboard.cn:8888/Chatboard"
+        private const val BASE_URL = "https://demo.latitech.cn:8808/"
 
         /**
          * 白板垂直方向延展倍数，从1开始。
@@ -68,7 +68,7 @@ class MainViewModel : ViewModel() {
             val body = """
             {
                 "appId":"$appId",
-                "appSecret":"$appSecret",
+                "secret":"$appSecret",
                 "bgColor":$BACKGROUND_COLOR,
                 "extendTimes":$EXTENDS,
                 "widthHeightThan":$ASPECT_RATIO
