@@ -57,38 +57,41 @@ class MainViewModel : ViewModel() {
      * 创建房间
      *
      * @param appId 北纬白板应用id
+     * @param appSecret 北纬白板应用密钥
      *
      * @return 邀请码
      *
      * @throws IOException 如果网络请求失败或接口执行失败
      */
-    suspend fun createRoom(appId: String): String = withContext(Dispatchers.IO) {
-        val body = """
+    suspend fun createRoom(appId: String, appSecret: String): String =
+        withContext(Dispatchers.IO) {
+            val body = """
             {
                 "appId":"$appId",
+                "appSecret":"$appSecret",
                 "bgColor":$BACKGROUND_COLOR,
                 "extendTimes":$EXTENDS,
                 "widthHeightThan":$ASPECT_RATIO
             }
         """.toRequestBody(JSON)
 
-        val request = Request.Builder()
-            .url("$BASE_URL/board/create")
-            .post(body)
-            .build()
+            val request = Request.Builder()
+                .url("$BASE_URL/board/create")
+                .post(body)
+                .build()
 
-        okHttpClient.newCall(request).execute().use { response ->
-            if (!response.isSuccessful) throw IOException("create room failed")
+            okHttpClient.newCall(request).execute().use { response ->
+                if (!response.isSuccessful) throw IOException("create room failed")
 
-            val jsonObject = JSONObject(response.body!!.string())
+                val jsonObject = JSONObject(response.body!!.string())
 
-            if (!jsonObject.getBoolean("state")) {
-                throw IOException("create room failed")
+                if (!jsonObject.getBoolean("state")) {
+                    throw IOException("create room failed")
+                }
+
+                jsonObject.getString("result")
             }
-
-            jsonObject.getString("result")
         }
-    }
 
     /**
      * 获取房间配置信息

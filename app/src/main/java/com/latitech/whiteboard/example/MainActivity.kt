@@ -27,6 +27,11 @@ class MainActivity : AppCompatActivity() {
          * 北纬白板sdk的应用appId，需要替换为您自己申请的appId。
          */
         private const val SDK_APP_ID = ""
+
+        /**
+         * 北纬白板sdk的应用appSecret，需要替换为您自己申请的appSecret。
+         */
+        private const val SDK_APP_SECRET = ""
     }
 
     /**
@@ -81,7 +86,7 @@ class MainActivity : AppCompatActivity() {
      */
     private fun createRoom() = lifecycleScope.launch {
         val code = try {
-            viewModel.createRoom(SDK_APP_ID)
+            viewModel.createRoom(SDK_APP_ID, SDK_APP_SECRET)
         } catch (e: IOException) {
             toast("创建房间失败")
             return@launch
