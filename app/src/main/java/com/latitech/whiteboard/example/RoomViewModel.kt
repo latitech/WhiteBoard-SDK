@@ -210,10 +210,6 @@ class RoomViewModel : ViewModel() {
                 Log.i(TAG, "onDisconnected")
             }
 
-            override fun onFilePageChanged(info: ActiveWidgetInfo) {
-                Log.i(TAG, "onFilePageChanged $info")
-            }
-
             override fun onWidgetActionEvent(event: WidgetActionEvent) {
                 Log.i(TAG, "onWidgetActionEvent $event")
             }
