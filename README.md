@@ -16,7 +16,7 @@ repositories {
 }
 
 dependencies {
-    implementation 'com.latitech.android:whiteboard:0.6.9'
+    implementation 'com.latitech.android:whiteboard-sdk:+'
 
     // 可选，如果项目使用了androidx可以添加此项开启sdk的可空/非空参数注解的识别，在kotlin环境非常有用。
     compileOnly 'androidx.annotation:annotation:1.3.0'
@@ -38,29 +38,6 @@ android {
             targetCompatibility JavaVersion.VERSION_1_8
     }
 }
-
-```
-
-## 混淆配置
-
-```proguard
-
--dontwarn com.latitech.whiteboard.**
-
-# 由jni调用
--keep class com.latitech.whiteboard.core.EGLEnvironment {
-    private void onRequestRender();
-    private void onRenderListenerError();
-}
--keep class com.latitech.whiteboard.core.NativeListener {
-    private <methods>;
-}
--keep class com.latitech.whiteboard.core.ResourceInfo {*;}
-
-# 阿里云oss
--keep class com.alibaba.sdk.android.oss.** { *; }
--dontwarn okio.**
--dontwarn org.apache.commons.codec.binary.**
 
 ```
 
@@ -190,7 +167,6 @@ class MyApplication : Application(){
 |[nextBoardPage](#nextboardpage)|前进到下一页|
 |[deleteBoardPage](#deleteboardpage)|删除白板页|
 |[insertFile](#insertfile)|向当前白板页中插入文件|
-|[jumpFilePage](#jumpfilepage)|文件翻页|
 |[deleteFile](#deletefile)|删除文件|
 |[recover](#recover)|撤销一次擦除的笔迹|
 |[screenshots](#screenshots)|白板截图|
@@ -517,21 +493,6 @@ class MyApplication : Application(){
 |参数|描述|
 |----|----|
 |[config](#fileconfig)|文件配置信息|
-
-## jumpFilePage
-
-`public static void jumpFilePage(@NonNull String widgetId , int pageNo)`
-
-文件翻页
-
-对于可翻页的文件，如pdf和office文件，通过调用此方法可以使文件跳到指定序号的页面。
-
-翻页成功后会收到[onFilePageChanged](#onfilepagechanged)回调。
-
-|参数|描述|
-|----|----|
-|widgetId|文件的widgetId，每个文件都有一个id，可以通过[getActiveWidget](#getactivewidget)方法获取当前用户正在操作的Widget，也可以通过[onWidgetActive](#onwidgetactive)收集当前正在操作的Widget|
-|pageNo|跳转的目标页号，从1开始，如果序号超出文件范围，跳转会失败并忽略|
 
 ## deleteFile
 
@@ -901,19 +862,6 @@ class MyApplication : Application(){
 |----|----|
 |[info](#activewidgetinfo)|当前激活的widget信息，null表示用户还没有操作，比如刚刚翻页后|
 
-## onFilePageChanged
-
-`void onFilePageChanged(@NonNull ActiveWidgetInfo info)`
-
-文件页改变
-
-当文件被翻页时触发，同时会触发[onWidgetActive](#onwidgetactive)。 当前仅被激活的文件发生翻页时才会收到此事件。
-文件翻页可通过调用[jumpFilePage](#jumpfilepage)实现。
-
-|参数|描述|
-|----|----|
-|[info](#activewidgetinfo)|新的widget信息|
-
 ## onWidgetActionEvent
 
 `void onWidgetActionEvent(@NonNull WidgetActionEvent event)`
@@ -1109,7 +1057,7 @@ widget被执行了某些关键动作
 
 |参数|类型|可空|描述|
 |----|----|----|----|
-|id|String|否|widgetId，此widget的唯一标识符，后续对widget的操作都会用到此id，比如[jumpFilePage](#jumpfilepage)和[deleteFile](#deletefile)|
+|id|String|否|widgetId，此widget的唯一标识符，后续对widget的操作都会用到此id，比如[deleteFile](#deletefile)|
 |type|[WidgetType](#widgettype)|否|指示了此widget的类型|
 |userId|String|是|此widget创建者的userId，通常白板页是没有创建者的，由服务器创建|
 |name|String|是|widget名称，如果此widget是文件或图片时|
