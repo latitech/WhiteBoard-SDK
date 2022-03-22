@@ -135,11 +135,11 @@ class MarkPenStyle : BaseObservable() {
          * 可选颜色
          */
         val colors = intArrayOf(
-            0xFFFFE800.toInt(),
-            0xFF20FFD2.toInt(),
-            0xFF00B8FF.toInt(),
-            0xFFFF5252.toInt(),
-            0xFFC300FF.toInt(),
+            0xFFFFC000.toInt(),
+            0xFF1ECAB1.toInt(),
+            0xFF0BA8FF.toInt(),
+            0xFFF44949.toInt(),
+            0xFF991EFF.toInt(),
         )
 
         /**
@@ -279,11 +279,11 @@ class GeometryStyle {
          * 可选颜色
          */
         val colors = intArrayOf(
-            0xFF000000.toInt(),
-            0xFFFFFF00.toInt(),
-            0xFF388E3C.toInt(),
-            0xFFD500F9.toInt(),
-            0xFFFF0000.toInt(),
+            0xFF101010.toInt(),
+            0xFFF89E01.toInt(),
+            0xFFA203C8.toInt(),
+            0xFF006FFF.toInt(),
+            0xFF1F9E8C.toInt(),
         )
 
         /**
