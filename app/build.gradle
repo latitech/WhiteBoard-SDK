@@ -1,16 +1,17 @@
 plugins {
     id 'com.android.application'
-    id 'kotlin-android'
+    id 'org.jetbrains.kotlin.android'
     id 'kotlin-kapt'
 }
 
 android {
-    compileSdkVersion 31
+    namespace 'com.latitech.whiteboard.example'
+    compileSdk 31
 
     defaultConfig {
         applicationId "com.latitech.whiteboard.example"
-        minSdkVersion 21
-        targetSdkVersion 31
+        minSdk 21
+        targetSdk 31
         versionCode 1
         versionName "1.0"
 
@@ -45,7 +46,6 @@ android {
 dependencies {
     def splitties_version = '3.0.0'
 
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
     implementation 'androidx.core:core-ktx:1.8.0'
     implementation 'androidx.appcompat:appcompat:1.4.2'
     implementation 'com.google.android.material:material:1.5.0'
@@ -67,7 +67,6 @@ dependencies {
 
     implementation 'com.github.bumptech.glide:okhttp3-integration:4.12.0'
     implementation 'com.squareup.okhttp3:okhttp:4.9.1'
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.3'
 
     implementation 'com.latitech.android:whiteboard-sdk:0.8.0'
 }
