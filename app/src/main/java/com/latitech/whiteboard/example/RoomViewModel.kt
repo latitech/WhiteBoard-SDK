@@ -8,7 +8,9 @@ import androidx.lifecycle.ViewModel
 import com.latitech.whiteboard.WhiteBoard
 import com.latitech.whiteboard.listener.AutoRemoveWhiteBoardListener
 import com.latitech.whiteboard.model.*
+import com.latitech.whiteboard.type.BoardMode
 import com.latitech.whiteboard.type.BoardStatus
+import com.latitech.whiteboard.type.RoomStatus
 import com.latitech.whiteboard.type.WidgetType
 
 /**
@@ -17,15 +19,27 @@ import com.latitech.whiteboard.type.WidgetType
 class RoomViewModel : ViewModel() {
 
     /**
-     * 房间号
+     * 白板控制器
      */
-    var roomCode = ""
+    val whiteBoardClient = WhiteBoard.createInstance()
 
     /**
      * 当前房间状态
      */
-    val roomStatus = MutableLiveData(WhiteBoard.getStatus()).apply {
+    val roomStatus = MutableLiveData(WhiteBoard.getRoomStatus()).apply {
         WhiteBoard.addListener(object : AutoRemoveWhiteBoardListener {
+            override fun onRoomStatusChanged(status: RoomStatus) {
+                Log.i(TAG, "onBoardStatusChanged $status")
+                value = status
+            }
+        })
+    }
+
+    /**
+     * 白板状态
+     */
+    val boardStatus = MutableLiveData(whiteBoardClient.status).apply {
+        whiteBoardClient.addListener(object : AutoRemoveWhiteBoardListener {
             override fun onBoardStatusChanged(status: BoardStatus) {
                 Log.i(TAG, "onBoardStatusChanged $status")
                 value = status
@@ -34,13 +48,12 @@ class RoomViewModel : ViewModel() {
     }
 
     /**
-     * 白板宽高比
+     * 白板模式
      */
-    val whiteBoardRatio = MutableLiveData("2048:1440").apply {
-        WhiteBoard.addListener(object : AutoRemoveWhiteBoardListener {
-            override fun onBoardSizeChanged(viewport: WhiteBoardViewport) {
-                Log.i(TAG, "onBoardSizeChanged")
-                value = "${viewport.size.displayWidth}:${viewport.size.displayHeight}"
+    val boardMode = MutableLiveData(BoardMode.NORMAL).apply {
+        whiteBoardClient.addListener(object : AutoRemoveWhiteBoardListener {
+            override fun onWhiteBoardOpened(bucketId: String, mode: BoardMode) {
+                value = mode
             }
         })
     }
@@ -49,7 +62,7 @@ class RoomViewModel : ViewModel() {
      * 页信息列表
      */
     val pageList = MutableLiveData<List<WhiteBoardPage>>().apply {
-        WhiteBoard.addListener(object : AutoRemoveWhiteBoardListener {
+        whiteBoardClient.addListener(object : AutoRemoveWhiteBoardListener {
             override fun onBoardPageList(list: List<WhiteBoardPage>) {
                 Log.i(TAG, "onBoardPageList count:${list.size}")
                 value = list
@@ -66,10 +79,21 @@ class RoomViewModel : ViewModel() {
      * 当前白板页
      */
     val currentPage = MutableLiveData<WhiteBoardPage>().apply {
-        WhiteBoard.addListener(object : AutoRemoveWhiteBoardListener {
+        whiteBoardClient.addListener(object : AutoRemoveWhiteBoardListener {
             override fun onCurrentBoardPageChanged(page: WhiteBoardPage) {
                 Log.i(TAG, "onCurrentBoardPageChanged ${page.pageNumber}")
                 value = page
+            }
+        })
+    }
+
+    /**
+     * ppt当前页码显示
+     */
+    val pptPages = MutableLiveData("0/0").apply {
+        whiteBoardClient.addListener(object : AutoRemoveWhiteBoardListener {
+            override fun onFileStateChanged(data: MutableMap<String, Any>) {
+                value = "${data["no"]}/${data["pageCount"]}"
             }
         })
     }
@@ -100,7 +124,7 @@ class RoomViewModel : ViewModel() {
      * 当前是否可还原笔迹
      */
     val canRecovery = MutableLiveData<Boolean>().apply {
-        WhiteBoard.addListener(object : AutoRemoveWhiteBoardListener {
+        whiteBoardClient.addListener(object : AutoRemoveWhiteBoardListener {
             override fun onRecoveryStateChanged(isEmpty: Boolean) {
                 Log.i(TAG, "onRecoveryStateChanged")
                 value = !isEmpty
@@ -112,7 +136,7 @@ class RoomViewModel : ViewModel() {
      * 当前激活的widget，仅保留文件和图片类型
      */
     val activeWidget = MutableLiveData<ActiveWidgetInfo?>().apply {
-        WhiteBoard.addListener(object : AutoRemoveWhiteBoardListener {
+        whiteBoardClient.addListener(object : AutoRemoveWhiteBoardListener {
             override fun onWidgetActive(info: ActiveWidgetInfo?) {
                 Log.i(TAG, "onWidgetActive")
                 value = info?.takeIf { it.type == WidgetType.FILE || it.type == WidgetType.IMAGE }
@@ -124,7 +148,7 @@ class RoomViewModel : ViewModel() {
      * 当前白板背景主题
      */
     val theme = MutableLiveData(BoardTheme.white()).apply {
-        WhiteBoard.addListener(object : AutoRemoveWhiteBoardListener {
+        whiteBoardClient.addListener(object : AutoRemoveWhiteBoardListener {
             override fun onBackgroundColorChanged(backgroundColor: Int) {
                 Log.i(TAG, "onBackgroundColorChanged")
                 value = BoardTheme(backgroundColor)
@@ -155,27 +179,27 @@ class RoomViewModel : ViewModel() {
     /**
      * 普通笔配置
      */
-    val normalPenStyle = NormalPenStyle()
+    val normalPenStyle = NormalPenStyle(whiteBoardClient)
 
     /**
      * 马克笔配置
      */
-    val markPenStyle = MarkPenStyle()
+    val markPenStyle = MarkPenStyle(whiteBoardClient)
 
     /**
      * 橡皮配置
      */
-    val eraserStyle = EraserStyle()
+    val eraserStyle = EraserStyle(whiteBoardClient)
 
     /**
      * 激光笔配置
      */
-    val laserStyle = LaserStyle()
+    val laserStyle = LaserStyle(whiteBoardClient)
 
     /**
      * 几何图形样式
      */
-    val geometryStyle = GeometryStyle()
+    val geometryStyle = GeometryStyle(whiteBoardClient)
 
     /**
      * 当前输入模式
@@ -188,7 +212,6 @@ class RoomViewModel : ViewModel() {
     var imageTempPath = ""
 
     init {
-
         WhiteBoard.addListener(object : AutoRemoveWhiteBoardListener {
             override fun onJoinSuccess(room: Room, me: RoomMember) {
                 Log.i(TAG, "onJoinSuccess")
@@ -198,8 +221,8 @@ class RoomViewModel : ViewModel() {
                 Log.i(TAG, "onJoinFailed $errorCode")
             }
 
-            override fun onReconnecting(times: Int) {
-                Log.i(TAG, "onReconnecting $times")
+            override fun onReconnecting(time: Int) {
+                Log.i(TAG, "onReconnecting")
             }
 
             override fun onReconnected() {
@@ -209,9 +232,47 @@ class RoomViewModel : ViewModel() {
             override fun onDisconnected() {
                 Log.i(TAG, "onDisconnected")
             }
+        })
+
+        whiteBoardClient.addListener(object : AutoRemoveWhiteBoardListener {
+            override fun onWhiteBoardOpened(bucketId: String, mode: BoardMode) {
+                Log.i(TAG, "onWhiteBoardOpened $mode")
+            }
+
+            override fun onWhiteBoardOpenFailed(bucketId: String, errorCode: Int) {
+                Log.i(TAG, "onWhiteBoardOpenFailed $errorCode")
+            }
+
+            override fun onWhiteBoardClosed(bucketId: String) {
+                Log.i(TAG, "onWhiteBoardClosed")
+            }
+
+            override fun onFileLoadedSuccessful() {
+                Log.i(TAG, "onFileLoadedSuccessful")
+            }
+
+            override fun onFileLoadingFailed(errorCode: Int) {
+                Log.i(TAG, "onFileLoadingFailed $errorCode")
+            }
+
+            override fun onMessage(command: String, content: String, sessionId: String) {
+                Log.i(TAG, "onMessage command:$command content:$content sessionId:$sessionId")
+            }
+
+            override fun onFileStateChanged(data: MutableMap<String, Any>) {
+                Log.i(TAG, "onFileStateChanged $data")
+            }
 
             override fun onWidgetActionEvent(event: WidgetActionEvent) {
                 Log.i(TAG, "onWidgetActionEvent $event")
+            }
+
+            override fun onFileScrolled(info: WidgetScrollInfo) {
+                Log.i(TAG, "onWidgetScrolled top:${info.atTop} bottom:${info.atBottom} ")
+            }
+
+            override fun onPageCleaned(pageId: String) {
+                Log.i(TAG, "page cleaned")
             }
         })
     }
@@ -230,8 +291,9 @@ class RoomViewModel : ViewModel() {
             InputType.ERASE -> eraserStyle.inputConfig
             InputType.SELECT -> InputConfig.select()
             InputType.GEOMETRY -> geometryStyle.inputConfig
+            InputType.OPERATION -> InputConfig.operation()
         }
-        WhiteBoard.setInputMode(config)
+        whiteBoardClient.setInputMode(config)
     }
 
     override fun onCleared() {

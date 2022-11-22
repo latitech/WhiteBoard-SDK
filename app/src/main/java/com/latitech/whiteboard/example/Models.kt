@@ -7,6 +7,7 @@ import androidx.core.graphics.ColorUtils
 import androidx.databinding.BaseObservable
 import androidx.databinding.Bindable
 import com.latitech.whiteboard.WhiteBoard
+import com.latitech.whiteboard.WhiteBoardClient
 import com.latitech.whiteboard.model.InputConfig
 import com.latitech.whiteboard.type.GeometryType
 import com.latitech.whiteboard.type.LaserType
@@ -15,7 +16,7 @@ import kotlin.math.pow
 /**
  * 普通笔配置
  */
-class NormalPenStyle : BaseObservable() {
+class NormalPenStyle(private val whiteBoardClient: WhiteBoardClient) : BaseObservable() {
 
     /**
      * 当前使用的颜色序号
@@ -25,7 +26,7 @@ class NormalPenStyle : BaseObservable() {
         set(value) {
             field = value
             notifyPropertyChanged(BR.colorIndex)
-            WhiteBoard.setInputMode(inputConfig)
+            whiteBoardClient.setInputMode(inputConfig)
         }
 
     /**
@@ -34,7 +35,7 @@ class NormalPenStyle : BaseObservable() {
     var sizeIndex = 0
         set(value) {
             field = value
-            WhiteBoard.setInputMode(inputConfig)
+            whiteBoardClient.setInputMode(inputConfig)
         }
 
     /**
@@ -43,18 +44,13 @@ class NormalPenStyle : BaseObservable() {
     var supportPressure = false
         set(value) {
             field = value
-            WhiteBoard.setInputMode(inputConfig)
+            whiteBoardClient.setInputMode(inputConfig)
         }
 
     /**
      * 生成当前配置
      */
     val inputConfig get() = InputConfig.pen(colors[colorIndex], sizes[sizeIndex], supportPressure)
-
-    override fun notifyPropertyChanged(fieldId: Int) {
-        super.notifyPropertyChanged(fieldId)
-        WhiteBoard.setInputMode(inputConfig)
-    }
 
     companion object {
         /**
@@ -89,7 +85,7 @@ class NormalPenStyle : BaseObservable() {
 /**
  * 马克笔配置
  */
-class MarkPenStyle : BaseObservable() {
+class MarkPenStyle(private val whiteBoardClient: WhiteBoardClient) : BaseObservable() {
 
     /**
      * 当前使用的颜色序号
@@ -99,7 +95,7 @@ class MarkPenStyle : BaseObservable() {
         set(value) {
             field = value
             notifyPropertyChanged(BR.colorIndex)
-            WhiteBoard.setInputMode(inputConfig)
+            whiteBoardClient.setInputMode(inputConfig)
         }
 
     /**
@@ -108,7 +104,7 @@ class MarkPenStyle : BaseObservable() {
     var sizeIndex = 0
         set(value) {
             field = value
-            WhiteBoard.setInputMode(inputConfig)
+            whiteBoardClient.setInputMode(inputConfig)
         }
 
     /**
@@ -117,7 +113,7 @@ class MarkPenStyle : BaseObservable() {
     var supportPressure = false
         set(value) {
             field = value
-            WhiteBoard.setInputMode(inputConfig)
+            whiteBoardClient.setInputMode(inputConfig)
         }
 
     /**
@@ -158,7 +154,7 @@ class MarkPenStyle : BaseObservable() {
 /**
  * 橡皮配置
  */
-class EraserStyle {
+class EraserStyle(private val whiteBoardClient: WhiteBoardClient) {
 
     /**
      * 当前使用的面积序号
@@ -166,7 +162,7 @@ class EraserStyle {
     var sizeIndex = 0
         set(value) {
             field = value
-            WhiteBoard.setInputMode(inputConfig)
+            whiteBoardClient.setInputMode(inputConfig)
         }
 
     /**
@@ -191,14 +187,14 @@ class EraserStyle {
 /**
  * 激光笔样式
  */
-class LaserStyle {
+class LaserStyle(private val whiteBoardClient: WhiteBoardClient) {
     /**
      * 当前使用的图形res（作为key）
      */
     var iconKey = R.drawable.ic_laser_point
         set(value) {
             field = value
-            WhiteBoard.setInputMode(inputConfig)
+            whiteBoardClient.setInputMode(inputConfig)
         }
 
     /**
@@ -223,7 +219,7 @@ class LaserStyle {
 /**
  * 几何图形样式
  */
-class GeometryStyle {
+class GeometryStyle(private val whiteBoardClient: WhiteBoardClient) {
 
 
     /**
@@ -232,7 +228,7 @@ class GeometryStyle {
     var iconKey = R.drawable.ic_geometry_rect
         set(value) {
             field = value
-            WhiteBoard.setInputMode(inputConfig)
+            whiteBoardClient.setInputMode(inputConfig)
         }
 
     /**
@@ -241,7 +237,7 @@ class GeometryStyle {
     var colorIndex = 0
         set(value) {
             field = value
-            WhiteBoard.setInputMode(inputConfig)
+            whiteBoardClient.setInputMode(inputConfig)
         }
 
     /**
@@ -250,7 +246,7 @@ class GeometryStyle {
     var sizeIndex = 0
         set(value) {
             field = value
-            WhiteBoard.setInputMode(inputConfig)
+            whiteBoardClient.setInputMode(inputConfig)
         }
 
     /**
@@ -331,6 +327,11 @@ enum class InputType {
      * 几何图形
      */
     GEOMETRY,
+
+    /**
+     * 操作模式，仅pdf-scroll模式的白板有效
+     */
+    OPERATION,
 }
 
 /**

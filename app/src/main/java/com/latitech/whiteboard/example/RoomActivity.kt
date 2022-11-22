@@ -31,11 +31,6 @@ class RoomActivity : AppCompatActivity() {
          * 传递房间data
          */
         const val ROOM_DATA_TAG = "room_data_tag"
-
-        /**
-         * 传递房间邀请码
-         */
-        const val ROOM_CODE_TAG = "room_code_tag"
     }
 
     /**
@@ -53,7 +48,6 @@ class RoomActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-        viewModel.roomCode = intent.getStringExtra(ROOM_CODE_TAG)!!
 
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
@@ -74,7 +68,6 @@ class RoomActivity : AppCompatActivity() {
     }
 
     override fun onContentChanged() {
-        binding.whiteBoard.isOpaque = false
 
         binding.insertFile.setOnClickListener {
             insertFilePopupMenu.show()
@@ -85,7 +78,7 @@ class RoomActivity : AppCompatActivity() {
         }
 
         binding.restore.setOnClickListener {
-            WhiteBoard.recover()
+            viewModel.whiteBoardClient.recover()
         }
 
         binding.pageMenu.setOnClickListener {
@@ -93,19 +86,19 @@ class RoomActivity : AppCompatActivity() {
         }
 
         binding.prePage.setOnClickListener {
-            WhiteBoard.preBoardPage()
+            viewModel.whiteBoardClient.preBoardPage()
         }
 
         binding.nextPage.setOnClickListener {
-            WhiteBoard.nextBoardPage()
+            viewModel.whiteBoardClient.nextBoardPage()
         }
 
         binding.newPage.setOnClickListener {
-            WhiteBoard.newBoardPage()
+            viewModel.whiteBoardClient.newBoardPage()
         }
 
         binding.screenshots.setOnClickListener {
-            WhiteBoard.screenshots {
+            viewModel.whiteBoardClient.screenshots {
                 if (it == null) {
                     return@screenshots
                 }
@@ -123,7 +116,7 @@ class RoomActivity : AppCompatActivity() {
 
         binding.deleteFile.setOnClickListener {
             viewModel.activeWidget.value?.let {
-                WhiteBoard.deleteFile(it.id)
+                viewModel.whiteBoardClient.deleteFile(it.id)
             }
         }
 
@@ -280,7 +273,7 @@ class RoomActivity : AppCompatActivity() {
             )
 
             addColorSelection(colors, viewModel.theme.value!!.themeType.ordinal) {
-                WhiteBoard.setBackgroundColor(colors[it])
+                viewModel.whiteBoardClient.backgroundColor = colors[it]
             }
         }
     }
@@ -324,7 +317,7 @@ class RoomActivity : AppCompatActivity() {
     private val takePicture = registerForActivityResult(ActivityResultContracts.TakePicture()) {
         val file = File(viewModel.imageTempPath)
         if (file.exists()) {
-            WhiteBoard.insertFile(FileConfig.Builder(file).build())
+            viewModel.whiteBoardClient.insertFile(FileConfig.Builder(file).build())
         }
     }
 
@@ -351,7 +344,7 @@ class RoomActivity : AppCompatActivity() {
         if (path != null) {
             Log.v(TAG, "openGallery path:$path")
 
-            WhiteBoard.insertFile(FileConfig.Builder(File(path)).build())
+            viewModel.whiteBoardClient.insertFile(FileConfig.Builder(File(path)).build())
         }
     }
 
@@ -370,12 +363,12 @@ class RoomActivity : AppCompatActivity() {
 
             FileConfig.Builder(File(path))
                 .location(
-                    WhiteBoard.getViewport().size.displayWidth / 5f,
-                    WhiteBoard.getViewport().size.displayHeight / 5f
+                    viewModel.whiteBoardClient.viewport.size.displayWidth / 5f,
+                    viewModel.whiteBoardClient.viewport.size.displayHeight / 5f
                 )
                 .boxSize(800, 800)
                 .build()
-                .let(WhiteBoard::insertFile)
+                .let(viewModel.whiteBoardClient::insertFile)
         }
     }
 }
