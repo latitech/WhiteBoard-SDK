@@ -4,7 +4,7 @@
 
     <data>
 
-        <import type="com.latitech.whiteboard.WhiteBoard" />
+        <import type="com.latitech.whiteboard.type.BoardMode" />
 
         <import type="androidx.lifecycle.LiveData" />
 
@@ -15,6 +15,10 @@
         <variable
             name="isCurrentPage"
             type="LiveData&lt;Boolean>" />
+
+        <variable
+            name="client"
+            type="com.latitech.whiteboard.WhiteBoardClient" />
     </data>
 
     <com.google.android.material.card.MaterialCardView
@@ -23,7 +27,7 @@
         android:layout_margin="8dp"
         android:backgroundTint="@{isCurrentPage ? @color/teal_200 : @android:color/transparent}"
         android:backgroundTintMode="src_over"
-        android:onClick="@{()->WhiteBoard.jumpBoardPage(page.pageId)}">
+        android:onClick="@{()-> client.boardMode == BoardMode.NORMAL ? client.jumpBoardPage(page.pageId) : client.jumpPage(page.pageNumber)}">
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -45,10 +49,11 @@
                     style="@style/Widget.MaterialComponents.Button.TextButton.Dialog.Flush"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:onClick="@{()->WhiteBoard.insertBoardPage(page.pageId)}"
-                    android:text="插入页" />
+                    android:onClick="@{()->client.insertBoardPage(page.pageId)}"
+                    android:text="插入"
+                    app:visibleGone="@{client.boardMode == BoardMode.NORMAL}" />
 
-                <com.google.android.material.textview.MaterialTextView
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:minWidth="16dp"
@@ -58,8 +63,9 @@
                     style="@style/Widget.MaterialComponents.Button.TextButton.Dialog.Flush"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:onClick="@{()->WhiteBoard.deleteBoardPage(page.pageId)}"
-                    android:text="删除页" />
+                    android:onClick="@{()->client.deleteBoardPage(page.pageId)}"
+                    android:text="删除"
+                    app:visibleGone="@{client.boardMode == BoardMode.NORMAL}" />
 
             </LinearLayout>
 

@@ -1,6 +1,6 @@
 // Created by 超悟空 on 2018/3/15.
 
-package com.latitech.whiteboard.example
+package com.latitech.whiteboard.example.room
 
 import android.Manifest
 import android.content.pm.PackageManager
@@ -13,6 +13,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.PopupMenu
 import androidx.core.content.ContextCompat
 import com.latitech.whiteboard.WhiteBoard
+import com.latitech.whiteboard.example.*
+import com.latitech.whiteboard.example.common.*
 import com.latitech.whiteboard.example.databinding.ActivityRoomBinding
 import com.latitech.whiteboard.model.FileConfig
 import splitties.alertdialog.appcompat.alertDialog
@@ -52,11 +54,12 @@ class RoomActivity : AppCompatActivity() {
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
 
-        binding.pageList.adapter = PageListAdapter(this, viewModel.currentPage).apply {
-            viewModel.pageList.observe(this@RoomActivity) {
-                submitList(it)
+        binding.pageList.adapter =
+            PageListAdapter(this, viewModel.currentPage, viewModel.whiteBoardClient).apply {
+                viewModel.pageList.observe(this@RoomActivity) {
+                    submitList(it)
+                }
             }
-        }
 
         binding.userList.adapter = UserListAdapter().apply {
             viewModel.userList.observe(this@RoomActivity) {

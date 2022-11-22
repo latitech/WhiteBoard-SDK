@@ -20,7 +20,6 @@
 
         <activity
             android:name=".MainActivity"
-            android:theme="@style/LaunchTheme"
             android:windowSoftInputMode="stateHidden"
             android:exported="true">
             <intent-filter>
@@ -29,7 +28,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".RoomActivity" />
+        <activity android:name=".room.RoomActivity" />
 
         <provider
             android:name="androidx.core.content.FileProvider"

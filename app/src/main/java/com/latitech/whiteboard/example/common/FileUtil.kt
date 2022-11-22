@@ -1,6 +1,6 @@
 // Created by 超悟空 on 2017/10/20.
 
-package com.latitech.whiteboard.example
+package com.latitech.whiteboard.example.common
 
 import android.content.Context
 import android.net.Uri
@@ -15,14 +15,16 @@ import java.io.File
  **/
 object FileUtil {
 
-    fun getPathFromUri(context: Context, uri: Uri): String? = getPathFromRemoteUri(context, uri)
-
-    private fun getPathFromRemoteUri(context: Context, uri: Uri): String? {
+    fun getPathFromUri(context: Context, uri: Uri): String? {
         return try {
             context.contentResolver.openInputStream(uri)?.use { inputStream ->
                 val suffix = getFileExtension(getFileName(context, uri))
 
-                val file = File.createTempFile("document", suffix, context.externalCacheDir ?: context.cacheDir)
+                val file = File.createTempFile(
+                    "document",
+                    suffix,
+                    context.externalCacheDir ?: context.cacheDir
+                )
 
                 file.outputStream().use {
                     inputStream.copyTo(it)

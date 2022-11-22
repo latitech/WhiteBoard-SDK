@@ -1,6 +1,6 @@
 // Created by 超悟空 on 2021/4/27.
 
-package com.latitech.whiteboard.example
+package com.latitech.whiteboard.example.room
 
 import android.view.LayoutInflater
 import android.view.View
@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.latitech.whiteboard.example.R
 import com.latitech.whiteboard.example.databinding.ItemUserBinding
 import com.latitech.whiteboard.model.RoomMember
 

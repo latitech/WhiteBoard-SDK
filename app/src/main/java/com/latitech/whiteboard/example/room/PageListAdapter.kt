@@ -1,6 +1,6 @@
 // Created by 超悟空 on 2021/4/23.
 
-package com.latitech.whiteboard.example
+package com.latitech.whiteboard.example.room
 
 import android.view.LayoutInflater
 import android.view.View
@@ -9,6 +9,8 @@ import androidx.lifecycle.*
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.latitech.whiteboard.WhiteBoardClient
+import com.latitech.whiteboard.example.R
 import com.latitech.whiteboard.example.databinding.ItemPageNavigationBinding
 import com.latitech.whiteboard.model.WhiteBoardPage
 
@@ -17,10 +19,12 @@ import com.latitech.whiteboard.model.WhiteBoardPage
  *
  * @property lifecycleOwner 生命周期
  * @property current 当前页
+ * @property whiteBoardClient 白板控制器实例
  */
 class PageListAdapter(
     private val lifecycleOwner: LifecycleOwner,
-    private val current: LiveData<WhiteBoardPage>
+    private val current: LiveData<WhiteBoardPage>,
+    private val whiteBoardClient: WhiteBoardClient,
 ) : ListAdapter<WhiteBoardPage, PageViewHolder>(PageDiffCallback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
@@ -30,6 +34,7 @@ class PageListAdapter(
             current
         ).apply {
             binding.lifecycleOwner = lifecycleOwner
+            binding.client = whiteBoardClient
         }
 
     override fun onBindViewHolder(holder: PageViewHolder, position: Int) {

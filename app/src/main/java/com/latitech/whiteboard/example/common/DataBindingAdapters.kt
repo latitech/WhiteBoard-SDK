@@ -1,25 +1,12 @@
 // Created by 超悟空 on 2018/3/15.
 
-package com.latitech.whiteboard.example
+package com.latitech.whiteboard.example.common
 
 import android.view.View
 import android.widget.ImageView
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
-
-/**
- * ConstraintLayout的layout_constraintDimensionRatio属性绑定
- */
-@BindingAdapter("layout_constraintDimensionRatio")
-fun View.setConstraintDimensionRatio(ratio: String) {
-    layoutParams.let {
-        if (it is ConstraintLayout.LayoutParams) {
-            it.dimensionRatio = ratio
-            requestLayout()
-        }
-    }
-}
+import com.latitech.whiteboard.example.R
 
 /**
  * 设置图片网络源

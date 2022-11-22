@@ -1,6 +1,6 @@
 // Created by 超悟空 on 2021/4/26.
 
-package com.latitech.whiteboard.example
+package com.latitech.whiteboard.example.common
 
 import android.content.Context
 import android.content.res.ColorStateList
@@ -12,9 +12,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupWindow
 import androidx.core.view.isNotEmpty
-import androidx.core.view.setMargins
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
+import com.latitech.whiteboard.example.R
 import com.latitech.whiteboard.example.databinding.PopupCardBinding
 import splitties.dimensions.dip
 

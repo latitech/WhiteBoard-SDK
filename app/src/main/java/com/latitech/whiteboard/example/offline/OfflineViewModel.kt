@@ -1,11 +1,12 @@
 // Created by 超悟空 on 2018/10/18.
 
-package com.latitech.whiteboard.example
+package com.latitech.whiteboard.example.offline
 
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.latitech.whiteboard.WhiteBoard
+import com.latitech.whiteboard.example.common.*
 import com.latitech.whiteboard.listener.AutoRemoveWhiteBoardListener
 import com.latitech.whiteboard.model.*
 import com.latitech.whiteboard.type.BoardMode
@@ -16,7 +17,7 @@ import com.latitech.whiteboard.type.WidgetType
 /**
  * 房间功能
  **/
-class RoomViewModel : ViewModel() {
+class OfflineViewModel : ViewModel() {
 
     /**
      * 白板控制器

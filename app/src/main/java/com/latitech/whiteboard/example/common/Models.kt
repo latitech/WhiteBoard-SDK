@@ -1,13 +1,14 @@
 // Created by 超悟空 on 2021/4/26.
 
-package com.latitech.whiteboard.example
+package com.latitech.whiteboard.example.common
 
 import android.graphics.Color
 import androidx.core.graphics.ColorUtils
 import androidx.databinding.BaseObservable
 import androidx.databinding.Bindable
-import com.latitech.whiteboard.WhiteBoard
 import com.latitech.whiteboard.WhiteBoardClient
+import com.latitech.whiteboard.example.BR
+import com.latitech.whiteboard.example.R
 import com.latitech.whiteboard.model.InputConfig
 import com.latitech.whiteboard.type.GeometryType
 import com.latitech.whiteboard.type.LaserType
