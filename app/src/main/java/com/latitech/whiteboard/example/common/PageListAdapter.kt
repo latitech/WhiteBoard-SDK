@@ -1,6 +1,6 @@
 // Created by 超悟空 on 2021/4/23.
 
-package com.latitech.whiteboard.example.room
+package com.latitech.whiteboard.example.common
 
 import android.view.LayoutInflater
 import android.view.View
