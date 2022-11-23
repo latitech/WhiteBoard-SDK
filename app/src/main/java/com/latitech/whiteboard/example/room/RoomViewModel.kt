@@ -3,7 +3,6 @@
 package com.latitech.whiteboard.example.room
 
 import android.util.Log
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.latitech.whiteboard.WhiteBoard
@@ -90,12 +89,12 @@ class RoomViewModel : ViewModel() {
     }
 
     /**
-     * ppt当前页码显示
+     * ppt或pdf独占模式下当前页码显示
      */
-    val pptPages = MutableLiveData("0/0").apply {
+    val filePages = MutableLiveData("0/0").apply {
         whiteBoardClient.addListener(object : AutoRemoveWhiteBoardListener {
             override fun onFileStateChanged(data: MutableMap<String, Any>) {
-                value = "${data["no"]}/${data["pageCount"]}"
+                value = "${data["currentPage"]}/${data["pageCount"]}"
             }
         })
     }

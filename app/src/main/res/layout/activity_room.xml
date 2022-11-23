@@ -229,7 +229,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@{viewModel.pptPages}" />
+                        android:text="@{viewModel.filePages}" />
 
                     <androidx.appcompat.widget.AppCompatImageButton
                         android:id="@+id/next_file_step"
