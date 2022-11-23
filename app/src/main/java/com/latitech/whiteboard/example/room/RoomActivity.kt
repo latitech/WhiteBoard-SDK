@@ -3,6 +3,7 @@
 package com.latitech.whiteboard.example.room
 
 import android.Manifest
+import android.content.DialogInterface
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.util.Log
@@ -19,6 +20,7 @@ import com.latitech.whiteboard.example.databinding.ActivityRoomBinding
 import com.latitech.whiteboard.model.FileConfig
 import splitties.alertdialog.appcompat.alertDialog
 import java.io.File
+import java.util.Arrays
 
 /**
  * 白板房间
@@ -58,6 +60,8 @@ class RoomActivity : AppCompatActivity() {
 
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
+
+        viewModel.bucketIds = intent.getStringArrayExtra(BUCKET_IDS_DATA_TAG)!!.toList()
 
         binding.pageList.adapter =
             PageListAdapter(this, viewModel.currentPage, viewModel.whiteBoardClient).apply {
@@ -186,6 +190,14 @@ class RoomActivity : AppCompatActivity() {
 
         binding.settings.setOnClickListener {
             viewModel.settingsVisible.value = !viewModel.settingsVisible.value!!
+        }
+
+        binding.switchBucket.setOnClickListener {
+            alertDialog {
+                setItems(Array(viewModel.bucketIds.size) { "白板${it + 1}" }) { _, which ->
+                    WhiteBoard.switchBucket(viewModel.bucketIds[which])
+                }
+            }.show()
         }
     }
 

@@ -3,6 +3,7 @@
 package com.latitech.whiteboard.example.room
 
 import android.util.Log
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.latitech.whiteboard.WhiteBoard
@@ -156,6 +157,22 @@ class RoomViewModel : ViewModel() {
             }
         })
     }
+
+    /**
+     * 白板当前打开的白板bucketId
+     */
+    val currentBucketId = MutableLiveData("").apply {
+        whiteBoardClient.addListener(object : AutoRemoveWhiteBoardListener {
+            override fun onWhiteBoardOpened(bucketId: String, mode: BoardMode) {
+                value = bucketId
+            }
+        })
+    }
+
+    /**
+     * 可切换的白板id列表
+     */
+    var bucketIds = emptyList<String>()
 
     /**
      * 页列表是否可见

@@ -37,4 +37,10 @@
         <item>已销毁</item>
     </string-array>
 
+    <string-array name="board_mode_names">
+        <item>标准白板</item>
+        <item>PPT演示</item>
+        <item>PDF卷轴</item>
+    </string-array>
+
 </resources>

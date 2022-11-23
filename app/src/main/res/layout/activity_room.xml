@@ -8,6 +8,10 @@
 
         <import type="com.latitech.whiteboard.example.common.InputType" />
 
+        <import type="com.latitech.whiteboard.type.RoomStatus" />
+
+        <import type="com.latitech.whiteboard.type.BoardStatus" />
+
         <variable
             name="viewModel"
             type="com.latitech.whiteboard.example.room.RoomViewModel" />
@@ -31,21 +35,21 @@
             android:id="@+id/label_room_status"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_margin="8dp"
             android:text="@{`房间：` + @stringArray/room_status_names[viewModel.roomStatus.ordinal()]}"
             android:textColor="@color/grey"
-            android:layout_margin="8dp"
-            app:layout_constraintHorizontal_chainStyle="packed"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/label_board_status"
+            app:layout_constraintHorizontal_chainStyle="packed"
             app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
             android:id="@+id/label_board_status"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_margin="8dp"
             android:text="@{`白板：` + @stringArray/board_status_names[viewModel.boardStatus.ordinal()]}"
             android:textColor="@color/grey"
-            android:layout_margin="8dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/label_room_status" />
@@ -242,6 +246,26 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@{`背景:` + @stringArray/board_theme_names[viewModel.theme.themeType.ordinal()]}" />
+
+                <TextView
+                    visibleGone="@{viewModel.boardStatus == BoardStatus.SUCCESSFUL &amp;&amp; !viewModel.bucketIds.empty}"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{`已打开白板:` + (viewModel.bucketIds.indexOf(viewModel.currentBucketId) + 1) }" />
+
+                <TextView
+                    visibleGone="@{viewModel.boardStatus == BoardStatus.SUCCESSFUL}"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{`白板类型:` + @stringArray/board_mode_names[viewModel.boardMode.ordinal()]}" />
+
+                <Button
+                    android:id="@+id/switch_bucket"
+                    style="@style/Widget.AppCompat.Button.Small"
+                    visibleGone="@{viewModel.roomStatus == RoomStatus.CONNECTED &amp;&amp; !viewModel.bucketIds.empty}"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="切换白板" />
 
             </LinearLayout>
 
