@@ -1325,7 +1325,7 @@ class MyApplication : Application(){
 
 |   名称    | 类型 |             描述             |
 | :-------: | :--: | :--------------------------: |
-|    no     | int  |     当前ppt页号，从1开始     |
+| currentPage | int  |     当前ppt页号，从1开始     |
 |   step    | int  | 当前ppt动画位置索引，从1开始 |
 | pageCount | int  |          ppt总页数           |
 | stepCount | int  |         ppt总动画数          |
