@@ -33,6 +33,11 @@ class RoomActivity : AppCompatActivity() {
          * 传递房间data
          */
         const val ROOM_DATA_TAG = "room_data_tag"
+
+        /**
+         * 传递房间中所有bucketId数组
+         */
+        const val BUCKET_IDS_DATA_TAG = "bucket_ids_data_tag"
     }
 
     /**

@@ -29,6 +29,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".room.RoomActivity" />
+        <activity android:name=".playback.PlaybackActivity"/>
+        <activity android:name=".offline.OfflineActivity" />
 
         <provider
             android:name="androidx.core.content.FileProvider"

@@ -4,16 +4,37 @@
         <item>未连接</item>
         <item>正在连接</item>
         <item>已连接</item>
-        <item>连接失败</item>
         <item>正在重连</item>
+        <item>连接失败</item>
+        <item>离线</item>
+    </string-array>
+
+    <string-array name="board_status_names">
+        <item>空闲</item>
+        <item>正在加载</item>
+        <item>已打开</item>
+        <item>打开失败</item>
+        <item>正在重连</item>
+        <item>离线</item>
     </string-array>
 
     <string-array name="board_theme_names">
-        <item>白</item>
-        <item>黑</item>
-        <item>绿</item>
+        <item>白色</item>
+        <item>黑色</item>
+        <item>绿色</item>
         <item>透明</item>
         <item>未知</item>
+    </string-array>
+
+    <string-array name="playback_status_names">
+        <item>空闲</item>
+        <item>正在加载</item>
+        <item>准备就绪</item>
+        <item>正在播放</item>
+        <item>暂停</item>
+        <item>停止</item>
+        <item>错误</item>
+        <item>已销毁</item>
     </string-array>
 
 </resources>
