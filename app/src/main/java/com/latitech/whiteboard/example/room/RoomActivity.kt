@@ -192,6 +192,22 @@ class RoomActivity : AppCompatActivity() {
             viewModel.settingsVisible.value = !viewModel.settingsVisible.value!!
         }
 
+        binding.preFilePage.setOnClickListener {
+            viewModel.whiteBoardClient.prePage()
+        }
+
+        binding.nextFilePage.setOnClickListener {
+            viewModel.whiteBoardClient.nextPage()
+        }
+
+        binding.preFileStep.setOnClickListener {
+            viewModel.whiteBoardClient.preStep()
+        }
+
+        binding.nextFileStep.setOnClickListener {
+            viewModel.whiteBoardClient.nextStep()
+        }
+
         binding.switchBucket.setOnClickListener {
             alertDialog {
                 setItems(Array(viewModel.bucketIds.size) { "白板${it + 1}" }) { _, which ->
