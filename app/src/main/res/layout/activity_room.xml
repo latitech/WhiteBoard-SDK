@@ -28,14 +28,27 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
+            android:id="@+id/label_room_status"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{@stringArray/room_status_names[viewModel.roomStatus.ordinal()]}"
+            android:text="@{`房间：` + @stringArray/room_status_names[viewModel.roomStatus.ordinal()]}"
             android:textColor="@color/grey"
-            app:contentPadding="8dp"
+            android:layout_margin="8dp"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/label_board_status"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@+id/label_board_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{`白板：` + @stringArray/board_status_names[viewModel.boardStatus.ordinal()]}"
+            android:textColor="@color/grey"
+            android:layout_margin="8dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toEndOf="@id/label_room_status" />
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/board_toolbar"
