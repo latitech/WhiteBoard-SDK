@@ -169,80 +169,72 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                app:visibleGone="@{viewModel.boardMode == BoardMode.NORMAL}">
 
                 <androidx.appcompat.widget.AppCompatImageButton
                     android:id="@+id/page_menu"
                     style="@style/WhiteBoardActionButton"
-                    app:srcCompat="@drawable/ic_baseline_dashboard_24"
-                    app:visibleGone="@{viewModel.boardMode != BoardMode.PDF_SCROLL}" />
+                    app:srcCompat="@drawable/ic_baseline_dashboard_24" />
 
-                <LinearLayout
+                <androidx.appcompat.widget.AppCompatImageButton
+                    android:id="@+id/pre_page"
+                    style="@style/WhiteBoardActionButton"
+                    app:srcCompat="@drawable/ic_sharp_arrow_back_ios_24" />
+
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal"
-                    app:visibleGone="@{viewModel.boardMode == BoardMode.NORMAL}">
+                    android:text="@{viewModel.currentPage.pageNumber + `/` + viewModel.pageList.size()}" />
 
-                    <androidx.appcompat.widget.AppCompatImageButton
-                        android:id="@+id/pre_page"
-                        style="@style/WhiteBoardActionButton"
-                        app:srcCompat="@drawable/ic_sharp_arrow_back_ios_24" />
+                <androidx.appcompat.widget.AppCompatImageButton
+                    android:id="@+id/next_page"
+                    style="@style/WhiteBoardActionButton"
+                    app:srcCompat="@drawable/ic_sharp_arrow_forward_ios_24"
+                    app:visibleGone="@{viewModel.currentPage.pageNumber &lt; viewModel.pageList.size()}" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@{viewModel.currentPage.pageNumber + `/` + viewModel.pageList.size()}" />
+                <androidx.appcompat.widget.AppCompatImageButton
+                    android:id="@+id/new_page"
+                    style="@style/WhiteBoardActionButton"
+                    app:srcCompat="@drawable/ic_baseline_add_24"
+                    app:visibleGone="@{viewModel.currentPage.pageNumber == viewModel.pageList.size()}" />
 
-                    <androidx.appcompat.widget.AppCompatImageButton
-                        android:id="@+id/next_page"
-                        style="@style/WhiteBoardActionButton"
-                        app:srcCompat="@drawable/ic_sharp_arrow_forward_ios_24"
-                        app:visibleGone="@{viewModel.currentPage.pageNumber &lt; viewModel.pageList.size()}" />
+            </LinearLayout>
 
-                    <androidx.appcompat.widget.AppCompatImageButton
-                        android:id="@+id/new_page"
-                        style="@style/WhiteBoardActionButton"
-                        app:srcCompat="@drawable/ic_baseline_add_24"
-                        app:visibleGone="@{viewModel.currentPage.pageNumber == viewModel.pageList.size()}" />
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                app:visibleGone="@{viewModel.boardMode != BoardMode.NORMAL}">
 
-                </LinearLayout>
+                <androidx.appcompat.widget.AppCompatImageButton
+                    android:id="@+id/pre_file_page"
+                    style="@style/WhiteBoardActionButton"
+                    app:srcCompat="@drawable/ic_baseline_first_page_24"
+                    app:visibleGone="@{viewModel.boardMode == BoardMode.PPT_PLAY}" />
 
-                <LinearLayout
+                <androidx.appcompat.widget.AppCompatImageButton
+                    android:id="@+id/pre_file_step"
+                    style="@style/WhiteBoardActionButton"
+                    app:srcCompat="@drawable/ic_sharp_arrow_back_ios_24" />
+
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal"
-                    app:visibleGone="@{viewModel.boardMode != BoardMode.NORMAL}">
+                    android:text="@{viewModel.filePages}" />
 
-                    <androidx.appcompat.widget.AppCompatImageButton
-                        android:id="@+id/pre_file_page"
-                        style="@style/WhiteBoardActionButton"
-                        app:srcCompat="@drawable/ic_baseline_first_page_24"
-                        app:visibleGone="@{viewModel.boardMode == BoardMode.PPT_PLAY}" />
+                <androidx.appcompat.widget.AppCompatImageButton
+                    android:id="@+id/next_file_step"
+                    style="@style/WhiteBoardActionButton"
+                    app:srcCompat="@drawable/ic_sharp_arrow_forward_ios_24" />
 
-                    <androidx.appcompat.widget.AppCompatImageButton
-                        android:id="@+id/pre_file_step"
-                        style="@style/WhiteBoardActionButton"
-                        app:srcCompat="@drawable/ic_sharp_arrow_back_ios_24" />
+                <androidx.appcompat.widget.AppCompatImageButton
+                    android:id="@+id/next_file_page"
+                    style="@style/WhiteBoardActionButton"
+                    app:srcCompat="@drawable/ic_baseline_last_page_24"
+                    app:visibleGone="@{viewModel.boardMode == BoardMode.PPT_PLAY}" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@{viewModel.filePages}" />
-
-                    <androidx.appcompat.widget.AppCompatImageButton
-                        android:id="@+id/next_file_step"
-                        style="@style/WhiteBoardActionButton"
-                        app:srcCompat="@drawable/ic_sharp_arrow_forward_ios_24" />
-
-                    <androidx.appcompat.widget.AppCompatImageButton
-                        android:id="@+id/next_file_page"
-                        style="@style/WhiteBoardActionButton"
-                        app:srcCompat="@drawable/ic_baseline_last_page_24"
-                        app:visibleGone="@{viewModel.boardMode == BoardMode.PPT_PLAY}" />
-
-                </LinearLayout>
             </LinearLayout>
 
         </com.google.android.material.card.MaterialCardView>
