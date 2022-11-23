@@ -84,6 +84,13 @@
                     app:visibleGone="@{viewModel.activeWidget != null}" />
 
                 <androidx.appcompat.widget.AppCompatImageButton
+                    android:id="@+id/operation"
+                    style="@style/WhiteBoardActionButton"
+                    app:selected="@{viewModel.currentInputType == InputType.OPERATION}"
+                    app:srcCompat="@drawable/ic_baseline_pan_tool_24"
+                    app:visibleGone="@{viewModel.boardMode == BoardMode.PDF_SCROLL}" />
+
+                <androidx.appcompat.widget.AppCompatImageButton
                     android:id="@+id/select"
                     style="@style/WhiteBoardActionButton"
                     app:selected="@{viewModel.currentInputType == InputType.SELECT}"

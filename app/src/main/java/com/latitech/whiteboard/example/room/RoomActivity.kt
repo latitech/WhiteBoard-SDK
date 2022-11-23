@@ -85,6 +85,10 @@ class RoomActivity : AppCompatActivity() {
             insertFilePopupMenu.show()
         }
 
+        binding.operation.setOnClickListener {
+            viewModel.changeInputType(InputType.OPERATION)
+        }
+
         binding.select.setOnClickListener {
             viewModel.changeInputType(InputType.SELECT)
         }

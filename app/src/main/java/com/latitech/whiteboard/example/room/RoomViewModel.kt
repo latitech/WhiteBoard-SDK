@@ -255,6 +255,10 @@ class RoomViewModel : ViewModel() {
         whiteBoardClient.addListener(object : AutoRemoveWhiteBoardListener {
             override fun onWhiteBoardOpened(bucketId: String, mode: BoardMode) {
                 Log.i(TAG, "onWhiteBoardOpened $mode")
+                if (mode != BoardMode.PDF_SCROLL && currentInputType.value == InputType.OPERATION) {
+                    // 仅pdf卷轴模式支持 InputConfig.operation()
+                    changeInputType(InputType.NORMAL)
+                }
             }
 
             override fun onWhiteBoardOpenFailed(bucketId: String, errorCode: Int) {
